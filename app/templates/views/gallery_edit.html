@@ -1,4 +1,65 @@
 {% extends "snips/base.html" %}
 {% block body %}
-<h2>Hello Internet Person</h2>
+<div class="row">
+  <form class="form-inline">
+    <div class="form-group">
+      <label for="galleryName">Gallery</label>
+      <input type="text" id="galleryName" class="form-control mx-sm-3" aria-describedby="galleryName">
+    </div>
+  </form>
+</div>
+<div class="row">
+  <div class="col-sm-3">
+    <div class="form-group">
+      <div class='input-group date' id='startDate'>
+          <input type='text' class="form-control" />
+          <span class="input-group-addon">
+              <span class="glyphicon glyphicon-time"></span>
+          </span>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+            $(function () {
+                $('#startDate').datetimepicker();
+            });
+        </script>
+  <div class="col-sm-3">
+    <div class="form-group">
+      <div class='input-group date' id='endDate'>
+          <input type='text' class="form-control" />
+          <span class="input-group-addon">
+              <span class="glyphicon glyphicon-time"></span>
+          </span>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+            $(function () {
+                $('#endDate').datetimepicker();
+            });
+        </script>
+</div>
+<div class="row">
+  <div class="modal" id="uploadModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Attachments</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="help-block">If you have any additional attachments you would like to add to this request please do so here.</p>
+                    <form class="dropzone" id="drop" action = "/">
+                        <div class="box"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                <a href="/upload/feedback" onclick="closeModal()" class="btn btn-success">Submit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<script src="/static/js/local/upload.js"></script>-->
+</div>
+
 {% endblock %}
