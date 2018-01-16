@@ -1,4 +1,51 @@
 {% extends "snips/base.html" %}
 {% block body %}
-<h2>Hello Internet Person</h2>
+<!--<link rel="stylesheet" href="/static/css/application_create.css" type="text/css" />-->
+<div id="createApplication">
+    <h3>{Gallery Name} - Application</h3>
+    <form class = "form-horizontal" method = "post" id = "createApplicationForm" action = "/">
+        <div>
+            <label for = "name">Name*</label>
+            <input placeholder = "First" type = "text" id = "name" name = "firstName" class = "form-control">
+            <input placeholder = "Last" type = "text" id = "name" name = "lastName" class = "form-control">
+        </div>
+        <div>
+            <label for = "address">Address*</label>
+            <input placeholder = "Street Address" type = "text" id = "address" name = "streetAddress" class = "form-control">
+            <input placeholder = "Address Line 2" type = "text" id = "address" name = "addressLine2" class = "form-control">
+            <input placeholder = "City" type = "text" id = "address" name = "city" class = "form-control">
+            <input placeholder = "State/Province/Region" type = "text" id = "address" name = "stateProvinceRegion" class = "form-control">
+            <input placeholder = "Zip/Postal Code" type = "text" id = "address" name = "zipPostalCode" class = "form-control">
+        </div>
+        <div>
+            <label for = "email">Email*</label>
+            <input placeholder = "example@example.com" type = "email" id = "email" name = "emailAddress" class = "form-control">
+        </div>
+        <div>
+            <label for = "phone">Phone</label>
+            <input placeholder = "(555)322-2321" type = "text" id = "phone" name = "phoneNumber" class = "form-control">
+        </div>
+        <div>
+            <label for = "website">Personal Website</label>
+            <input placeholder = "http://thisispersonal.com" type = "text" id = "website" name = "personalWebsite" class = "form-control">
+        </div>
+        <div>
+            <label for = "statement">Personal Statement</label>
+            <textarea id="statement" name="personalStatement">Please include a personal statement</textarea>
+        </div>
+         <div>
+            <label for = "cv">CV (optional)</label>
+            <input id = "cv" name = "uploadedCV" type = "file" accept=".doc,.docx,.pdf, .txt">
+        </div>
+        <div>
+            <label for = "cv">Image Upload</label>
+            <div class = "row">
+                <div class="dropzone" id="fileDropZone" name = "uploaded_images">  </div> 
+            </div>
+        </div>
+        <div>
+            <button type="submit" class = "btn btn-primary pull-right" id="submitApplication">Submit</button>    
+        </div>
+    </form>
+</div>
 {% endblock %}

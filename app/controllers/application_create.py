@@ -9,4 +9,16 @@ def create():
 
 
 
+@app.route('/application/submit', methods=["POST"])
+def application_submit():
+    data        = request.form
+    submit_date = time.strftime("%m%d%y")
+    try:
+        #Insert data into database
+        submission = 
+    except Exception as e:
+        print e
+        flash ("An error occured during submission.")
+        return redirect(url_for("/"))
+        
 
