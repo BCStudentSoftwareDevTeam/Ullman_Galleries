@@ -1,51 +1,74 @@
 {% extends "snips/base.html" %}
 {% block body %}
-<!--<link rel="stylesheet" href="/static/css/application_create.css" type="text/css" />-->
+<link rel="stylesheet" href="/static/css/application_create.css" type="text/css" />
 <div id="createApplication">
-    <h3>{Gallery Name} - Application</h3>
-    <form class = "form-horizontal" method = "post" id = "createApplicationForm" action = "/">
+    <div class="col-xs-16
+                col-sm-8
+                col-md-9
+                col-lg-10"
+         id="">
+    <h1 style = "text-align: center;"><strong>{{gallery}} - Application </strong></h1>
+    <input type = "text" value = {{gid}} id = "gallery_id" hidden>
+    <form class = "form-group" method = "post" id = "createApplicationForm" action = "/application/submit/{{gid}}">
+        
         <div>
             <label for = "name">Name*</label>
-            <input placeholder = "First" type = "text" id = "name" name = "firstName" class = "form-control">
-            <input placeholder = "Last" type = "text" id = "name" name = "lastName" class = "form-control">
+            <input placeholder = "First" type = "text" id = "name" name = "firstName" class = "form-control" required>
+            </br>
+            <input placeholder = "Last" type = "text" id = "name" name = "lastName" class = "form-control" required>
+            
         </div>
+        </br>
         <div>
             <label for = "address">Address*</label>
-            <input placeholder = "Street Address" type = "text" id = "address" name = "streetAddress" class = "form-control">
-            <input placeholder = "Address Line 2" type = "text" id = "address" name = "addressLine2" class = "form-control">
-            <input placeholder = "City" type = "text" id = "address" name = "city" class = "form-control">
-            <input placeholder = "State/Province/Region" type = "text" id = "address" name = "stateProvinceRegion" class = "form-control">
-            <input placeholder = "Zip/Postal Code" type = "text" id = "address" name = "zipPostalCode" class = "form-control">
+            <input placeholder = "Street Address" type = "text" id = "address" name = "streetAddress" class = "form-control"required>
+            </br>
+            <input placeholder = "Address Line 2" type = "text" id = "address" name = "addressLine2" class = "form-control"required>
+            </br>
+            <input placeholder = "City" type = "text" id = "address" name = "city" class = "form-control"required>
+            </br>
+            <input placeholder = "State/Province/Region" type = "text" id = "address" name = "stateProvinceRegion" class = "form-control"required>
+            </br>
+            <input placeholder = "Zip/Postal Code" type = "text" id = "address" name = "zipPostalCode" class = "form-control"required>
+                
         </div>
+        </br>
         <div>
             <label for = "email">Email*</label>
-            <input placeholder = "example@example.com" type = "email" id = "email" name = "emailAddress" class = "form-control">
+            <input placeholder = "example@example.com" type = "email" id = "email" name = "email" class = "form-control"required>
         </div>
+        </br>
         <div>
             <label for = "phone">Phone</label>
-            <input placeholder = "(555)322-2321" type = "text" id = "phone" name = "phoneNumber" class = "form-control">
+            <input placeholder = "(555)322-2321" type = "text" id = "phone" name = "phone" class = "form-control">
         </div>
+        </br>
         <div>
             <label for = "website">Personal Website</label>
-            <input placeholder = "http://thisispersonal.com" type = "text" id = "website" name = "personalWebsite" class = "form-control">
+            <input placeholder = "http://thisispersonal.com" type = "text" id = "website" name = "website" class = "form-control">
+        </div>
+        </br>
+         <div>
+            <label for = "cv">CV (optional)</label>
+            <input id = "cv" name = "cv" type = "file" accept=".doc,.docx,.pdf, .txt">
         </div>
         <div>
             <label for = "statement">Personal Statement</label>
-            <textarea id="statement" name="personalStatement">Please include a personal statement</textarea>
-        </div>
-         <div>
-            <label for = "cv">CV (optional)</label>
-            <input id = "cv" name = "uploadedCV" type = "file" accept=".doc,.docx,.pdf, .txt">
+            <input id = "statement" name = "statement" type = "file" accept=".doc,.docx,.pdf, .txt">
+            
         </div>
         <div>
-            <label for = "cv">Image Upload</label>
+            <label for = "fileDropZone">Image Upload</label>
             <div class = "row">
-                <div class="dropzone" id="fileDropZone" name = "uploaded_images">  </div> 
+                <div class="dropzone" id="fileDropZone" name = "fileDropZone">  </div> 
             </div>
         </div>
+        </br>
         <div>
             <button type="submit" class = "btn btn-primary pull-right" id="submitApplication">Submit</button>    
         </div>
     </form>
+    </div>
 </div>
+<script type="text/javascript" src="/static/js/ext/imageUpload.js"></script>
 {% endblock %}
