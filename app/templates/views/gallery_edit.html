@@ -41,25 +41,24 @@
         </script>
 </div>
 <div class="row">
-  <div class="modal" id="uploadModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Attachments</h4>
-                </div>
-                <div class="modal-body">
-                    <p class="help-block">If you have any additional attachments you would like to add to this request please do so here.</p>
-                    <form class="dropzone" id="drop" action = "/">
-                        <div class="box"></div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                <a href="/upload/feedback" onclick="closeModal()" class="btn btn-success">Submit</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--<script src="/static/js/local/upload.js"></script>-->
+  <div class="modal-body">
+      <form action="/file-upload"
+        class="dropzone"
+        id="my-awesome-dropzone"></form>
+  </div>
 </div>
-
+<div class="row">
+  <form>
+    <textarea name="editor1" id="editor1" rows="10" cols="80">
+        Description
+    </textarea>
+    <script>
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace( 'editor1' );
+    </script>
+    </form>
+</div>
+<button type="button" class="btn btn-light">Cancel</button>
+<button type="button" class="btn btn-primary">Submit</button>
 {% endblock %}
