@@ -1,4 +1,4 @@
 {% extends "snips/base.html" %}
 {% block body %}
-<h2>Hello Internet Person</h2>
+<h2>Submissions/h2>
 {% endblock %}
