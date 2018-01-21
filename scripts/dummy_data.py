@@ -14,7 +14,7 @@ from app.models import *
 
 def load_dummy():
 
-    Users(uid=1, username="Seth")
+    Users(uid=1, username="adminUser").save(force_insert=True)
     Files(fid=1, filetype="pdf", form=1, filename="Seth's CV", filepath="applications/gallery_1/seth@seth.com/").save(force_insert=True)
 
     Galleries(gid=1, title="gallery_1", open_date="2001-01-22-11:22", close_date="2018-02-23-11:22", description="HI THIS IS A TEST", banner=1).save(force_insert=True)
