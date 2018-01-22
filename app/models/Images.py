@@ -1,6 +1,6 @@
 from app.models.util import *
 from app.models.Forms import *
-from app.models.Files import *
+from app.models.Files import Files
 
 class Images (baseModel):
   iid               = IntegerField(primary_key=True)

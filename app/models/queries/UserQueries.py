@@ -1,4 +1,5 @@
 from app.models import Users
+from app.logic.data_validation import *
 def select_all(self):
     '''Selects all users
     Args:
@@ -21,7 +22,7 @@ def insert(username):
       User: The newly created user
       False: if unsuccessful
     '''
-    if checkStrings(username):
+    if check_empty_str(username):
         try:
             user = Users(username=username)
             user.save(force_insert=True)
@@ -39,7 +40,7 @@ def select_single(username):
       User: The selected user
       False: if unsuccessful
     '''
-    if checkStrings(username):
+    if check_empty_str(username):
       try:
         user=Users.get(Users.username==username)
         return user
@@ -47,8 +48,3 @@ def select_single(username):
         print(e)
     return False
 
-def checkStrings(string):
-    if type(string) is str and len(string) > 1:
-        return True
-    else:
-        return False
