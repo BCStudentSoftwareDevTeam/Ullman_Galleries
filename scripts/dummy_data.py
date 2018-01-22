@@ -24,7 +24,7 @@ def create_tables():
             model.create_table()
 
 def dummy_data():
-    drop_tables()
+    # drop_tables()
     create_tables()
     load_user_data()
     load_files_data()

@@ -17,6 +17,9 @@ from app.config import *
 from app.models import *
 from app.config import loadConfig
 from app.models.util import *
+from app.controllers.admin import admin
+from app.controllers.public import public
+from app.controllers import *
 
 import pprint
 import sys
@@ -33,6 +36,9 @@ returns a replacement function. See start.py for an example"
 '''
 app = Flask(__name__)
 app.secret_key = secret_cfg['secret_key']
+app.register_blueprint(admin)
+app.register_blueprint(public)
+
 #from app import app
 admin = Admin(app)
 
@@ -41,6 +47,7 @@ admin = Admin(app)
 @app.before_request
 def before_request():
     g.dbMain =  mainDB.get_conn()
+    g.cfg = loadConfig.get_cfg()
 
 @app.teardown_request
 def teardown_request(exception):

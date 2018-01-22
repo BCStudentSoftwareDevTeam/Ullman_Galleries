@@ -8,4 +8,4 @@ It also includes all the application files that are used as "pages" in the app
 
 from .allImports import *
 from app import allImports
-from app.controllers import *
+# from app.controllers import *

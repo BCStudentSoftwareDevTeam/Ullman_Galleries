@@ -1,9 +1,10 @@
-from app.allImports import * 
-from app.logic.validation import *
-from werkzeug.security import check_password_hash
-from flask import session
+from . import admin
 
-@app.route('/gallery/submission/<int:gid>', methods=["GET","POST"])
+from app.logic.validation import *
+from flask import render_template
+
+
+@admin.route('/gallery/submission/<int:gid>', methods=["GET","POST"])
 def gallery_submission(gid):
     gallery = GalleryQueries.get(gid)
     #TODO sanatize html data
