@@ -51,8 +51,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Submitted'
-copyright = '2018, Jesson Soto Ventura, Guillermo Ramos Macias'
-author = 'Jesson Soto Ventura, Guillermo Ramos Macias'
+author = 'Student Software Development team'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -144,7 +143,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'Submitted.tex', 'Submitted Documentation',
-     'Jesson Soto Ventura, Guillermo Ramos Macias', 'manual'),
+     'Student Software Development Team', 'manual'),
 ]
 
 
