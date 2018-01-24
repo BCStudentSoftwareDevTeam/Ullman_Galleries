@@ -13,7 +13,7 @@ To rename the app, you need to make three changes:
 import os
 import sys
 
-from app import app
+from app import create_app
 sys.path.insert(0,'/home/ubuntu/workspace/')
 # sys.path.insert(0,'/Users/jesson/Development/Github/Project_ART')
 
@@ -30,4 +30,5 @@ else:
 
 # Print statements go to your log file in production; to your console while developing
 print(("Running server at http://{0}:{1}/".format(IP, PORT)))
+app = create_app('development')
 app.run(host = IP, port = PORT, debug = True, threaded = True)
