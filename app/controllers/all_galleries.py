@@ -9,8 +9,7 @@ def all_galleries():
     user = Forms.get(fid=1)
     name = user.first_name
     print(name)
+    print(doesUserHaveRole("admin"))
     return render_template('views/all_galleries.html')
-
-
 
 

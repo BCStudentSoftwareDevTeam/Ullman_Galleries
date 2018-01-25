@@ -2,6 +2,7 @@
 # this library.
 # http://configure.readthedocs.io/en/latest/#
 from app.models import *
+from app.models.queries import *
 from app.config import * #This import is for testing
 from app.logic.absolute_path import *
 from functools import wraps
@@ -13,7 +14,6 @@ def getUsernameFromEnv():
   Returns:
     str: The user's username  
   '''
-  #TODO: Delete dummy circumstance before production
   env = request.environ
   envK = "eppn"
   if envK in env:
@@ -34,33 +34,26 @@ def doesUserHaveRole(role):
   #TODO: Delete dummy circumstance before production
   username = getUsernameFromEnv()
   try:
-    user = UserQueries()
-    user.select_single(username)
-    if user:
-      if role=='admin':
-        if user.is_admin:
-          return True
-        else:
-          return False
-      else:
-        return True
+    user = UserQueries.select_single(username)
+    if user and role=='admin':
+      return True
     else:
       return False
   except Exception as e:
     print(e)
     return False
 
-def switchRoles(Role):
-  ''' Pulls the user's username from the environment 
-  Args: 
-    role (str): Checks to see if a user has a certain role
-  Returns:
-    boolean: True if user has role, false otherwise
-  '''
-  userName = getUsernameFromEnv()
-  query    = User.update(role=Role).where(User.username==userName)
-  query.execute()
-  return True
+# def switchRoles(Role):
+#   ''' Pulls the user's username from the environment 
+#   Args: 
+#     role (str): Checks to see if a user has a certain role
+#   Returns:
+#     boolean: True if user has role, false otherwise
+#   '''
+#   userName = getUsernameFromEnv()
+#   query    = User.update(role=Role).where(User.username==userName)
+#   query.execute()
+#   return True
 
 
 # https://realpython.com/blog/python/primer-on-python-decorators/
@@ -71,8 +64,7 @@ def require_login ():
     User: The resulting user object is returned
   '''
   username = getUsernameFromEnv()
-  user = UserQueries()
-  user = user.select_single(username)
+  user = UserQueries.select_single(username)
   return user
 
 
@@ -104,28 +96,27 @@ def require_role (requiredRole):
     return decorated_fun
   return decorator
 
-def add_user(env,username):
-  '''Adds a uer to the environment 
-  Args:
-    env (dict): The environment dictionary
-    username (str): The username to be added to the environment
-
-  Returns:
-    User: The newly added user is returned 
-  '''
-  user = UserQueries()
-  is_user = user.select_single(username)
-  print(is_user)
-  if is_user == False:
-    description = request.environ['description'].lower()
-    if description != 'student':
-      try:
-        newUser= user.insert(username, False, env['givenName'], env['sn'])
-        return newUser
-      except Exception as e:
-        print(e)
-        abort(403)
-    else:
-      abort(404)
+# def add_user(env,username):
+#   '''Adds a uer to the environment 
+#   Args:
+#     env (dict): The environment dictionary
+#     username (str): The username to be added to the environment
+#
+#   Returns:
+#     User: The newly added user is returned 
+#   '''
+#   is_user = UserQueries.select_single(username)
+#   print(is_user)
+#   if is_user == False:
+#     description = request.environ['description'].lower()
+#     if description != 'student':
+#       try:
+#         newUser= UserQueries.insert(username)
+#         return newUser
+#       except Exception as e:
+#         print(e)
+#         abort(403)
+#     else:
+#       abort(404)
 
 

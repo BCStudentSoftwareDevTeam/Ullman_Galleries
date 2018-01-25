@@ -15,6 +15,8 @@ else:
     new_path = os.path.dirname(path)
     sys.path.insert(0,new_path)
 
+from app.models.util import getDB
+
 class ConfigureApp():
     def __init__(self):
         self.db_choice = None
@@ -87,11 +89,8 @@ class ConfigureApp():
 
     def get_db_name(self):
         # print('Please exclude any path or extention details, eg( "data/" or ".sqlite").')
-        db_name0 = str()
-        if self.db_choice == "mysql":
-            db_name0 = input('What is the name of your {0} database: '.format(self.db_choice))
-        else:
-            db_name0 = input('What would you like to name your {0} database. '.format(self.db_choice))
+        db_name0 = 'localhost'
+        db_name0 = input('What is the name of your mysql database: ')
         return db_name0
 
     def get_mysql_variables(self):
@@ -178,18 +177,17 @@ class ConfigureApp():
         return True
 
     def create_tables(self,database_type):
-        mainDB = None
+        database = None
         if database_type == "sqlite":
             db_abs_path = self.get_abs_path(self.db_name)
-            mainDB = SqliteDatabase(db_abs_path)
+            database = SqliteDatabase(db_abs_path)
         else:
-            mainDB = MySQLDatabase(self.db_name, host=self.host, passwd=self.password, user=self.username)
+            database = getDB()
+            database.connect()
 
-        class baseModel(Model):
-            class Meta:
-                database = mainDB
         models = self.import_peewee_tables()
-        mainDB.create_tables(models,safe=True)
+        for model in models:
+            database.create_table(model,safe=True)
 
 
 

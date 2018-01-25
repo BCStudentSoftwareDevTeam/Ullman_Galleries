@@ -2,3 +2,57 @@
 {% block body %}
 <h2>Hello Internet Person</h2>
 {% endblock %}
+{% extends "snips/base.html" %}
+{% block body %}
+<div class="container">
+<h2>All Galleries View</h2>
+</div>
+<div class="container">
+<a href='/application/create'></href><button float="left" type="button" class="btn btn-primary" style="float: right;">Create</button><a/>
+<a href='/gallery/submission'><button float="left" type="button" class="btn btn-primary" style="float: left;">Submissions</button></a>
+</div>
+<h2 align="center">Galleries</h2> 
+
+<div class="container">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Gallery</th>
+        <th>Number of Submissions</th>
+        <th>Deadline</th>
+         <th> Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+            <a href='/gallery/view'> Gallery1</a>
+        </td>
+        <td>100</td>
+        <td>Open</td>
+         <td>
+          <a href="/gallery/edit"> <span class="glyphicon glyphicon-edit"></span></a>
+        </td>
+      </tr>
+      <tr>
+    <td><a href="/gallery/view">Gallery 2</a></td>
+        <td>89</td>
+        <td>Closed</td>
+         <td>
+          <a href="/gallery/edit"> <span class="glyphicon glyphicon-edit"></span></a>
+        </td>
+      </tr>
+      <tr>
+        <td><a href="gallery/view">Gallery 1</a></td>
+        <td>43</td>
+        <td>Closed</td>
+         <td>
+          <a href="/gallery/edit"> <span class="glyphicon glyphicon-edit"></span></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
+

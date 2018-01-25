@@ -1,5 +1,4 @@
-# Ullman Galleries 
-Ullman Galleries is a management tool for application entries. It provides an easy way to accept applications. Our main purpose for the system is to accept applications from artists that want to show their work in a Berea College Gallery Showing.
+# Ullman Galleries Ullman Galleries is a management tool for application entries. It provides an easy way to accept applications. Our main purpose for the system is to accept applications from artists that want to show their work in a Berea College Gallery Showing.
   
 
 ## Getting Started
@@ -10,7 +9,7 @@ However, if you are working out of a windows operating system during development
 ### Cloud9 Setup Guide (Optional)
 You can find the instruction to setting up c9 at https://docs.c9.io/docs/create-a-workspace. You should use python as the template.
 
-### Starting up the Application
+### Setting up the Application
 
 After you have accessed your environment, we have built some scripts into the system that will get the application up and running for you. 
 
@@ -24,12 +23,30 @@ After you have accessed your environment, we have built some scripts into the sy
           password - empty
           database name  - Given by mysql-ctl
    ```
-5. ```python app.py```
+5. ```Follow the prompts:
+      1. Enter anything for the secret key
+      2. make sure to create the database```
+6. ``` It seems everyone is getting an error, on the first run. Please re-run the program to have it setup properly```
+7. ```python app.py```
+
+>***Note***: To start and stop mysql  in cloud9 use ```mysql-ctl [start|stop|restart]``` 
 
 >***Note***: If you working inside of your own linux environment you may need to change the port and host information inside of ```app.py`` the default is setup up for working inside of cloud9
->***Note***: You may also need to setup mysql on your own.
->***Note***: To start and stop mysql use ```mysql.server [start|stop|restart]```
 
+>***Note***: You may also need to setup mysql on your own if you are not using cloud9
+
+### Starting the application after inital setup
+1. ```source venv/bin/activate```
+2. ```mysql-ctl start ```
+3. ```python app.py```
+
+## Adding dummy data
+1. ```
+      Add dummy data to the scripts/dummy_data.py file
+      Please note that due to the forigen keys, the order does matter!
+      Please order them as: Users, Files,Galleries,Forms,Images
+   ```
+2. ```python scripts/dummy_data.py```
 
 ## Source Structure and Guidelines
 ### Structure
