@@ -38,6 +38,7 @@ def load_user_data():
 def load_galleries_data():
     Galleries(gid=1, title="Fortran", open_date="2018-01-21 12:00:00", close_date="2018-02-22 12:00:00", banner=2, description="<b>I AM BOLD, I AM FORTRAN, MAKE SURE TO SANITIZE ME </b>" ).save(force_insert=True)
 
+    #Forms(fid=1, first_name="seth", last_name="roger", street_address="101 Seth Roger Road",second_address="Bluegrass Complex", city="Blueburge", state="KY",zipCode="40404", email="seth@seth.com",phone_number="1234567890", website="seth.com", gallery=1, cv=1,personal_statement=1, submit_date = "4/25/17").save(force_insert=True)
     Galleries(gid=2, title="Golang", open_date="2018-01-21 12:00:00", close_date="2018-02-12 12:00:00", banner=11, description="<em> I am edgy, I am golang, make sure to sanitize me </em>").save(force_insert=True)
 
 def load_files_data():
