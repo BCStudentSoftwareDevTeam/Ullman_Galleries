@@ -75,4 +75,5 @@ def application_submit(gid):
 
     else:
         flash("Your application was not submitted, for an error occured in the process.")
-        return render_template('views/application_create.html',gid=gid, gallery = gallery, cfg=cfg)
+    return render_template('views/application_create.html',gid=gid, gallery = gallery, cfg=cfg)
+
