@@ -9,6 +9,8 @@ models:
 paths:
   files: 'app/static/files'
 
+user:
+  tmp: "adminUser"
 
 contributors:
   - name: "Cody Myers"

@@ -27,32 +27,3 @@ class baseModel(Model):
   class Meta:
     database = mainDB
 
-def checkStrings(strings):
-  try:
-    status = True
-    for string in strings:
-      if string == '':
-        string = None
-      if string != None:
-        result = isinstance(str(string),str)
-        if result == False:
-          status = False
-    return status
-  except Exception as e:
-    return False
-
-def checkBooleans(booleans):
-  status = True
-  for bol in booleans:
-    result = isinstance(bol,bool)
-    if result == False:
-      status = False
-  return status
-
-def checkIntegers(integers):
-  status = True
-  for num in integers:
-    result = isinstance(num,int)
-    if result == False:
-      status = False
-  return status

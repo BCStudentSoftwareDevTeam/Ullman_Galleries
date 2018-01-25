@@ -9,7 +9,7 @@ However, if you are working out of a windows operating system during development
 ### Cloud9 Setup Guide (Optional)
 You can find the instruction to setting up c9 at https://docs.c9.io/docs/create-a-workspace. You should use python as the template.
 
-### Starting up the Application
+### Setting up the Application
 
 After you have accessed your environment, we have built some scripts into the system that will get the application up and running for you. 
 
@@ -35,7 +35,18 @@ After you have accessed your environment, we have built some scripts into the sy
 
 >***Note***: You may also need to setup mysql on your own if you are not using cloud9
 
+### Starting the application after inital setup
+1. ```source venv/bin/activate```
+2. ```mysql-ctl start ```
+3. ```python app.py```
 
+## Adding dummy data
+1. ```
+      Add dummy data to the scripts/dummy_data.py file
+      Please note that due to the forigen keys, the order does matter!
+      Please order them as: Users, Files,Galleries,Forms,Images
+   ```
+2. ```python scripts/dummy_data.py```
 
 ## Source Structure and Guidelines
 ### Structure
