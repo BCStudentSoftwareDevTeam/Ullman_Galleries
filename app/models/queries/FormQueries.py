@@ -42,9 +42,6 @@ class FormQueries():
             cv = Files(filepath = filepath, filename=filename, filetype = filetype)
             cv.save()
             form.cv = cv
-            # form.cv.filename = filename
-            # form.cv.filepath = filepath
-            # form.cv.filetype = filetype
             form.save()
             return form
         except Exception as e:

@@ -45,10 +45,9 @@ def application_submit(gid):
 
         
     if submission != False:
-      
+        fid  = submission.fid
         try:
             # save uploads in the database with the associated FID
-            fid = submission.fid
             if 'cv' in request.files:
                 cv = request.files['cv']
                 cv_ext    = (str(cv.filename.split(".").pop())).replace(" ","")
@@ -56,22 +55,28 @@ def application_submit(gid):
                 cv_upload_path = getAbsolutePath(cfg['paths']['files'],cv_filename,True)
                 cv.save(cv_upload_path)
                 application_obj.insert_cv_file(fid,cv_filename,cv_upload_path,cv_ext)
-            
+        except Exception as e:
+            print (e)
+            flash("An error occured while saving cv file!")
+            return render_template('views/application_create.html',gid=gid, gallery = gallery, cfg=cfg)
+        
+        try:    
             if 'statement' in request.files:   
                 statement = request.files['statement']
                 statement_ext    = (str(statement.filename.split(".").pop())).replace(" ","")
                 statement_filename = "personal_statement_{}".format(data['firstName']+ '_'+ data['lastName'])
-                statement_upload_path = getAbsolutePath(cfg['paths']['files'],statement_filename)
-                # statement.save(statement_upload_path)
+                statement_upload_path = getAbsolutePath(cfg['paths']['files'],statement_filename,True)
+                statement.save(statement_upload_path)
                 application_obj.insert_statement_file(fid,statement_filename,statement_upload_path,statement_ext)
-                    
-            flash("Your application was successfully submitted.")
-            return render_template('views/application_review.html',gid=gid, gallery = gallery, cfg=cfg)
-
         except Exception as e:
             print (e)
-            flash("An error occured while saving uploaded files.")
+            flash("An error occured while saving statement")
             return render_template('views/application_create.html',gid=gid, gallery = gallery, cfg=cfg)
+            
+        flash("Your application was successfully submitted.")
+        return render_template('views/application_review.html',gid=gid, gallery = gallery, cfg=cfg)
+
+    
 
     else:
         flash("Your application was not submitted, for an error occured in the process.")

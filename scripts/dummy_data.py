@@ -38,7 +38,7 @@ def load_user_data():
 def load_galleries_data():
     Galleries(gid=1, title="Fortran", open_date="2018-01-21 12:00:00", close_date="2018-02-22 12:00:00", banner=2, description="<b>I AM BOLD, I AM FORTRAN, MAKE SURE TO SANITIZE ME </b>" ).save(force_insert=True)
 
-    #Forms(fid=1, first_name="seth", last_name="roger", street_address="101 Seth Roger Road",second_address="Bluegrass Complex", city="Blueburge", state="KY",zipCode="40404", email="seth@seth.com",phone_number="1234567890", website="seth.com", gallery=1, cv=1,personal_statement=1, submit_date = "4/25/17").save(force_insert=True)
+    Forms(fid=1, first_name="seth", last_name="roger", street_address="101 Seth Roger Road",second_address="Bluegrass Complex", city="Blueburge", state="KY",zipCode="40404", email="seth@seth.com",phone_number="1234567890", website="seth.com", gallery=1, cv=1,personal_statement=1, submit_date = "4/25/17").save(force_insert=True)
     Galleries(gid=2, title="Golang", open_date="2018-01-21 12:00:00", close_date="2018-02-12 12:00:00", banner=11, description="<em> I am edgy, I am golang, make sure to sanitize me </em>").save(force_insert=True)
 
 def load_files_data():
@@ -63,8 +63,8 @@ def load_files_data():
     Files(fid=18, filetype="pdf", form=1, filename="statement", filepath="/static/data/Go_2018_01_21/Rob@Pike.go/statement.pdf").save(force_insert=True)
 
 def load_forms_data():
-    Forms(fid=1, first_name="John", last_name="Backus", street_address="101 Road", city="Fortran", state="KY", email="John@Backus.me",phone_number="1234567890", website="Backus.me", gallery=1, cv=1, personal_statement=9).save(force_insert=True)
-    Forms(fid=2, first_name="Rob", last_name="Pike", street_address="101 Pike Road", city="Golang", state="NY", email="Rob@Pike.go",phone_number="0987654321", website="Pike.go", gallery=2, cv=10, personal_statement=18).save(force_insert=True)
+    Forms(fid=1, first_name="John", last_name="Backus", street_address="101 Road",second_address = "Blue", city="Fortran", state="KY", email="John@Backus.me",phone_number="1234567890", website="Backus.me", gallery=1, cv=1, personal_statement=9).save(force_insert=True)
+    Forms(fid=2, first_name="Rob", last_name="Pike", street_address="101 Pike Road", second_address = "Red", city="Golang", state="NY", email="Rob@Pike.go",phone_number="0987654321", website="Pike.go", gallery=2, cv=10, personal_statement=18).save(force_insert=True)
 
 def load_images_data():
     Images(iid=1, form=1, fullsize=3, thumbnail=4).save(force_insert=True)
