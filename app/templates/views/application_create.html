@@ -1,6 +1,6 @@
 {% extends "snips/base.html" %}
 {% block body %}
-<link rel="stylesheet" href="/static/css/application_create.css" type="text/css" />
+ <!--<link rel="stylesheet" href="/static/css/application_create.css" type="text/css" />-->
 <div id="createApplication">
     <div class="col-xs-16
                 col-sm-8
@@ -8,8 +8,8 @@
                 col-lg-10"
          id="">
     <h1 style = "text-align: center;"><strong>{{gallery}} - Application </strong></h1>
-    <input type = "text" value = {{gid}} id = "gallery_id" hidden>
-    <form class = "form-group" method = "post" id = "createApplicationForm" action = "/application/submit/{{gid}}">
+    <input type = "text" value = "{{gid}}" type = "hidden" id = "gallery_id" hidden>
+    <form class = "form-group" method = "POST" id = "createApplicationForm" action = "/application/submit/{{gid}}" enctype="multipart/form-data">
         
         <div>
             <label for = "name">Name*</label>
@@ -57,12 +57,12 @@
             <input id = "statement" name = "statement" type = "file" accept=".doc,.docx,.pdf, .txt">
             
         </div>
-        <div>
-            <label for = "fileDropZone">Image Upload</label>
-            <div class = "row">
-                <div class="dropzone" id="fileDropZone" name = "fileDropZone">  </div> 
-            </div>
-        </div>
+        <!--<div>-->
+        <!--    <label for = "fileDropZone">Image Upload</label>-->
+        <!--    <div class = "row">-->
+        <!--        <div class="dropzone" id="fileDropZone" name = "fileDropZone">  </div> -->
+        <!--    </div>-->
+        <!--</div>-->
         </br>
         <div>
             <button type="submit" class = "btn btn-primary pull-right" id="submitApplication">Submit</button>    
@@ -70,5 +70,5 @@
     </form>
     </div>
 </div>
-<script type="text/javascript" src="/static/js/ext/imageUpload.js"></script>
+<!--<script type="text/javascript" src="/static/js/ext/imageUpload.js"></script>-->
 {% endblock %}

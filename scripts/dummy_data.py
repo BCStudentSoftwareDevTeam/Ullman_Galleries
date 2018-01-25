@@ -19,7 +19,7 @@ def load_dummy():
 
     Galleries(gid=1, title="gallery_1", open_date="2001-01-22-11:22", close_date="2018-02-23-11:22", description="HI THIS IS A TEST", banner=1).save(force_insert=True)
 
-    Forms(fid=1, first_name="seth", last_name="roger", street_address="101 Seth Roger Road", city="Blueburge", state="KY", email="seth@seth.com",phone_number="1234567890", website="seth.com", gallery=1, cv=1,personal_statement=1).save(force_insert=True)
+    Forms(fid=1, first_name="seth", last_name="roger", street_address="101 Seth Roger Road",second_address="Bluegrass Complex", city="Blueburge", state="KY",zipCode="40404", email="seth@seth.com",phone_number="1234567890", website="seth.com", gallery=1, cv=1,personal_statement=1, submit_date = "4/25/17").save(force_insert=True)
 
     Images(iid=1, form=1, fullsize=1, thumbnail=1).save(force_insert=True)
 
