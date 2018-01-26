@@ -10,20 +10,4 @@ class Galleries (baseModel):
     banner        = ForeignKeyField(Files)
 
     def __str__(self):
-        return self.title
-
-class galleriesQueries():
-    def select_single(self, gid):
-        try:
-            form = Galleries.get(Galleries.gid == gid)
-            return form
-        except Exception as e:
-            print (e)
-            return False
-    
-    def insert(self, title, open_date, close_date, description, ):
-        try:
-            gallery = Galleries(title=title,open_date=open_date,close_date=close_date,description=description)
-        except Exception as e:
-            print (e)
-            return False
+        return self.gid
