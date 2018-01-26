@@ -14,12 +14,14 @@ from app.models import *
 def drop_tables():
     models = [Images, Forms, Galleries,Files,Users] 
     for model in models:
-        model.drop_table()
+        if model.table_exists():
+            model.drop_table()
 
 def create_tables():
     models = [Users, Files,Galleries,Forms,Images] 
     for model in models:
-        model.create_table()
+        if not model.table_exists():
+            model.create_table()
 
 def dummy_data():
     drop_tables()

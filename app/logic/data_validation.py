@@ -20,10 +20,10 @@ def check_empty_str(the_string):
         str: If the sting is not empty then the original string is returned otherwise None is returned
     '''
     try:
-        if string == '':
+        if the_string == '':
             return None
-        if string != None:
-            result = isinstance(str(string),str)
+        if the_string != None:
+            result = isinstance(str(the_string),str)
             if result == False:
                 return None
     except Exception as e:
