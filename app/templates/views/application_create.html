@@ -10,7 +10,6 @@
     <h1 style = "text-align: center;"><strong>{{gallery}} - Application </strong></h1>
     <input type = "text" value = "{{gid}}" type = "hidden" id = "gallery_id" hidden>
     <form class = "form-group" method = "POST" id = "createApplicationForm" action = "/application/submit/{{gid}}" enctype="multipart/form-data">
-        
         <div>
             <label for = "name">Name*</label>
             <input placeholder = "First" type = "text" id = "name" name = "firstName" class = "form-control" required>
@@ -72,5 +71,5 @@
     </form>
     </div>
 </div>
-<!--<script type="text/javascript" src="/static/js/ext/imageUpload.js"></script>-->
+<script type="text/javascript" src="/static/js/local/imageUpload.js"></script>
 {% endblock %}

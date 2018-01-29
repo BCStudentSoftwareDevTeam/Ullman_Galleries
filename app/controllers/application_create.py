@@ -12,7 +12,17 @@ def create(gid):
     gallery = Galleries.get(Galleries.gid==gid)
     return render_template('views/application_create.html',gid=gid, gallery = gallery, cfg=cfg)
 
-
+def get_image_info(number,cfg,im_type, file_ext):
+    if im_type == "fullsize":
+        filename = "image_{}".format(number)
+    elif im_type == "thumbnail":
+        filename = "image_{}_thumb".format(number) 
+    upload_path = getAbsolutePath(cfg['paths']['files'],filename)
+    if os.path.isfile(upload_path):
+        number = number+1
+        return get_file_info(number,cfg, im_type, file_ext)
+    else:
+        return filename
 
 @app.route('/application/submit/<gid>', methods=["GET", "POST"])
 def application_submit(gid):
@@ -107,6 +117,21 @@ def application_submit(gid):
             flash("An error occured while saving the personal statement file!")
         
             return render_template('views/application_create.html',gid=gid, gallery = gallery, cfg=cfg)
+        print("Wait!")   
+        try:
+            number = 1
+            images = request.files['fileDropZone']
+            print("Is it it here?")
+            file_ext    = (str(images.filename.split(".").pop())).replace(" ","")
+            im_filename = get_image_info(number, cfg, "fullsize", file_ext)
+            im_upload_path = getAbsolutePath(cfg['paths']['files'],im_filename,True)
+            print("Second")
+            images.save(im_upload_path)
+            print("Third")
+            file = Files(filepath = im_upload_path, filename = im_filename, filetype = file_ext)
+            #im = Images(form = fid, fullsize = im_filename)
+        except Exception as e:
+            print (e)
             
         flash("Your application was successfully submitted.")
  
