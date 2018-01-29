@@ -14,7 +14,7 @@ import os
 import sys
 from app import create_app
 
-# Ues local path if local variable is provided
+# Use local path if local variable is provided
 if os.getenv("LOCAL"):
     if os.getenv("LOCAL").lower() == 'true':
         sys.path.insert(0,os.getcwd())
