@@ -14,7 +14,7 @@ import os
 import sys
 
 from app import app
-sys.path.insert(0,'/home/ubuntu/workspace/')
+sys.path.insert(0,'/home/ubuntu/workspace/Ullman_Galleries')
 # sys.path.insert(0,'/Users/jesson/Development/Github/Project_ART')
 
 # Builds the server configuration
