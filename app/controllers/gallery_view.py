@@ -5,8 +5,10 @@ from flask import session
 
 @app.route('/gallery/view', methods=["GET","POST"])
 def gallery_view():
-    return render_template('views/gallery_view.html')
-
-
-
+    gid = 1
+    gallery = GalleryQueries.get(gid)
+    is_admin = False
+    if(doesUserHaveRole('admin')):
+        is_admin = True
+    return render_template('views/gallery_view.html', gallery = gallery, is_admin=is_admin)
 

@@ -16,4 +16,6 @@ class Forms (baseModel):
   gallery           = ForeignKeyField(Galleries)
   cv                = ForeignKeyField(Files, related_name="cv_file")
   personal_statement = ForeignKeyField(Files, related_name="personal_statment")
+  submit_date       = CharField()
+  status            = CharField(max_length=100)
 
