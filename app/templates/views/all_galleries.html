@@ -8,17 +8,17 @@
 <h2>All Galleries View</h2>
 </div>
 
-<div class="container">
-<a href='/application/create/1' ></href> <button type="button" id ="create" style="float:right"  class="btn btn-primary" >Create</button><a/>
+<div class="container" id = "buttons">
+<a href='/application/create/1' ></href> <button type="button" id ="create" class="btn btn-primary" >Create</button><a/>
 <a href='/gallery/submission' ><button type="button" id ="submit"class="btn btn-primary">Submissions</button></a>
 </div>
 
 <h2 align="center">Galleries</h2> 
 
+
 <div class ="container">
-
 <table id="gallery" class= "table table-bordered">
-
+    
 <thead>
        <tr>
             <th>Galleries</th> 
@@ -27,19 +27,18 @@
             <th>Edit</th>
         </tr> 
     </thead>
-   <tbody>
-       {%for key,value in map1.items() %}
+    <tbody>
+       {%for gallery,submissionCount in galleryTosubmissions.items() %}
            <tr>
                <td>
-                   <a href='/gallery/view'>{{value}}</a>
+                   <a href='/gallery/view'>{{gallery}}</a>
                </td>
                <td>
-                   {{map2[key]}}
+                   {{submissionCount}}
                </td>
                <td>
-                   <b>{{map3[key]}} </b>{{map4[key]}}
+                   <b>{{galleryStatus[gallery]}}</b>
                </td>
-          
                <td>
                    <a href="/gallery/edit"> <span class="glyphicon glyphicon-edit"></span></a>
                </td>
@@ -47,6 +46,8 @@
         {% endfor %}
     </tbody>
 </table>
+</div>
+
 <script type="text/javascript" src="/static/js/local/all_galleries.js"></script>
 
 {% endblock %}
