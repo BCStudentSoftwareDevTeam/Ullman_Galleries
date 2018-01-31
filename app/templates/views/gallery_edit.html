@@ -1,74 +1,86 @@
 {% extends "snips/base.html" %}
 {% set currentPage = 'gallery_edit' %}
 {% block body %}
-<script type="text/javascript" src="/static/js/ext/ckeditor/ckeditor.js"></script>
+
 <form
 {% if gallery is defined %}
 action="{{url_for('gallery_edit', gid=gallery.gid)}}"
 {% else %}
 action="{{url_for('gallery_add')}}"
 {% endif %} method="post">
-<div class="row">
-    <div class="form-group">
-      <label for="galleryName">Gallery</label>
-      <input type="text"
-        id="galleryName"
-        class="form-control mx-sm-3"
-        aria-describedby="gallery title"
-        name="title"
-        value="{% if gallery is defined%}{{gallery.title}}{% else %} {% endif %}">
-    </div>
-</div>
-<div class="row">
-  <div class="col-sm-3">
-    <div class="form-group">
-      <div class='input-group date' id='open_date'
-      {% if gallery is  defined %}
-      value="{{gallery.open_date}}"
-      {% else %}
-      value=""
-      {% endif %}>
-        <input type='text' class="form-control" name="open_date"/>
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-time"></span>
-        </span>
+
+  <div class="row">
+      <div class="form-group">
+        <label for="galleryName">Gallery</label>
+        <input type="text"
+          id="galleryName"
+          class="form-control mx-sm-3"
+          aria-describedby="gallery title"
+          name="title"
+          value="{% if gallery is defined%}{{gallery.title}}{% else %} {% endif %}">
+      </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm-3">
+      <div class="form-group">
+        <div class='input-group date' id='open_date'
+        {% if gallery is  defined %}
+        value="{{gallery.open_date}}"
+        {% else %}
+        value=""
+        {% endif %}>
+          <input type='text' class="form-control" name="open_date"/>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-time"></span>
+          </span>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-sm-3">
-    <div class="form-group">
-      <div class='input-group date' id='close_date'
-      {% if gallery is  defined %}
-      value="{{gallery.close_date}}"
-      {% else %}
-      value=""
-      {% endif %}>
-        <input type='text' class="form-control" name="close_date"/>
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-time"></span>
-        </span>
+
+    <div class="col-sm-3">
+      <div class="form-group">
+        <div class='input-group date' id='close_date'
+        {% if gallery is  defined %}
+        value="{{gallery.close_date}}"
+        {% else %}
+        value=""
+        {% endif %}>
+          <input type='text' class="form-control" name="close_date"/>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-time"></span>
+          </span>
+        </div>
       </div>
     </div>
+
   </div>
-</div>
-<input type="text" name="banner" value="2"/>
-<div class="row">
-  <div class="form-group">
-    <textarea rows="4" 
-                    class="form-control" 
-                    id="description" 
-                    name="description" 
-                    cols="50">
-      {% if gallery is defined %}
-        {% if gallery.description != None %}
-          {{gallery.description}} 
+
+  <input type="text" name="banner" value="2"/>
+
+  <div class="row">
+    <div class="form-group">
+      <textarea rows="4" 
+                      class="form-control" 
+                      id="description" 
+                      name="description" 
+                      cols="50">
+        {% if gallery is defined %}
+          {% if gallery.description != None %}
+            {{gallery.description}} 
+          {% endif %}
         {% endif %}
-      {% endif %}
-    </textarea>
+      </textarea>
+    </div>
   </div>
-</div>
-<button type="button" class="btn btn-light">Cancel</button>
-<button type="submit" class="btn btn-primary">Submit</button>
+
+  <button type="button" class="btn btn-light">Cancel</button>
+  <button type="submit" class="btn btn-primary">Submit</button>
+
 </form>
+
+<script type="text/javascript" src="/static/js/ext/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="/static/js/local/gallery_edit.js"></script>
+
 {% endblock %}
