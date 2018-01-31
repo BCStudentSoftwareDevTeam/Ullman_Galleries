@@ -2,33 +2,23 @@
 {% block body %}
 
 <div class="row">
-  <h1 class="text-center col-xs-12">Submissions</h1>
+  <h1 class="text-center col-xs-12">{{gallery.title}}</h1>
 </div>
 
-<table class="table table-striped table-bordered">
-  <thead>
+<table class="table table-striped table-bordered"> <thead>
     <tr>
-      <th>Name </th>
+      <th>Name</th>
       <th>Date Submitted</th>
       <th>Status</th>
     </tr>
   </thead>
 
   <tbody>
-    {% set counter = 1 -%}
-    {% for gallery in gallery_submission -%}
+    {% for form in forms%}
       <tr>
-        <td>
-          {% for value in gallery_Dict[gallery.FID] %}  
-            <div>
-              {{value}}
-              {% if not loop.last %}
-              {% endif %}
-            </div>
-          {% endfor %}
-        </td>
-        <td>{{gallery.submit_date}}</td>
-        <td>{{gallery.status}}</td>
+        <td>{{form.first_name}} {{form.last_name}}</td>
+        <td>{{form.submit_date.strftime('%Y-%m-%d')}}</td>
+        <td>{{form.status}}</td>
       </tr>
      {% endfor %}
    </tbody>
