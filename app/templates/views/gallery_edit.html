@@ -1,12 +1,13 @@
 {% extends "snips/base.html" %}
 {% set currentPage = 'gallery_edit' %}
 {% block body %}
-<script type="text/javascript" src="/static/js/ext/ckeditor/ckeditor.js"></script>
+
 <form
 {% if gallery is defined %}
 action="{{url_for('gallery_edit', gid=gallery.gid)}}"
 {% else %}
 action="{{url_for('gallery_add')}}"
+<<<<<<< HEAD
 {% endif %}
 method="post"
 enctype="multipart/form-data">
@@ -37,21 +38,22 @@ enctype="multipart/form-data">
       </div>
     </div>
   </div>
-  <div class="col-sm-3">
-    <div class="form-group">
-      <div class='input-group date' id='close_date'
-      {% if gallery is  defined %}
-      value="{{gallery.close_date}}"
-      {% else %}
-      value=""
-      {% endif %}>
-        <input type='text' class="form-control" name="close_date"/>
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-time"></span>
-        </span>
+
+    <div class="col-sm-3">
+      <div class="form-group">
+        <div class='input-group date' id='close_date'
+        {% if gallery is  defined %}
+        value="{{gallery.close_date}}"
+        {% else %}
+        value=""
+        {% endif %}>
+          <input type='text' class="form-control" name="close_date"/>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-time"></span>
+          </span>
+        </div>
       </div>
     </div>
-  </div>
 </div>
 {% if gallery is defined %}
 <div class="col-xs-12">
@@ -71,11 +73,16 @@ enctype="multipart/form-data">
           {{gallery.description}} 
         {% endif %}
       {% endif %}
-    </textarea>
+      </textarea>
+    </div>
   </div>
-</div>
-<button type="button" class="btn btn-light">Cancel</button>
-<button type="submit" class="btn btn-primary">Submit</button>
+
+  <button type="button" class="btn btn-light">Cancel</button>
+  <button type="submit" class="btn btn-primary">Submit</button>
+
 </form>
+
+<script type="text/javascript" src="/static/js/ext/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="/static/js/local/gallery_edit.js"></script>
+
 {% endblock %}
