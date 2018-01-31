@@ -1,3 +1,4 @@
+
 from app.allImports import * 
 from app.logic.validation import *
 from werkzeug.security import check_password_hash
@@ -11,7 +12,3 @@ def gallery_submission(gid):
     if(doesUserHaveRole('admin')):
         is_admin = True
     return render_template('views/gallery_submission.html', gallery=gallery, is_admin=is_admin)
-
-
-
-
