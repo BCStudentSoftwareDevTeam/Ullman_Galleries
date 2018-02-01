@@ -42,7 +42,7 @@ def load_galleries_data():
 
 def load_files_data():
     Files(fid=1, filetype="pdf", form=1, filename="cv", filepath="/static/data/Fortran_2018_01_21/John@Backus.me/cv.pdf").save(force_insert=True)
-    Files(fid=2, filetype="jpeg", form=1, filename="banner", filepath="/static/data/Fortran_2018_01_21/John@Backus.me/banner.jpeg").save(force_insert=True)
+    Files(fid=2, filetype="jpeg", form=1, filename="banner", filepath="/static/data/Fortran_2018_01_21/banner.jpeg").save(force_insert=True)
     Files(fid=3, filetype="jpg", form=1, filename="image_0", filepath="/static/data/Fortran_2018_01_21/John@Backus.me/image_0.jpg").save(force_insert=True)
     Files(fid=4, filetype="jpg", form=1, filename="image_0_thumb", filepath="/static/data/Fortran_2018_01_21/John@Backus.me/image_0_thumb.jpg").save(force_insert=True)
     Files(fid=5, filetype="jpg", form=1, filename="image_1", filepath="/static/data/Fortran_2018_01_21/John@Backus.me/image_1.jpg").save(force_insert=True)
@@ -52,7 +52,7 @@ def load_files_data():
     Files(fid=9, filetype="pdf", form=1, filename="statement", filepath="/static/data/Fortran_2018_01_21/John@Backus.me/statement.pdf").save(force_insert=True)
 
     Files(fid=10, filetype="pdf", form=1, filename="cv", filepath="/static/data/Go_2018_01_21/Rob@Pike.go/cv.pdf").save(force_insert=True)
-    Files(fid=11, filetype="png", form=1, filename="banner", filepath="/static/data/Go_2018_01_21/Rob@Pike.go/banner.png").save(force_insert=True)
+    Files(fid=11, filetype="png", form=1, filename="banner", filepath="/static/data/Go_2018_01_21/banner.png").save(force_insert=True)
     Files(fid=12, filetype="jpg", form=1, filename="image_0", filepath="/static/data/Go_2018_01_21/Rob@Pike.go/image_0.jpg").save(force_insert=True)
     Files(fid=13, filetype="jpg", form=1, filename="image_0_thumb", filepath="/static/data/Go_2018_01_21/Rob@Pike.go/image_0_thumb.jpg").save(force_insert=True)
     Files(fid=14, filetype="png", form=1, filename="image_1", filepath="/static/data/Go_2018_01_21/Rob@Pike.go/image_1.png").save(force_insert=True)

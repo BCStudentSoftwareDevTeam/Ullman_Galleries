@@ -15,10 +15,10 @@ def gallery_edit(gid):
         else:
             abort(404)
     if request.method == "POST":
+        gallery = GalleryQueries.get(gid)
         galleryData = request.form
-
-        #uploaded_path = gallery_banner_upload(request, galleryData['title'])
-        uploaded_path = upload(request, 'app/static/data')
+        uploaded_path = gallery_banner_upload(request, galleryData['title'])
+        #uploaded_path = upload(request, 'app/static/data')
         # create a function that gets the file id
 
 
