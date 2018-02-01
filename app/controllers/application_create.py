@@ -117,21 +117,23 @@ def application_submit(gid):
             flash("An error occured while saving the personal statement file!")
         
             return render_template('views/application_create.html',gid=gid, gallery = gallery, cfg=cfg)
-        print("Wait!")   
+          
         try:
             number = 1
-            images = request.files['fileDropZone']
-            print("Is it it here?")
-            file_ext    = (str(images.filename.split(".").pop())).replace(" ","")
-            im_filename = get_image_info(number, cfg, "fullsize", file_ext)
-            im_upload_path = getAbsolutePath(cfg['paths']['files'],im_filename,True)
-            print("Second")
-            images.save(im_upload_path)
-            print("Third")
-            file = Files(filepath = im_upload_path, filename = im_filename, filetype = file_ext)
-            #im = Images(form = fid, fullsize = im_filename)
+            try:
+                images = request.files['images']
+                print("It is working!")
+            except Exception as e:
+                print("There is a problem with request file")
+            # file_ext    = (str(images.filename.split(".").pop())).replace(" ","")
+            # im_filename = get_image_info(number, cfg, "fullsize", file_ext)
+            # im_upload_path = getAbsolutePath(cfg['paths']['files'],im_filename,True)
+            # images.save(im_upload_path)
+            # file = Files(filepath = im_upload_path, filename = im_filename, filetype = file_ext)
+            # im = Images(form = fid, fullsize = im_filename, thumbnail = None )
         except Exception as e:
             print (e)
+            print("I messed up!")
             
         flash("Your application was successfully submitted.")
  
