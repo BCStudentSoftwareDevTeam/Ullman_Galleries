@@ -10,4 +10,4 @@ def gallery_submission(gid):
     is_admin = False
     if(doesUserHaveRole('admin')):
         is_admin = True
-    return render_template('views/gallery_submission.html', gallery=gallery, is_admin=is_admin)
+    return render_template('views/admin/gallery_submission.html', gallery=gallery, is_admin=is_admin)

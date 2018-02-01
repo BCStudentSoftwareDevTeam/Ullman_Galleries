@@ -6,3 +6,5 @@ from . import all_galleries
 from . import gallery_edit
 from . import gallery_submission
 from . import gallery_view
+from . import gallery_add
+

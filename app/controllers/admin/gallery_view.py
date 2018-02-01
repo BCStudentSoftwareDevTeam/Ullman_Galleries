@@ -4,4 +4,4 @@ from flask import render_template
 
 @admin.route('/gallery/view', methods=["GET","POST"])
 def gallery_view():
-    return render_template('views/gallery_view.html')
+    return render_template('views/admin/gallery_view.html')

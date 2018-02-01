@@ -8,7 +8,7 @@ import time
 @public.route('/application/create/<gid>', methods=["GET","POST"])
 def create(gid):
     gallery = Galleries.get(Galleries.gid==gid)
-    return render_template('views/application_create.html',gid=gid, gallery = gallery, cfg=g.cfg)
+    return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
 
 def get_image_info(letter, file_ext, fid, cfg,im_type):
     if im_type == "fullsize":
