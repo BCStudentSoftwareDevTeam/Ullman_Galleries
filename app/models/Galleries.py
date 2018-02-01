@@ -10,4 +10,4 @@ class Galleries (baseModel):
   banner        = ForeignKeyField(Files)
 
   def __str__(self):
-    return self.gid
+    return self.title

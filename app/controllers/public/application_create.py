@@ -1,4 +1,5 @@
 from . import public
+from flask import render_template, g
 from app.logic.validation import *
 from app.models.queries.FormQueries import FormQueries
 from werkzeug.security import check_password_hash
@@ -7,7 +8,7 @@ import os, sys
 import time
 
 
-@app.route('/application/create/<gid>', methods=["GET","POST"])
+@public.route('/application/create/<gid>', methods=["GET","POST"])
 def create(gid):
     gallery = Galleries.get(Galleries.gid==gid)
     return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
@@ -24,7 +25,7 @@ def get_image_info(number,cfg,im_type, file_ext):
     else:
         return filename
 
-@app.route('/application/submit/<gid>', methods=["GET", "POST"])
+@public.route('/application/submit/<gid>', methods=["GET", "POST"])
 def application_submit(gid):
     # retrieve the specific gallery for which the application was submitted
     gallery         = Galleries.get(Galleries.gid==gid)
