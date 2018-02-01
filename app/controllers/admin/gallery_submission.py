@@ -1,5 +1,4 @@
 from . import admin
-
 from app.logic.validation import *
 from flask import render_template
 
@@ -12,7 +11,3 @@ def gallery_submission(gid):
     if(doesUserHaveRole('admin')):
         is_admin = True
     return render_template('views/gallery_submission.html', gallery=gallery, is_admin=is_admin)
-
-
-
-
