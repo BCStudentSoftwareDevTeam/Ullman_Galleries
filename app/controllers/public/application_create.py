@@ -1,14 +1,14 @@
-from app.allImports import *
+from . import public
 from app.logic.validation import *
-from werkzeug.security import check_password_hash
-from flask import session
+from flask import render_template, g
+
 import os, sys
 import time
 
-@app.route('/application/create/<gid>', methods=["GET","POST"])
+@public.route('/application/create/<gid>', methods=["GET","POST"])
 def create(gid):
     gallery = Galleries.get(Galleries.gid==gid)
-    return render_template('views/application_create.html',gid=gid, gallery = gallery, cfg=cfg)
+    return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
 
 def get_image_info(letter, file_ext, fid, cfg,im_type):
     if im_type == "fullsize":
@@ -23,7 +23,7 @@ def get_image_info(letter, file_ext, fid, cfg,im_type):
         return filename
 
 
-@app.route('/application/submit/<gallery>', methods=["GET", "POST"])
+@public.route('/application/submit/<gallery>', methods=["GET", "POST"])
 def application_submit(gallery):
     
  
