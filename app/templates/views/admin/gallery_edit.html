@@ -4,9 +4,9 @@
 
 <form
 {% if gallery is defined %}
-action="{{url_for('gallery_edit', gid=gallery.gid)}}"
+action="{{url_for('administrator.gallery_edit', gid=gallery.gid)}}"
 {% else %}
-action="{{url_for('gallery_add')}}"
+action="{{url_for('administrator.gallery_add')}}"
 {% endif %} method="post">
 
   <div class="row">
