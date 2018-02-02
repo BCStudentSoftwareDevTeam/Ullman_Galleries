@@ -17,8 +17,6 @@ def gallery_edit(gid):
     if request.method == "POST":
         gallery = GalleryQueries.get(gid)
         galleryData = request.form
-        gallery = GalleryQueries.get(gid)
-        galleryData = request.form
         fid = gallery_banner_upload(request, galleryData['title'], gallery.banner.fid)
 
         #TODO: need to sanitize de@scription
