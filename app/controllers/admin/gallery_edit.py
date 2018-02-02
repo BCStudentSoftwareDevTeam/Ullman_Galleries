@@ -1,5 +1,6 @@
 from . import admin
 from app.logic.validation import *
+from app.logic.upload import *
 from flask import render_template
 from flask import session
 from datetime import datetime
@@ -14,15 +15,21 @@ def gallery_edit(gid):
         else:
             abort(404)
     if request.method == "POST":
+        gallery = GalleryQueries.get(gid)
         galleryData = request.form
-        #TODO: need to sanitize description
+        uploaded_path = gallery_banner_upload(request, galleryData['title'])
+        #uploaded_path = upload(request, 'app/static/data')
+        # create a function that gets the file id
+
+
+        #TODO: need to sanitize de@scription
         #TODO: need to validate form date format
         updatedGid = GalleryQueries.update(gid,\
                                     galleryData['title'],\
                                     datetime.strptime(galleryData['open_date'],'%m/%d/%Y'),\
                                     datetime.strptime(galleryData['close_date'],'%m/%d/%Y'),\
                                     galleryData['description'],\
-                                    galleryData['banner'])
+                                    2)
         if updatedGid is not None:
             print("update success") #TODO: replace with some flash
             return redirect(url_for('administrator.gallery_edit', gid=updatedGid))
