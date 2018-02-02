@@ -11,7 +11,13 @@ models:
     - Images
 
 paths:
-  files: 'app/static/files'
+  files: 'app/static/data'
+  
+allowed_extensions:
+  - 'pdf'
+  - 'png'
+  - 'jpg'
+  - 'jpeg'
 
 user:
   tmp: "adminUser"

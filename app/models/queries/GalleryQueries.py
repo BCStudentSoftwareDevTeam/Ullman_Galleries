@@ -1,4 +1,5 @@
 from app.models.Galleries import Galleries
+
 def get(gid):
     """ Retrieves a single gallery object
 
