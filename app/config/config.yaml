@@ -1,7 +1,3 @@
-databases:
-  mainDB: "data/jesson.sqlite"
-
-# For every table in the database, add an item here
 models:
   mainDB:
     - Users
