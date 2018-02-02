@@ -1,6 +1,7 @@
 from . import admin
 from app.logic.validation import *
 from flask import session
+from flask import render_template
 
 @admin.route('/gallery/view/<int:gid>', methods=["GET","POST"])
 def gallery_view(gid):
