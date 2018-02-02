@@ -1,5 +1,6 @@
 from app.models import Forms
 from app.models import Files
+from app.models import Galleries
 
 def get(fid):
     """ Retrieves a single form object
