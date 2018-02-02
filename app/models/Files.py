@@ -1,7 +1,7 @@
 from app.models.util import *
 
 class Files (baseModel):
-  fid           = IntegerField(primary_key=True)
+  fid           = PrimaryKeyField()
   filepath      = TextField()
   filename      = TextField()
   filetype      = TextField()
