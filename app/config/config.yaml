@@ -1,0 +1,47 @@
+models:
+  mainDB:
+    - Users
+    - Files
+    - Galleries
+    - Forms
+    - Images
+
+paths:
+  app: 'app'
+  data: '/static/data'
+  
+allowed_extensions:
+  - 'pdf'
+  - 'png'
+  - 'jpg'
+  - 'jpeg'
+
+user:
+  tmp: "adminUser"
+
+contributors:
+  - name: "Cody Myers"
+    year: 2017
+  - name: "Guillermo Ramos"
+    year: 2018
+  - name: "Sarah Watts"
+    year: 2018
+  - name: "Jose Zindia"
+    year: 2018
+  - name: "Jonathan Chauwa"
+    year: 2019
+  - name: "Kenny Nelson"
+    year: 2019
+  - name: "Sher Sanginov"
+    year: 2019
+  - name: "Evan Johnson"
+    year: 2019
+
+contact_list:
+  - name: "Contact One"
+    email: "contactone@gmail.com"
+  - name: "Contact Two"
+    email: "contacttwo@gmail.com"
+  - name: "Contact Three"
+    email: "contactthree@gmail.com"
+  
