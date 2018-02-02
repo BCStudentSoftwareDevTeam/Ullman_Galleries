@@ -12,9 +12,9 @@ To rename the app, you need to make three changes:
 '''
 import os
 import sys
+from app import create_app
 
-from app import app
-
+# Use local path if local variable is provided
 if os.getenv("LOCAL"):
     if os.getenv("LOCAL").lower() == 'true':
         sys.path.insert(0,os.getcwd())
@@ -36,4 +36,5 @@ else:
 
 # Print statements go to your log file in production; to your console while developing
 print(("Running server at http://{0}:{1}/".format(IP, PORT)))
+app = create_app('development')
 app.run(host = IP, port = PORT, debug = True, threaded = True)

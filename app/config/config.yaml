@@ -1,13 +1,19 @@
-databases:
-  mainDB: "data/jesson.sqlite"
-
-# For every table in the database, add an item here
 models:
   mainDB:
-    - User
+    - Users
+    - Files
+    - Galleries
+    - Forms
+    - Images
 
 paths:
-  files: 'app/static/files'
+  files: 'app/static/data'
+  
+allowed_extensions:
+  - 'pdf'
+  - 'png'
+  - 'jpg'
+  - 'jpeg'
 
 user:
   tmp: "adminUser"

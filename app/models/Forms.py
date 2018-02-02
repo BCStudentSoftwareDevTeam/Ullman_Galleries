@@ -3,19 +3,22 @@ from app.models.Galleries import *
 from app.models.Files import *
 from peewee import *
 
+
 class Forms (baseModel):
-  fid               = IntegerField(primary_key=True)
-  first_name        = TextField()
-  last_name         = TextField()
-  street_address    = TextField()
-  city              = TextField()
-  state             = TextField()
-  email             = TextField()
-  phone_number      = TextField()
-  website           = TextField()
-  gallery           = ForeignKeyField(Galleries)
-  cv                = ForeignKeyField(Files, related_name="cv_file")
-  personal_statement= ForeignKeyField(Files, related_name="personal_statment")
-  submit_date       = DateTimeField()
-  status            = CharField(max_length=100, null=True)
+    fid               = PrimaryKeyField()
+    first_name        = TextField()
+    last_name         = TextField()
+    street_address    = TextField()
+    second_address    = TextField(null=True)
+    city              = TextField()
+    state             = TextField()
+    zip_code           = TextField()
+    email             = TextField()
+    phone_number      = TextField(null=True)
+    website           = TextField(null=True)
+    gallery           = ForeignKeyField(Galleries)
+    cv                = ForeignKeyField(Files, related_name="cv_file", null = True)
+    personal_statement = ForeignKeyField(Files, related_name="personal_statment", null = True)
+    submit_date       = DateTimeField()
+    status            = TextField(null=True)
 

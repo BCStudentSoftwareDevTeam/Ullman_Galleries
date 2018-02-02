@@ -42,7 +42,7 @@ def load_galleries_data():
 
 def load_files_data():
     Files(fid=1, filetype="pdf", form=1, filename="cv", filepath="/static/data/Fortran_2018_01_21/John@Backus.me/cv.pdf").save(force_insert=True)
-    Files(fid=2, filetype="jpeg", form=1, filename="banner", filepath="/static/data/Fortran_2018_01_21/John@Backus.me/banner.jpeg").save(force_insert=True)
+    Files(fid=2, filetype="jpeg", form=1, filename="banner", filepath="/static/data/Fortran_2018_01_21/banner.jpeg").save(force_insert=True)
     Files(fid=3, filetype="jpg", form=1, filename="image_0", filepath="/static/data/Fortran_2018_01_21/John@Backus.me/image_0.jpg").save(force_insert=True)
     Files(fid=4, filetype="jpg", form=1, filename="image_0_thumb", filepath="/static/data/Fortran_2018_01_21/John@Backus.me/image_0_thumb.jpg").save(force_insert=True)
     Files(fid=5, filetype="jpg", form=1, filename="image_1", filepath="/static/data/Fortran_2018_01_21/John@Backus.me/image_1.jpg").save(force_insert=True)
@@ -52,7 +52,7 @@ def load_files_data():
     Files(fid=9, filetype="pdf", form=1, filename="statement", filepath="/static/data/Fortran_2018_01_21/John@Backus.me/statement.pdf").save(force_insert=True)
 
     Files(fid=10, filetype="pdf", form=1, filename="cv", filepath="/static/data/Go_2018_01_21/Rob@Pike.go/cv.pdf").save(force_insert=True)
-    Files(fid=11, filetype="png", form=1, filename="banner", filepath="/static/data/Go_2018_01_21/Rob@Pike.go/banner.png").save(force_insert=True)
+    Files(fid=11, filetype="png", form=1, filename="banner", filepath="/static/data/Go_2018_01_21/banner.png").save(force_insert=True)
     Files(fid=12, filetype="jpg", form=1, filename="image_0", filepath="/static/data/Go_2018_01_21/Rob@Pike.go/image_0.jpg").save(force_insert=True)
     Files(fid=13, filetype="jpg", form=1, filename="image_0_thumb", filepath="/static/data/Go_2018_01_21/Rob@Pike.go/image_0_thumb.jpg").save(force_insert=True)
     Files(fid=14, filetype="png", form=1, filename="image_1", filepath="/static/data/Go_2018_01_21/Rob@Pike.go/image_1.png").save(force_insert=True)
@@ -62,8 +62,9 @@ def load_files_data():
     Files(fid=18, filetype="pdf", form=1, filename="statement", filepath="/static/data/Go_2018_01_21/Rob@Pike.go/statement.pdf").save(force_insert=True)
 
 def load_forms_data():
-    Forms(fid=1, first_name="John", last_name="Backus", street_address="101 Road", city="Fortran", state="KY", email="John@Backus.me",phone_number="1234567890", website="Backus.me", gallery=1, cv=1, personal_statement=9, submit_date="2018-01-25 12:00:00", status = "Pending").save(force_insert=True)
-    Forms(fid=2, first_name="Rob", last_name="Pike", street_address="101 Pike Road", city="Golang", state="NY", email="Rob@Pike.go",phone_number="0987654321", website="Pike.go", gallery=2, cv=10, personal_statement=18, submit_date="2018-01-25 12:00:00", status = "Approved").save(force_insert=True)
+    Forms(fid=1, first_name="John", last_name="Backus", street_address="101 Road",second_address = "Blue", city="Fortran", state="KY", email="John@Backus.me",phone_number="1234567890", website="Backus.me", gallery=1, cv=1, personal_statement=9, zip_code = "40404", submit_date = "2018-01-12 12:00:00",status = "Pending").save(force_insert=True)
+
+    Forms(fid=2, first_name="Rob", last_name="Pike", street_address="101 Pike Road", second_address = "Red", city="Golang", state="NY", email="Rob@Pike.go",phone_number="0987654321", website="Pike.go", gallery=2, cv=10, personal_statement=18, zip_code = "60819", submit_date = "2018-01-12 12:00:00",status = "Approved").save(force_insert=True)
 
 def load_images_data():
     Images(iid=1, form=1, fullsize=3, thumbnail=4).save(force_insert=True)
@@ -77,5 +78,4 @@ def load_images_data():
 
 if __name__ == "__main__":
     dummy_data()
-
 
