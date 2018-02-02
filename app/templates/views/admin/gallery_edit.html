@@ -6,7 +6,7 @@
 {% if gallery is defined %}
 action="{{url_for('administrator.gallery_edit', gid=gallery.gid)}}"
 {% else %}
-action="{{url_for('gallery_add')}}"
+action="{{url_for('administrator.gallery_add')}}"
 {% endif %}
 method="post"
 enctype="multipart/form-data">
@@ -21,6 +21,7 @@ enctype="multipart/form-data">
         value="{% if gallery is defined%}{{gallery.title}}{% else %} {% endif %}">
     </div>
 </div>
+
 <div class="row">
   <div class="col-sm-3">
     <div class="form-group">
@@ -54,6 +55,7 @@ enctype="multipart/form-data">
       </div>
     </div>
 </div>
+
 {% if gallery is defined %}
 <div class="col-xs-12">
   <img src="{{gallery.banner.filepath}}" class="img-responsive center-block">

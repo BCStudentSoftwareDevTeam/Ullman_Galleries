@@ -1,11 +1,7 @@
 from . import admin
 from app.logic.validation import *
-<<<<<<< HEAD:app/controllers/gallery_edit.py
 from app.logic.upload import *
-from werkzeug.security import check_password_hash
-=======
 from flask import render_template
->>>>>>> origin/development:app/controllers/admin/gallery_edit.py
 from flask import session
 from datetime import datetime
 
