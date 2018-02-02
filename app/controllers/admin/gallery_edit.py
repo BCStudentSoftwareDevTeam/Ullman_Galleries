@@ -1,6 +1,6 @@
 from . import admin
 from app.logic.validation import *
-from app.logic.upload import *
+from app.logic.upload import gallery_banner_upload
 from flask import render_template
 from flask import session
 from datetime import datetime
@@ -17,10 +17,9 @@ def gallery_edit(gid):
     if request.method == "POST":
         gallery = GalleryQueries.get(gid)
         galleryData = request.form
-        uploaded_path = gallery_banner_upload(request, galleryData['title'])
-        #uploaded_path = upload(request, 'app/static/data')
-        # create a function that gets the file id
-
+        gallery = GalleryQueries.get(gid)
+        galleryData = request.form
+        fid = gallery_banner_upload(request, galleryData['title'], gallery.banner.fid)
 
         #TODO: need to sanitize de@scription
         #TODO: need to validate form date format
@@ -29,7 +28,7 @@ def gallery_edit(gid):
                                     datetime.strptime(galleryData['open_date'],'%m/%d/%Y'),\
                                     datetime.strptime(galleryData['close_date'],'%m/%d/%Y'),\
                                     galleryData['description'],\
-                                    2)
+                                    fid)
         if updatedGid is not None:
             print("update success") #TODO: replace with some flash
             return redirect(url_for('administrator.gallery_edit', gid=updatedGid))

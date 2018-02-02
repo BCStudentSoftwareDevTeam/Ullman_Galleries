@@ -58,7 +58,7 @@ enctype="multipart/form-data">
 
 {% if gallery is defined %}
 <div class="col-xs-12">
-  <img src="{{gallery.banner.filepath}}" class="img-responsive center-block">
+  <img src="{{gallery.banner.filepath}}?{{ range(1, 50000) | random }}" class="img-responsive center-block">
 </div>
 {% endif %}
 

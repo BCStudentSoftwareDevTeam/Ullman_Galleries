@@ -40,3 +40,20 @@ def update(fid, filepath=None, filename=None, filetype=None):
     except Exception as e:
         print (e)
     return None
+
+def insert(filepath, filename, filetype):
+    """ Insert a new file record
+    Args:
+    
+    Returns:
+    
+    """
+    try:
+        fid = Files.create(filepath = filepath,\
+                        filename = filename,\
+                        filetype = filetype)
+        return fid
+    except Exception as e:
+        print (e)
+    return None
+    

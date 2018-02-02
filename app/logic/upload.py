@@ -31,30 +31,39 @@ def upload(request, absolute_path):
         file.save(absolute_path)
         return absolute_path
 
-def create_gallery_dir(title):
+
+def get_app_path(relativePath):
+    return cfg['paths']['app'] + relativePath
+
+def new_gallery_path(title):
     now = datetime.datetime.now()
-    relativePath = '{0}/{1}_{2}_{3}_{4}'.format(cfg['paths']['files'], title, now.year, now.month, now.day)
+    relativePath = '{0}/{1}_{2}_{3}_{4}'.format(cfg['paths']['data'], title, now.year, now.month, now.day)
     
-    dirpath = os.path.join(sys.path[0],relativePath)
+    dirpath = os.path.join(sys.path[0],get_app_path(relativePath))
     # create the gallery folder if it does not exist
     if not os.path.isdir(dirpath):
         os.makedirs(dirpath)
     
-    return dirpath
+    return '{0}/banner.jpg'.format(relativePath) #TODO: figure out how to rename files better way
+
     
     
 def gallery_banner_upload(request, title, fid=None):
-    # this is not working
-    # if file path already exists and does not have app infront of it
+
     if fid:
         file = FilesQueries.get(fid)
-        absolute_path = getAbsolutePath(file.filepath)
+        relativePath = get_app_path(file.filepath) 
         
     else:
         file = request.files['file']
         filename = secure_filename(file.filename)
-        dirpath = create_gallery_dir(title)
-        absolute_path = os.path.join(dirpath, filename)
-    print (absolute_path)
+        staticPath = new_gallery_path(title)
+        fid = FilesQueries.insert(staticPath, filename, 'jpg') #TODO: raise error if fid is not returned
+        relativePath = get_app_path(staticPath)
     
-    return upload(request, absolute_path)
+    absolute_path = getAbsolutePath(relativePath)
+    upload_path = upload(request, absolute_path)
+    
+    if upload_path is not None:
+        return fid
+    
