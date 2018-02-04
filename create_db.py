@@ -11,7 +11,7 @@ from app.models import *
 from app.config.loadConfig import *
 conf = load_config('app/config/config.yaml')
 
-sqlite_dbs  = [ conf['databases']['advancement']
+sqlite_dbs  = [ conf['databases']['ullman']
                 # add more here if multiple DBs
               ]
 

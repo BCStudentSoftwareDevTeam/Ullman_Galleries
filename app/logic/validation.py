@@ -35,6 +35,7 @@ def doesUserHaveRole(role):
   username = getUsernameFromEnv()
   try:
     user = UserQueries.select_single(username)
+    print ("Query working", user)
     if user and role=='admin':
       return True
     else:
