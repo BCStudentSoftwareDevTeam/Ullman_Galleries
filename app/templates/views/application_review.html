@@ -3,23 +3,23 @@
 <h2 style="text-align:center;">Gallery</h2>
 <div class ="row">
     <label for="name">Name:</label>
-        <p id="name">John Doe</p>
+        <p id="name">{{user.name}}</p>
 </div>
 <div class ="row">
     <label for="address">Address:</label>
-        <p id="address">1234 Generic Dr</p>
+        <p id="address">{{user.street_address}}</p>
 </div>
 <div class ="row">
     <label for="email">Email:</label>
-        <p id="email">example@example.com</p>
+        <p id="email">{{user.email}}</p>
 </div>
 <div class="row">
     <label for="phone">Phone:</label>
-        <p id="phone">(000)123-4567</p>
+        <p id="phone">{{user.phone_number}}</p>
 </div>
 <div class="row">
     <label for="website">Personal Website</label>
-    <p id="website">http://example.com</p>
+    <p id="website">{{user.website}}</p>
 </div>
 <div class="row">
     <label for="cv">CV:</label>
