@@ -20,4 +20,5 @@ class Forms (baseModel):
     cv                = ForeignKeyField(Files, related_name="cv_file", null = True)
     personal_statement = ForeignKeyField(Files, related_name="personal_statment", null = True)
     submit_date       = DateTimeField()
+    status            = TextField(null=True)
 

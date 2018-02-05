@@ -1,5 +1,39 @@
 from app.models import Forms
 from app.models import Files
+from app.models import Galleries
+
+def get(fid):
+    """ Retrieves a single form object
+
+    Args:
+        fid (int): The fid of the form model to retrieve 
+
+    Returns:
+        Form: The gallery object if it exists
+        None: If the form object does not exist
+    """
+
+    if type(fid) is int:
+        if Forms.select().where(Forms.fid == fid).exists():
+            return Forms.get(Forms.fid == fid)
+    return None
+
+def get_all_from_gallery(gid):
+    """ Retrieves all form object for a single gallery
+
+    Args:
+        gid (int): The gid of the gallery model to retrieve forms from
+
+    Returns:
+        Forms (list): A list of the form objects for a gallery
+        None: If the gallery object does not exist
+    """
+
+    if type(gid) is int:
+        if Galleries.select().where(Galleries.gid == gid).exists():
+            forms = Forms.select().join(Galleries).where(Galleries.gid == gid)
+            return list(forms)
+    return None
 
 
 
@@ -38,7 +72,7 @@ def select_single(self, fid):
         print (e)
         return False
 
-def insert(self,first_name, last_name, street_address, second_address,city, state, zip_code, email, phone_number, website, gallery,cv, personal_statement, submit_date ):
+def insert(self,first_name, last_name, street_address, second_address,city, state, zip_code, email, phone_number, website, gallery,cv, personal_statement, submit_date, status):
     '''This method is to store the inputs received from the application form into the database'''
     try:
         form = Forms(   first_name=first_name,
@@ -54,7 +88,8 @@ def insert(self,first_name, last_name, street_address, second_address,city, stat
                         gallery=gallery,
                         cv=cv,
                         personal_statement=personal_statement,
-                        submit_date=submit_date
+                        submit_date=submit_date,
+                        status=status
                     )
         form.save()
         return form
