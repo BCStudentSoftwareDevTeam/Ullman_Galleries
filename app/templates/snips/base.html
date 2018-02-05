@@ -59,8 +59,8 @@
     <link href="/static/css/ext/bootstrap-select.css"/>
   </head>
   <body>
-    <div class="container">
       {# All content should get rendered in here #}
+      {% include 'snips/nav.html' %}
       {% include 'snips/messages.html' %}
       {% block body %} {% endblock %}
       
