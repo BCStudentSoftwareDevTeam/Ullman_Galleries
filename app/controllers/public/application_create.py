@@ -54,7 +54,8 @@ def application_submit(gid):
                                             gallery,
                                             None,
                                             None,
-                                            submit_date
+                                            submit_date,
+                                            "Pending"
                                         )
     except Exception as e:
         print (e)
