@@ -2,8 +2,7 @@ from app.models.Galleries import Galleries
 from datetime import datetime
 
 def get(gid):
-    """ Retrieves a single gallery object
-
+    """ Retrieves a single gallery object 
     Args:
         gid (int): The gid of the gallery model to retrieve 
 
@@ -16,6 +15,17 @@ def get(gid):
         if Galleries.select().where(Galleries.gid == gid).exists():
             return Galleries.get(Galleries.gid == gid)
     return None
+
+def get_all():
+    """ Retrieves all Gallery objects
+
+    Returns:
+        Galleries (SelectQuery): The SelectQuery of all the Gallery objects with the forms table joined for performance. 
+
+        None: If an error occurs
+    """
+    galleries = Galleries.select(Galleries, fn.Count(Forms.fid).alias('count')).join(Forms, JOIN.LEFT_OUTER).group_by(Galleries)
+    return galleries
 
 def insert(title, open_date, close_date, description, banner):
     """ Creates a single gallery object
@@ -70,12 +80,14 @@ def update(gid, title, open_date, close_date, description, banner):
         print (e)
     return None
     
-def getstatus(gid):
+def get_status(gid, date_format="%m/%d/%Y"):
     
     """ Determine gallery status
     
     Args:
         gid: The gallery id for each gallery
+    Optional:
+        date_format (str): The strftime formatting for the DateTimeFields (default: %m/%d/%y)
     Returns:
         String with gallery status and relevant dates
     """
@@ -88,11 +100,11 @@ def getstatus(gid):
             status = None
             today = datetime.now()
             if today >= open_date and today >= close_date: 
-                status ="Closed" + " " + str(close_date)
+                status ="Closed" + " " + close_date.strftime(date_format)
             if today <= open_date and today <= close_date: 
-                status = "Coming Soon " +" " + str(open_date)
+                status = "Coming Soon " +" " + open_date.strftime(date_format)
             if today >= open_date and today <= close_date: 
-                status = "Active " + " " + str(open_date) + " " + "to" + " " + str(close_date)
+                status = "Active " + " " + open_date.strftime(date_format) + " " + "to" + " " + close_date.strftime(date_format)
         return status
     except Exception as e:
         print (e)
