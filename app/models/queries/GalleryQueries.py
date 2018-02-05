@@ -1,4 +1,5 @@
 from app.models.Galleries import Galleries
+from datetime import datetime
 
 def get(gid):
     """ Retrieves a single gallery object
@@ -68,3 +69,32 @@ def update(gid, title, open_date, close_date, description, banner):
     except Exception as e:
         print (e)
     return None
+    
+def getstatus(gid):
+    
+    """ Determine gallery status
+    
+    Args:
+        gid: The gallery id for each gallery
+    Returns:
+        String with gallery status and relevant dates
+    """
+    try:
+        if Galleries.select().where(Galleries.gid == gid).exists():
+            gallery = Galleries.get(Galleries.gid == gid)
+            title=gallery.title
+            open_date=gallery.open_date
+            close_date= gallery.close_date
+            status = None
+            today = datetime.now()
+            if today >= open_date and today >= close_date: 
+                status ="Closed" + " " + str(close_date)
+            if today <= open_date and today <= close_date: 
+                status = "Coming Soon " +" " + str(open_date)
+            if today >= open_date and today <= close_date: 
+                status = "Active " + " " + str(open_date) + " " + "to" + " " + str(close_date)
+        return status
+    except Exception as e:
+        print (e)
+    return None
+    
