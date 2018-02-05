@@ -79,7 +79,7 @@ def update(gid, title, open_date, close_date, description, banner):
     except Exception as e:
         print (e)
     return None
-    
+
 def get_status(gid, date_format="%m/%d/%Y"):
     
     """ Determine gallery status
@@ -109,4 +109,3 @@ def get_status(gid, date_format="%m/%d/%Y"):
     except Exception as e:
         print (e)
     return None
-    

@@ -36,6 +36,23 @@ def get_all_from_gallery(gid):
     return None
 
 
+
+def get(fid):
+    """ Retrieves a single Form object
+
+    Args:
+        fid (int): The fid of the Form model to retrieve 
+
+    Returns:
+        Form: The Form object if it exists
+        None: If the Form object does not exist
+    """
+
+    if type(fid) is int:
+        if Forms.select().where(Forms.fid == fid).exists():
+            return Forms.get(Forms.fid == fid)
+    return None
+
 def select_all(self):
     '''This method is to select all the forms stored in the database'''
     try:
