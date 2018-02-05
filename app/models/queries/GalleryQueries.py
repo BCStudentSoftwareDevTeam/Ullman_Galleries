@@ -16,17 +16,6 @@ def get(gid):
             return Galleries.get(Galleries.gid == gid)
     return None
 
-def get_all():
-    """ Retrieves all Gallery objects
-
-    Returns:
-        Galleries (SelectQuery): The SelectQuery of all the Gallery objects with the forms table joined for performance. 
-
-        None: If an error occurs
-    """
-    galleries = Galleries.select(Galleries, fn.Count(Forms.fid).alias('count')).join(Forms, JOIN.LEFT_OUTER).group_by(Galleries)
-    return galleries
-
 def insert(title, open_date, close_date, description, banner):
     """ Creates a single gallery object
     
