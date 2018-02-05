@@ -1,29 +1,36 @@
 {% extends "snips/base.html" %}
 {% block body %}
-<h2 style="text-align:center;">Gallery</h2>
+<h2 class="text-center">{{form.gallery.title}}</h2>
+
 <div class ="row">
     <label for="name">Name:</label>
-        <p id="name">{{user.name}}</p>
+    <p id="name">{{form.first_name}} {{form.last_name}}</p>
 </div>
+
 <div class ="row">
     <label for="address">Address:</label>
-        <p id="address">{{user.street_address}}</p>
+        <p id="address">{{form.street_address}}</p>
 </div>
+
 <div class ="row">
     <label for="email">Email:</label>
-        <p id="email">{{user.email}}</p>
+        <p id="email">{{form.email}}</p>
 </div>
+
 <div class="row">
     <label for="phone">Phone:</label>
-        <p id="phone">{{user.phone_number}}</p>
+        <p id="phone">{{form.phone_number}}</p>
 </div>
+
 <div class="row">
     <label for="website">Personal Website</label>
-    <p id="website">{{user.website}}</p>
+    <p id="website">{{form.website}}</p>
 </div>
+
 <div class="row">
     <label for="cv">CV:</label>
 </div>
+
 <div class="row">
     <label for="statement">Artist Statement:</label>
 </div>
