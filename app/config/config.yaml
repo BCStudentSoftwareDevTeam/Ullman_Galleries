@@ -6,6 +6,7 @@ models:
   mainDB:
     - User
 
+
 paths:
   files: 'app/static/files'
 
@@ -37,4 +38,6 @@ contact_list:
     email: "contacttwo@gmail.com"
   - name: "Contact Three"
     email: "contactthree@gmail.com"
-  
+
+project_name: "Submitted"
+project_description: "A submission system for art gallery exhibits."

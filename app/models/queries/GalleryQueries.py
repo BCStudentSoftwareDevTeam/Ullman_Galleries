@@ -1,9 +1,11 @@
 from app.models.Galleries import Galleries
+from datetime import datetime
+
 def get(gid):
     """ Retrieves a single gallery object
 
     Args:
-        gid (int): The gid of the gallery model to retrieve 
+        gid (int): The gid of the gallery model to retrieve
 
     Returns:
         Gallery: The gallery object if it exists
@@ -17,7 +19,7 @@ def get(gid):
 
 def insert(title, open_date, close_date, description, banner):
     """ Creates a single gallery object
-    
+
     Args:
         title(str): The title of the gallery
         open_date(datetime): The opening date of gallery submission
@@ -43,7 +45,7 @@ def insert(title, open_date, close_date, description, banner):
 
 def update(gid, title, open_date, close_date, description, banner):
     """ Update existing gallery record
-    
+
     Args:
         title(str): The title of the gallery
         open_date(datetime): The opening date of gallery submission
@@ -62,8 +64,18 @@ def update(gid, title, open_date, close_date, description, banner):
             gallery.close_date=close_date
             gallery.description=description
             gallery.banner=banner
-            d = gallery.save()
+            gallery.save()
         return gid
     except Exception as e:
         print (e)
     return None
+
+def get_all_open_galleries():
+    """ Returns all Galleries that are currently open
+
+    Returns:
+        galleries (SelectQuery): A query of all the currently open Galleries
+    """
+    return Galleries.select().where( (Galleries.open_date < datetime.now() ) & (Galleries.close_date > datetime.now()) )
+
+
