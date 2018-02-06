@@ -3,40 +3,38 @@
 
 <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/all_galleries.css') }}">
 
-<div class="container">
-    <h2>All Galleries View</h2>
-</div>
     <div class="container">
-        <a href='/application/create/1' ></href> <button type="button" id ="create" class="btn btn-primary" >Create</button><a/>
-        <a href='/gallery/submission' ><button type="button" id ="submit"class="btn btn-primary">Submissions</button></a>
+      <a href='/gallery/add' >
+        <button type="button" class="btn btn-primary pull-right" >Create</button>
+      </a>
     </div>
-    
-    <h2 class="text-center">Galleries</h2> 
-    
+
+    <h2 class="text-center">Galleries</h2>
+
         <div class ="container">
             <table id="gallery" class= "table table-bordered">
             <thead>
                     <tr>
-                       <th>Galleries</th> 
+                       <th>Galleries</th>
                         <th>Submissions</th>
                         <th>Status</th>
                         <th>Edit</th>
-                    </tr> 
+                    </tr>
             </thead>
             <tbody>
-               {%for gallery,submission_count in gallery_submissions_count.items() %}
+               {%for gallery in galleries %}
                    <tr>
                        <td>
-                           <a href='/gallery/view'>{{gallery}}</a>
+                         <a href='/gallery/view/{{gallery.gid}}'>{{gallery.title}}</a>
                        </td>
                        <td>
-                           {{submission_count}}
+                           {{gallery.count}}
                        </td>
                        <td>
-                           <b>{{status[gallery]}}</b>
+                           <b>{{status[gallery.title]}}</b>
                        </td>
                        <td>
-                           <a href="/gallery/edit"> <span class="glyphicon glyphicon-edit"></span></a>
+                         <a href="/gallery/edit/{{gallery.gid}}"> <span class="glyphicon glyphicon-edit"></span></a>
                        </td>
                    </tr>
                 {% endfor %}
