@@ -16,7 +16,7 @@ def get(gid):
             return Galleries.get(Galleries.gid == gid)
     return None
 
-def insert(title, open_date, close_date, description, banner):
+def insert(title, open_date, close_date, description, banner, folder_name):
     """ Creates a single gallery object
     
     Args:
@@ -36,13 +36,14 @@ def insert(title, open_date, close_date, description, banner):
                         open_date = open_date,\
                         close_date = close_date,\
                         description =  description,\
-                        banner = banner)
+                        banner = banner,\
+                        folder_name = folder_name)
         return gid
     except Exception as e:
         print (e)
     return None
 
-def update(gid, title, open_date, close_date, description, banner):
+def update(gid, title, open_date, close_date, description, banner, folder_name):
     """ Update existing gallery record
     
     Args:
@@ -57,13 +58,14 @@ def update(gid, title, open_date, close_date, description, banner):
     """
     try:
         if Galleries.select().where(Galleries.gid == gid).exists():
-            gallery = Galleries.get(Galleries.gid == gid)
-            gallery.title=title
-            gallery.open_date=open_date
-            gallery.close_date=close_date
-            gallery.description=description
-            gallery.banner=banner
-            d = gallery.save()
+            gallery              = Galleries.get(Galleries.gid == gid)
+            gallery.title        = title
+            gallery.open_date    = open_date
+            gallery.close_date   = close_date
+            gallery.description  = description
+            gallery.banner       = banner
+            gallery.folder_name  = folder_name
+            gallery.save()
         return gid
     except Exception as e:
         print (e)

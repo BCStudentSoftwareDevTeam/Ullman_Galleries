@@ -1,47 +1,36 @@
 from . import public
 from flask import render_template, g
-from app.logic.validation import *
-from app.models.queries.FormQueries import *
+from app.logic.validation import*
+from app.models.queries.FormQueries import*
+from app.config.loadConfig import get_cfg
 from flask import session
-
-# For every table in the database, add an item here
+from flask import current_app
 import os, sys
 import time
 
+cfg = get_cfg() 
 
-@public.route('/application/create/<gid>', methods=["GET","POST"])
+@public.route('/application/create/<gid>', methods=["GET"])
 def create(gid):
     gallery = Galleries.get(Galleries.gid==gid)
     return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
 
-def get_image_info(number,im_type, file_ext):
-    cfg = get_cfg()
-    if im_type == "fullsize":
-        filename = "image_{}".format(number)
-    elif im_type == "thumbnail":
-        filename = "image_{}_thumb".format(number)
-    upload_path = getAbsolutePath(cfg['paths']['files'],filename)
-    if os.path.isfile(upload_path):
-        number = number+1
-        return get_file_info(number,cfg, im_type, file_ext)
-    else:
-        return filename
 
-@public.route('/application/submit/<gid>', methods=["GET", "POST"])
+
 def application_submit(gid):
     # retrieve the specific gallery for which the application was submitted
     gallery         = Galleries.get(Galleries.gid==gid)
-
-    # create a Formqueries class object to insert data from the form and attachment files into the database.
-
+    
     # retrieve data from the form
     data            = request.form
 
     submit_date     = time.strftime("%m/%d/%y %H:%M:%S")
+    
+    status          = "Pending"
 
     try:
         #Insert data into database
-        submission   =  FormQueries.insert( data['firstName'],
+        submission  = FormQueries.insert(   data['firstName'],
                                             data['lastName'],
                                             data['streetAddress'],
                                             data['addressLine2'],
@@ -55,17 +44,21 @@ def application_submit(gid):
                                             None,
                                             None,
                                             submit_date,
-                                            "Pending"
+                                            status
                                         )
+       
     except Exception as e:
         print (e)
         flash ("An error occured during submission.")
         return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
 
-
+    print("Done inserting into the database!")
     if submission != False:
         # save uploads in the database with the associated FID
         fid  = submission.fid
+        form = FormQueries.get(fid)
+        gallery_folder = str(gallery.folder_name)
+        submission_folder = data['email']
         try:
 
             if 'cv' in request.files:
@@ -76,23 +69,22 @@ def application_submit(gid):
                 cv_ext         = (str(cv.filename.split(".").pop())).replace(" ","")
 
                 # rename the file uploaded to a specific format
-                cv_filename    = "cv_{}".format(data['firstName']+ '_'+ data['lastName'])
+                cv_filename    = "cv_{}".format(data['firstName']+ '_'+ data['lastName']) + '.' + cv_ext
 
-                # store the absolute path where the file will be stored on the server
-                cv_upload_path = getAbsolutePath(cfg['paths']['files'],cv_filename,True)
-
+                # get the absolute path where the file will be stored on the server
+                cv_upload_path = getAbsolutePath(cfg['paths']['app']+cfg['paths']['data']+"/"+gallery_folder+"/"+submission_folder,cv_filename,True)
+  
                 # save the file on the server
                 cv.save(cv_upload_path)
-
                 # save the file in the database in the Files table
-                FormQueries.insert_attachment_file("cv", fid,cv_filename,cv_upload_path,cv_ext)
-
+                saved_cv = FormQueries.insert_attachment_file("cv", fid,cv_filename,cv_upload_path,cv_ext)
+                print("Cv saved!")
         except Exception as e:
             print (e)
 
             flash("An error occured while saving cv file!")
 
-            return render_template('views/public/application_create.html',gid=gid, gallery = gallery, cfg=cfg)
+            return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
 
         try:
 
@@ -106,45 +98,60 @@ def application_submit(gid):
                 # rename the file uploaded to a specific format
                 statement_filename    = "personal_statement_{}".format(data['firstName']+ '_'+ data['lastName'])
 
-                # store the absolute path where the file will be stored on the server
-                statement_upload_path = getAbsolutePath(cfg['paths']['files'],statement_filename,True)
-
+                # get the absolute path where the file will be stored on the server
+                statement_upload_path = getAbsolutePath(cfg['paths']['app']+cfg['paths']['data']+"/"+gallery_folder+"/"+submission_folder,statement_filename,True)
+               
                 # save the file on the server
                 statement.save(statement_upload_path)
 
                 # save the file in the database in the Files table
-                FormQueries.insert_attachment_file("statement", fid,statement_filename,statement_upload_path,statement_ext)
-
+                saved_statement = FormQueries.insert_attachment_file("statement", fid,statement_filename,statement_upload_path,statement_ext)
+          
         except Exception as e:
             print (e)
 
             flash("An error occured while saving the personal statement file!")
 
-            return render_template('views/public/application_create.html',gid=gid, gallery = gallery, cfg=cfg)
+            return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
 
         try:
             number = 1
             try:
-                images = request.files['images']
+                print(request.files)
+                images = request.files['file']
                 print("It is working!")
             except Exception as e:
                 print("There is a problem with request file")
-            # file_ext    = (str(images.filename.split(".").pop())).replace(" ","")
-            # im_filename = get_image_info(number, cfg, "fullsize", file_ext)
-            # im_upload_path = getAbsolutePath(cfg['paths']['files'],im_filename,True)
-            # images.save(im_upload_path)
-            # file = Files(filepath = im_upload_path, filename = im_filename, filetype = file_ext)
-            # im = Images(form = fid, fullsize = im_filename, thumbnail = None )
+            try:
+                file_ext    = (str(images.filename.split(".").pop())).replace(" ","")
+                im_filename = get_image_info(number, cfg, "fullsize", file_ext)
+                im_upload_path = getAbsolutePath(cfg['paths']['app']+cfg['paths']['data']+"/"+gallery_folder+"/"+submission_folder,im_filename,True)
+                images.save(im_upload_path)
+                file = Files(filepath = im_upload_path, filename = im_filename, filetype = file_ext)
+                # im = Images(form = fid, fullsize = im_filename, thumbnail = None )
+            except:
+                print("Saving image is not working!")
         except Exception as e:
             print (e)
             print("I messed up!")
 
         flash("Your application was successfully submitted.")
 
-        return render_template('views/public/application_review.html',gid=gid, gallery = gallery, cfg=cfg)
+        return render_template('views/public/application_review.html',form = form)
 
     else:
         flash("Your application was not submitted, for an error occured in the process.")
 
-    return render_template('views/public/application_create.html',gid=gid, gallery = gallery, cfg=cfg)
+    return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
 
+@public.route('/application/submit/<gid>', methods=["POST"])
+def image_upload(gid):
+    print ('here')
+    
+    
+    for f in request.files:
+        print (request.files[f].filename)
+        
+    # images = request.files['file']
+    # print(images.filename)
+    return "worked"

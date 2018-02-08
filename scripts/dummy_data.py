@@ -36,9 +36,9 @@ def load_user_data():
     Users(uid=1, username="adminUser").save(force_insert=True)
 
 def load_galleries_data():
-    Galleries(gid=1, title="Fortran", open_date="2018-01-21 12:00:00", close_date="2018-02-22 12:00:00", banner=2, description="<b>I AM BOLD, I AM FORTRAN, MAKE SURE TO SANITIZE ME </b>" ).save(force_insert=True)
+    Galleries(gid=1, title="Fortran", open_date="2018-01-21 12:00:00", close_date="2018-02-22 12:00:00", banner=2, description="<b>I AM BOLD, I AM FORTRAN, MAKE SURE TO SANITIZE ME </b>", folder_name = "Fortran_2018_01_21" ).save(force_insert=True)
 
-    Galleries(gid=2, title="Golang", open_date="2018-01-21 12:00:00", close_date="2018-02-12 12:00:00", banner=11, description="<em> I am edgy, I am golang, make sure to sanitize me </em>").save(force_insert=True)
+    Galleries(gid=2, title="Golang", open_date="2018-01-21 12:00:00", close_date="2018-02-12 12:00:00", banner=11, description="<em> I am edgy, I am golang, make sure to sanitize me </em>", folder_name = "Go_2018_01_21").save(force_insert=True)
 
 def load_files_data():
     Files(fid=1, filetype="pdf", form=1, filename="cv", filepath="/static/data/Fortran_2018_01_21/John@Backus.me/cv.pdf").save(force_insert=True)
