@@ -15,25 +15,16 @@
   
   <tbody>
    {% set counter = 1 -%}
-   {% for gallery in gallery_submission -%}
+   {% for form in forms-%}
       <tr>
          
           <td>
-               {% for value in gallery_Dict[gallery.FID] %}  
-               {{
-               <div>
-                  {{value}}
-                  {% if not loop.last %}
-                  {% endif %}
-               </div>
-               {% endfor %}
-            </d>
-         </td>
-
-         <td>{{gallery.submit_date}}</td>
-         <td>{{gallery.status}}</td>
-
-      </tr>
+               {{form.first_name}}{{form.last_name}}
+               </td>
+               <td>{{form.submit_date}}</td>
+               <td>{{form.status}}</td>
+               
+            </tr>
    {% endfor %}
    </tbody>
 </table>

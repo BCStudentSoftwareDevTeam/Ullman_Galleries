@@ -12,9 +12,9 @@ To rename the app, you need to make three changes:
 '''
 import os
 import sys
+from app import create_app
 
-from app import app
-
+# Use local path if local variable is provided
 if os.getenv("LOCAL"):
     if os.getenv("LOCAL").lower() == 'true':
         sys.path.insert(0,os.getcwd())
