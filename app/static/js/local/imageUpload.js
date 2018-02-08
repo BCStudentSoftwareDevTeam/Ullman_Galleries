@@ -1,27 +1,38 @@
-// Retrieve the GID 
-var current_URL = String(document.URL);
-var modified_URL = current_URL.split("/")
-var GID= modified_URL.pop()
-// DropZone
+
+$(window).on('load',function(){
+    $('#uploadModal').modal('show');
+})
+
+function closeModal(){
+    $('#uploadModal').modal('hide');
+}
 Dropzone.autoDiscover = false;
-var fileDropZone = new Dropzone('#fileDropZone',
-  {
+var fileDropZone = new Dropzone('#fileDropZone',{
     paramname: 'file', //The name that will be used to transfer the file
     acceptedFiles: ".jpg,.jpeg,.png",
     dictDefaultMessage: "Upload images here.",
-    url:"/application/submit/"+GID,
     addRemoveLinks: true,
     clickable: true,
     uploadMultiple: true,
-    maxFiles: 100,
+    maxFiles: 10,
     autoProcessQueue: false,
     init: function(){
         var submitButton = document.querySelector('#submit');
         fileDropZone = this;
         submitButton.addEventListener('click',function(){
               fileDropZone.processQueue();
-        }
+        });
         
+        this.on("successmultiple", function(files, response) {
+        console.log(response);
+        window.location.replace("/application/review/"+response);
+        });
+        
+        this.on("errormultiple", function(files, response) {
+        // Gets triggered when there was an error sending the files.
+        // Maybe show form again, and notify user of error
+        console.log(response);
+        });
     }
   });
       

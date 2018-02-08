@@ -2,6 +2,9 @@ from . import public
 from flask import render_template, g
 from app.logic.validation import*
 from app.models.queries.FormQueries import*
+from app.models.queries.FilesQueries import*
+from app.models.queries.ImageQueries import*
+from app.logic.upload import *
 from app.config.loadConfig import get_cfg
 from flask import session
 from flask import current_app
@@ -57,6 +60,7 @@ def application_submit(gid):
         cfg = get_cfg() 
         # save uploads in the database with the associated FID
         fid  = submission.fid
+        form = FormQueries.get(fid)
         
         gallery_folder = str(gallery.folder_name)
         submission_folder = data['email']
@@ -115,9 +119,12 @@ def application_submit(gid):
 
             return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
         
-         #redirect to uploads
+        # redirect to uploads
         url = 'upload/{}'.format(fid)
         return redirect(url)
+        
+        # flash("Your application was successfully submitted.")
+        # return render_template('views/public/application_review.html',form = form)
 
     else:
         flash("Your application was not submitted, for an error occured in the process.")
@@ -131,19 +138,29 @@ def upload(fid):
     
     
     
-@public.route('upload/images/<fid>', methods = ["GET", "POST"])
+@public.route('/upload/images/<fid>', methods = ["POST"])
 def upload_images(fid):
-    
-    form = FormQueries.get(fid)
-    images = request.files['file']
-    file_ext    = (str(images.filename.split(".").pop())).replace(" ","")
-    im_filename = get_image_info(number, cfg, "fullsize", file_ext)
-    im_upload_path = getAbsolutePath(cfg['paths']['app']+cfg['paths']['data']+"/"+gallery_folder+"/"+submission_folder,im_filename,True)
-    images.save(im_upload_path)
-    file = Files(filepath = im_upload_path, filename = im_filename, filetype = file_ext)
-    im = Images(form = fid, fullsize = file, thumbnail = None )
-    
-    flash("Your application was successfully submitted.")
-    return render_template('views/public/application_review.html',form = form)
+    try:
+        cfg = get_cfg() 
+        form = Forms.get(Forms.fid== fid)
+        gallery = form.gallery
+        gallery_folder = str(gallery.folder_name)
+        submission_folder = form.email
+        for f in request.files:
+            img = request.files[f]
+            file_ext    = (str(img.filename.split(".").pop())).replace(" ","")
+            staticPath = cfg['paths']['data']+"/"+gallery_folder+"/"+submission_folder
+            im_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, img.filename, True)
+            img.save(im_upload_path)
+            file_id = FilesQueries.insert(staticPath+'/'+img.filename, img.filename, file_ext)
+            if allowed_file(img.filename):
+                img.save(im_upload_path)
+            iid = ImageQueries.insert(fid, file_id, None)
         
+        return fid #TODO: return appropriate JSON response for the Dropzone
 
+            
+    except Exception as e:
+        print("There is a problem!")
+        print(e)
+            

@@ -6,6 +6,6 @@ class Images (baseModel):
   iid               = PrimaryKeyField()
   form              = ForeignKeyField(Forms)
   fullsize          = ForeignKeyField(Files, related_name="fullsize")
-  thumbnail        = ForeignKeyField(Files, related_name="thumbnail")
+  thumbnail        = ForeignKeyField(Files, related_name="thumbnail", null = True) # can be null just for now
 
 
