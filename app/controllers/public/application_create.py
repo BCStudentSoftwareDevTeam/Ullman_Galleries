@@ -8,7 +8,7 @@ from flask import current_app
 import os, sys
 import time
 
-cfg = get_cfg() 
+
 
 @public.route('/application/create/<gid>', methods=["GET"])
 def create(gid):
@@ -16,7 +16,7 @@ def create(gid):
     return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
 
 
-
+@public.route('/application/submit/<gid>', methods=["POST"])
 def application_submit(gid):
     # retrieve the specific gallery for which the application was submitted
     gallery         = Galleries.get(Galleries.gid==gid)
@@ -54,9 +54,10 @@ def application_submit(gid):
 
     print("Done inserting into the database!")
     if submission != False:
+        cfg = get_cfg() 
         # save uploads in the database with the associated FID
         fid  = submission.fid
-        form = FormQueries.get(fid)
+        
         gallery_folder = str(gallery.folder_name)
         submission_folder = data['email']
         try:
@@ -113,45 +114,36 @@ def application_submit(gid):
             flash("An error occured while saving the personal statement file!")
 
             return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
-
-        try:
-            number = 1
-            try:
-                print(request.files)
-                images = request.files['file']
-                print("It is working!")
-            except Exception as e:
-                print("There is a problem with request file")
-            try:
-                file_ext    = (str(images.filename.split(".").pop())).replace(" ","")
-                im_filename = get_image_info(number, cfg, "fullsize", file_ext)
-                im_upload_path = getAbsolutePath(cfg['paths']['app']+cfg['paths']['data']+"/"+gallery_folder+"/"+submission_folder,im_filename,True)
-                images.save(im_upload_path)
-                file = Files(filepath = im_upload_path, filename = im_filename, filetype = file_ext)
-                # im = Images(form = fid, fullsize = im_filename, thumbnail = None )
-            except:
-                print("Saving image is not working!")
-        except Exception as e:
-            print (e)
-            print("I messed up!")
-
-        flash("Your application was successfully submitted.")
-
-        return render_template('views/public/application_review.html',form = form)
+        
+         #redirect to uploads
+        url = 'upload/{}'.format(fid)
+        return redirect(url)
 
     else:
         flash("Your application was not submitted, for an error occured in the process.")
 
     return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
 
-@public.route('/application/submit/<gid>', methods=["POST"])
-def image_upload(gid):
-    print ('here')
+
+@public.route('/upload/<fid>', methods=["GET"])
+def upload(fid):
+    return render_template('snips/upload.html', fid = fid)
     
     
-    for f in request.files:
-        print (request.files[f].filename)
+    
+@public.route('upload/images/<fid>', methods = ["GET", "POST"])
+def upload_images(fid):
+    
+    form = FormQueries.get(fid)
+    images = request.files['file']
+    file_ext    = (str(images.filename.split(".").pop())).replace(" ","")
+    im_filename = get_image_info(number, cfg, "fullsize", file_ext)
+    im_upload_path = getAbsolutePath(cfg['paths']['app']+cfg['paths']['data']+"/"+gallery_folder+"/"+submission_folder,im_filename,True)
+    images.save(im_upload_path)
+    file = Files(filepath = im_upload_path, filename = im_filename, filetype = file_ext)
+    im = Images(form = fid, fullsize = file, thumbnail = None )
+    
+    flash("Your application was successfully submitted.")
+    return render_template('views/public/application_review.html',form = form)
         
-    # images = request.files['file']
-    # print(images.filename)
-    return "worked"
+

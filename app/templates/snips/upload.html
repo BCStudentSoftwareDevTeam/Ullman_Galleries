@@ -1,0 +1,22 @@
+{% extends "snips/base.html" %}
+{% block body %}
+    <div class="modal fade" id="uploadModal" role="dialog" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Images</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="help-block">If you would like to add images to your submission, please do so here.</p>
+                    <form class="dropzone" id="drop" action = "/upload/images/{{FID}}">
+                        <div class="box"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                <button onclick="closeModal()" class="btn btn-success" id = "submit" >Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/local/upload.js"></script>
+{% endblock %}

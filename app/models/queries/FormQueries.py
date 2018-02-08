@@ -122,12 +122,12 @@ def insert_attachment_file(doc_type, fid, filename, filepath, filetype):
 def get_image_info(number,im_type, file_ext):
     cfg = get_cfg()
     if im_type == "fullsize":
-        filename = "image_{}".format(number)
+        filename = "image_{}".format(number)+"."+file_ext
     elif im_type == "thumbnail":
-        filename = "image_{}_thumb".format(number)
-    upload_path = getAbsolutePath(cfg['paths']['data'],filename)
+        filename = "image_{}_thumb".format(number)+"."+file_ext
+    upload_path = getAbsolutePath(cfg['paths']['app']+cfg['paths']['data']+"/"+gallery_folder+"/"+submission_folder,filename)
     if os.path.isfile(upload_path):
-        number = number+1
+        number += 1
         return get_file_info(number,cfg, im_type, file_ext)
     else:
         return filename
