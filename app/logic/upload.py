@@ -66,4 +66,11 @@ def gallery_banner_upload(request, title, fid=None):
     
     if upload_path is not None:
         return fid
+
+
+def create_form_path(galleryFolderName, email):
     
+    dirpath = os.path.join(sys.path[0])
+    # create the gallery folder if it does not exist
+    if not os.path.isdir(dirpath):
+        os.makedirs(dirpath)

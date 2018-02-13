@@ -1,6 +1,8 @@
 from app.models import Forms
 from app.models import Files
 from app.models import Galleries
+from app.config.loadConfig import get_cfg
+from app.logic.validation import*
 
 def get(fid):
     """ Retrieves a single form object
@@ -63,8 +65,8 @@ def select_all(self):
         return False
 
 
-def select_single(self, fid):
-    '''This method is to select a single form from the database using the unique identifier (FID) associated with that form'''
+def select_single(fid):
+    '''This function is to select a single form from the database using the unique identifier (FID) associated with that form'''
     try:
         form = Forms.get(Form.fid == fid)
         return form
@@ -72,9 +74,10 @@ def select_single(self, fid):
         print (e)
         return False
 
-def insert(self,first_name, last_name, street_address, second_address,city, state, zip_code, email, phone_number, website, gallery,cv, personal_statement, submit_date, status):
-    '''This method is to store the inputs received from the application form into the database'''
+def insert(first_name, last_name, street_address, second_address,city, state, zip_code, email, phone_number, website, gallery,cv, personal_statement, submit_date, status):
+    '''This function is to store the inputs received from the application form into the database'''
     try:
+        print("Saving:FormQueries")
         form = Forms(   first_name=first_name,
                         last_name=last_name,
                         street_address=street_address,
@@ -91,13 +94,14 @@ def insert(self,first_name, last_name, street_address, second_address,city, stat
                         submit_date=submit_date,
                         status=status
                     )
+        print("Saved: FormQueries")
         form.save()
         return form
     except Exception as e:
         return e
     return False
 
-def insert_attachment_file(self,doc_type, fid, filename, filepath, filetype):
+def insert_attachment_file(doc_type, fid, filename, filepath, filetype):
     '''This method is to store attachment files such as CVs and personal statements into the database'''
     form = Forms.get(Forms.fid == fid)
     file = Files(filepath = filepath, filename=filename, filetype = filetype)
@@ -116,3 +120,15 @@ def insert_attachment_file(self,doc_type, fid, filename, filepath, filetype):
             return False
     form.save()
     return form
+    
+def get_image_info(fid,im_type, file_ext, cfg, gallery_folder, submission_folder):
+    cfg = get_cfg()
+    if im_type == "fullsize":
+        filename = "image_{}".format(fid)+"."+file_ext
+    elif im_type == "thumbnail":
+        filename = "image_{}_thumb".format(fid)+"."+file_ext
+    upload_path = getAbsolutePath(cfg['paths']['app']+cfg['paths']['data']+"/"+gallery_folder+"/"+submission_folder,filename)
+    if os.path.isfile(upload_path):
+        return get_image_info(fid, im_type, file_ext,cfg, gallery_folder, submission_folder)
+    else:
+        return filename
