@@ -17,6 +17,7 @@ import json
 
 @public.route('/application/create/<gid>', methods=["GET"])
 def create(gid):
+    gallery = Galleries.get(Galleries.gid==gid)
     return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
         
         
