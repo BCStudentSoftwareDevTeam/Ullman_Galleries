@@ -146,35 +146,28 @@ def upload_images(fid):
     try:
         cfg = get_cfg() 
         form = Forms.get(Forms.fid== fid)
-        print(request.files)
-        # for i, f in enumerate(request.files):
-        #     img = request.files[f]
-        #     file_ext = get_file_extension(img.filename)
-        #     staticPath = cfg['paths']['data']+"/"+form.gallery.folder_name+"/"+ form.email
-        #     new_file_name = str(i)+'.'+file_ext
-        #     im_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, new_file_name, True)
+        for i, f in enumerate(request.files):
+            img = request.files[f]
+            file_ext = get_file_extension(img.filename)
+            staticPath = cfg['paths']['data']+"/"+form.gallery.folder_name+"/"+ form.email
+            new_file_name = str(i)+'.'+file_ext
+            im_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, new_file_name, True)
            
-        #     # Documentation for creating thumbnails: https://www.united-coders.com/christian-harms/image-resizing-tips-every-coder-should-know/ 
-        #     print(img.filename)
-        #     print(i)
+            # Documentation for creating thumbnails: https://www.united-coders.com/christian-harms/image-resizing-tips-every-coder-should-know/ 
+            im_thumbnail = Image.open(img)
+            im_thumbnail.thumbnail((200,200), Image.ANTIALIAS)
+            thumbnail_file_name = str(i)+'_thumb.'+file_ext
+            thumbnail_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, thumbnail_file_name, True)
             
             
-            
-        #     im_thumbnail = Image.open(img)
-        #     im_thumbnail.thumbnail((200,200), Image.ANTIALIAS)
-        #     thumbnail_file_name = str(i)+'_thumb.'+file_ext
-        #     thumbnail_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, thumbnail_file_name, True)
-            
-            
-        #     if allowed_file(img.filename):
-        #         img_fullsize_id = FilesQueries.insert(staticPath+'/'+new_file_name, new_file_name, file_ext)
-        #         img.save(im_upload_path)
-        #         img_thumbnail_id = FilesQueries.insert(staticPath+'/'+thumbnail_file_name, thumbnail_file_name, file_ext)
-        #         im_thumbnail.save(thumbnail_upload_path)
-        #         iid = ImageQueries.insert(fid, img_fullsize_id, img)
+            if allowed_file(img.filename):
+                img_fullsize_id = FilesQueries.insert(staticPath+'/'+new_file_name, new_file_name, file_ext)
+                img.save(im_upload_path)
+                img_thumbnail_id = FilesQueries.insert(staticPath+'/'+thumbnail_file_name, thumbnail_file_name, file_ext)
+                im_thumbnail.save(thumbnail_upload_path)
+                iid = ImageQueries.insert(fid, img_fullsize_id, img)
         
-        return fid #TODO: return appropriate JSON response for the Dropzone
-    
+        return fid 
 
     except Exception as e:
         print(e)
