@@ -134,6 +134,7 @@ def application_submit(gid):
 
 @public.route('/upload/<fid>', methods=["GET"])
 def upload(fid):
+    #TODO: check fid exists, maybe encode it
     return render_template('snips/upload.html', fid = fid)
     
     
@@ -143,19 +144,18 @@ def upload_images(fid):
     try:
         cfg = get_cfg() 
         form = Forms.get(Forms.fid== fid)
-        gallery = form.gallery
-        gallery_folder = str(gallery.folder_name)
-        submission_folder = form.email
-        for f in request.files:
+        for i, f in enumerate(request.files):
+            
             img = request.files[f]
-            file_ext    = (str(img.filename.split(".").pop())).replace(" ","")
-            staticPath = cfg['paths']['data']+"/"+gallery_folder+"/"+submission_folder
-            im_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, img.filename, True)
-            img.save(im_upload_path)
-            file_id = FilesQueries.insert(staticPath+'/'+img.filename, img.filename, file_ext)
+            file_ext = get_file_extension(img.filename)
+            staticPath = cfg['paths']['data']+"/"+form.gallery.folder_name+"/"+ form.email
+            new_file_name = str(i)+'.'+file_ext
+            im_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, new_file_name, True)
+            
             if allowed_file(img.filename):
+                file_id = FilesQueries.insert(staticPath+'/'+new_file_name, new_file_name, file_ext)
                 img.save(im_upload_path)
-            iid = ImageQueries.insert(fid, file_id, None)
+                iid = ImageQueries.insert(fid, file_id, None)
         
         return fid #TODO: return appropriate JSON response for the Dropzone
 

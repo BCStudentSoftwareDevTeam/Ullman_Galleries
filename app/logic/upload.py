@@ -10,9 +10,12 @@ import os, re, datetime
 
 cfg = get_cfg()
 
+def get_file_extension(filename):
+    return filename.rsplit('.', 1)[1].lower()
+
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in cfg['allowed_extensions']
+           get_file_extension(filename) in cfg['allowed_extensions']
 
 
 def upload(request, absolute_path):
