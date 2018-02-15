@@ -40,7 +40,8 @@ INSTALL_REQUIRES = [
     "email_validator",
     "Flask-Script",
     "flask-mysqldb",
-    "flask-login"
+    "flask-login",
+    "PIL"
     ]
     
 def parameters():

@@ -10,6 +10,8 @@ from flask import session
 from flask import current_app
 import os, sys
 import time
+from PIL import Image
+import json 
 
 
 
@@ -137,30 +139,43 @@ def upload(fid):
     #TODO: check fid exists, maybe encode it
     return render_template('snips/upload.html', fid = fid)
     
-    
+
     
 @public.route('/upload/images/<fid>', methods = ["POST"])
 def upload_images(fid):
     try:
         cfg = get_cfg() 
         form = Forms.get(Forms.fid== fid)
-        for i, f in enumerate(request.files):
+        print(request.files)
+        # for i, f in enumerate(request.files):
+        #     img = request.files[f]
+        #     file_ext = get_file_extension(img.filename)
+        #     staticPath = cfg['paths']['data']+"/"+form.gallery.folder_name+"/"+ form.email
+        #     new_file_name = str(i)+'.'+file_ext
+        #     im_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, new_file_name, True)
+           
+        #     # Documentation for creating thumbnails: https://www.united-coders.com/christian-harms/image-resizing-tips-every-coder-should-know/ 
+        #     print(img.filename)
+        #     print(i)
             
-            img = request.files[f]
-            file_ext = get_file_extension(img.filename)
-            staticPath = cfg['paths']['data']+"/"+form.gallery.folder_name+"/"+ form.email
-            new_file_name = str(i)+'.'+file_ext
-            im_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, new_file_name, True)
             
-            if allowed_file(img.filename):
-                file_id = FilesQueries.insert(staticPath+'/'+new_file_name, new_file_name, file_ext)
-                img.save(im_upload_path)
-                iid = ImageQueries.insert(fid, file_id, None)
+            
+        #     im_thumbnail = Image.open(img)
+        #     im_thumbnail.thumbnail((200,200), Image.ANTIALIAS)
+        #     thumbnail_file_name = str(i)+'_thumb.'+file_ext
+        #     thumbnail_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, thumbnail_file_name, True)
+            
+            
+        #     if allowed_file(img.filename):
+        #         img_fullsize_id = FilesQueries.insert(staticPath+'/'+new_file_name, new_file_name, file_ext)
+        #         img.save(im_upload_path)
+        #         img_thumbnail_id = FilesQueries.insert(staticPath+'/'+thumbnail_file_name, thumbnail_file_name, file_ext)
+        #         im_thumbnail.save(thumbnail_upload_path)
+        #         iid = ImageQueries.insert(fid, img_fullsize_id, img)
         
         return fid #TODO: return appropriate JSON response for the Dropzone
+    
 
-            
     except Exception as e:
-        print("There is a problem!")
         print(e)
             
