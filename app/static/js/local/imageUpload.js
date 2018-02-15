@@ -14,8 +14,8 @@ var fileDropZone = new Dropzone('#fileDropZone',{
     addRemoveLinks: true,
     clickable: true,
     uploadMultiple: true,
-    parallelUploads: 50,
-    maxFiles: 50,
+    parallelUploads: 100,
+    maxFiles: 100,
     autoProcessQueue: false,
     init: function(){
         var submitButton = document.querySelector('#submit');
