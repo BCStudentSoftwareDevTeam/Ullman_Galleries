@@ -13,9 +13,10 @@ def insert(form, fullsize, thumbnail):
     
     """
     try:
-        iid = Images.create(form=form,
+        iid = Images(form=form,
                             fullsize=fullsize,
                             thumbnail=thumbnail)
+        iid.save()
         return iid
     except Exception as e:
         print (e)

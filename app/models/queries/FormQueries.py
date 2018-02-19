@@ -121,14 +121,3 @@ def insert_attachment_file(doc_type, fid, filename, filepath, filetype):
     form.save()
     return form
     
-def get_image_info(fid,im_type, file_ext, cfg, gallery_folder, submission_folder):
-    cfg = get_cfg()
-    if im_type == "fullsize":
-        filename = "image_{}".format(fid)+"."+file_ext
-    elif im_type == "thumbnail":
-        filename = "image_{}_thumb".format(fid)+"."+file_ext
-    upload_path = getAbsolutePath(cfg['paths']['app']+cfg['paths']['data']+"/"+gallery_folder+"/"+submission_folder,filename)
-    if os.path.isfile(upload_path):
-        return get_image_info(fid, im_type, file_ext,cfg, gallery_folder, submission_folder)
-    else:
-        return filename

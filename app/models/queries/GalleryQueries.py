@@ -1,7 +1,7 @@
 from app.models.Galleries import Galleries
 from datetime import datetime
 
-def get(gid):
+def get_gallery(gid):
     """ Retrieves a single gallery object 
     Args:
         gid (int): The gid of the gallery model to retrieve 

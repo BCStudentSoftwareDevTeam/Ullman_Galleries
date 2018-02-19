@@ -10,6 +10,8 @@ from flask import session
 from flask import current_app
 import os, sys
 import time
+from PIL import Image
+import json 
 
 
 
@@ -17,8 +19,9 @@ import time
 def create(gid):
     gallery = Galleries.get(Galleries.gid==gid)
     return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
-
-
+        
+        
+   
 @public.route('/application/submit/<gid>', methods=["POST"])
 def application_submit(gid):
     # retrieve the specific gallery for which the application was submitted
@@ -55,15 +58,12 @@ def application_submit(gid):
         flash ("An error occured during submission.")
         return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
 
-    print("Done inserting into the database!")
     if submission != False:
         cfg = get_cfg() 
         # save uploads in the database with the associated FID
         fid  = submission.fid
         form = FormQueries.get(fid)
-        
-        gallery_folder = str(gallery.folder_name)
-        submission_folder = data['email']
+        staticPath = cfg['paths']['data']+"/"+form.gallery.folder_name+"/"+ form.email
         try:
 
             if 'cv' in request.files:
@@ -77,13 +77,13 @@ def application_submit(gid):
                 cv_filename    = "cv_{}".format(data['firstName']+ '_'+ data['lastName']) + '.' + cv_ext
 
                 # get the absolute path where the file will be stored on the server
-                cv_upload_path = getAbsolutePath(cfg['paths']['app']+cfg['paths']['data']+"/"+gallery_folder+"/"+submission_folder,cv_filename,True)
+                cv_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath,cv_filename,True)
   
                 # save the file on the server
                 cv.save(cv_upload_path)
                 # save the file in the database in the Files table
-                saved_cv = FormQueries.insert_attachment_file("cv", fid,cv_filename,cv_upload_path,cv_ext)
-                print("Cv saved!")
+                saved_cv = FormQueries.insert_attachment_file("cv", fid,cv_filename,staticPath+'/'+cv_filename,cv_ext)
+               
         except Exception as e:
             print (e)
 
@@ -104,13 +104,13 @@ def application_submit(gid):
                 statement_filename    = "personal_statement_{}".format(data['firstName']+ '_'+ data['lastName'])
 
                 # get the absolute path where the file will be stored on the server
-                statement_upload_path = getAbsolutePath(cfg['paths']['app']+cfg['paths']['data']+"/"+gallery_folder+"/"+submission_folder,statement_filename,True)
+                statement_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath,statement_filename,True)
                
                 # save the file on the server
                 statement.save(statement_upload_path)
 
                 # save the file in the database in the Files table
-                saved_statement = FormQueries.insert_attachment_file("statement", fid,statement_filename,statement_upload_path,statement_ext)
+                saved_statement = FormQueries.insert_attachment_file("statement", fid,statement_filename,staticPath+'/'+statement_filename,statement_ext)
           
         except Exception as e:
             print (e)
@@ -122,9 +122,7 @@ def application_submit(gid):
         # redirect to uploads
         url = 'upload/{}'.format(fid)
         return redirect(url)
-        
-        # flash("Your application was successfully submitted.")
-        # return render_template('views/public/application_review.html',form = form)
+
 
     else:
         flash("Your application was not submitted, for an error occured in the process.")
@@ -134,33 +132,39 @@ def application_submit(gid):
 
 @public.route('/upload/<fid>', methods=["GET"])
 def upload(fid):
-    return render_template('snips/upload.html', fid = fid)
-    
-    
+    if select_single(fid) != None:
+        return render_template('snips/upload.html', fid = fid)
+    else:
+        return render_template('views/404.html')
+        
     
 @public.route('/upload/images/<fid>', methods = ["POST"])
 def upload_images(fid):
     try:
         cfg = get_cfg() 
         form = Forms.get(Forms.fid== fid)
-        gallery = form.gallery
-        gallery_folder = str(gallery.folder_name)
-        submission_folder = form.email
-        for f in request.files:
+        for i, f in enumerate(request.files):
             img = request.files[f]
-            file_ext    = (str(img.filename.split(".").pop())).replace(" ","")
-            staticPath = cfg['paths']['data']+"/"+gallery_folder+"/"+submission_folder
-            im_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, img.filename, True)
-            img.save(im_upload_path)
-            file_id = FilesQueries.insert(staticPath+'/'+img.filename, img.filename, file_ext)
-            if allowed_file(img.filename):
-                img.save(im_upload_path)
-            iid = ImageQueries.insert(fid, file_id, None)
-        
-        return fid #TODO: return appropriate JSON response for the Dropzone
-
+            file_ext = get_file_extension(img.filename)
+            staticPath = cfg['paths']['data']+"/"+form.gallery.folder_name+"/"+ form.email
+            new_file_name = "Image"+str(i)+'.'+file_ext
+            im_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, new_file_name, True)
+           
+            # Documentation for creating thumbnails: https://www.united-coders.com/christian-harms/image-resizing-tips-every-coder-should-know/ 
+            im_thumbnail = Image.open(img)
+            im_thumbnail.thumbnail((200,200), Image.ANTIALIAS)
+            thumbnail_file_name = "Image"+str(i)+'_thumb.'+file_ext
+            thumbnail_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, thumbnail_file_name, True)
             
+            
+            if allowed_file(img.filename):
+                img_fullsize_id = FilesQueries.insert(staticPath+'/'+new_file_name, new_file_name, file_ext)
+                img.save(im_upload_path)
+                img_thumbnail_id = FilesQueries.insert(staticPath+'/'+thumbnail_file_name, thumbnail_file_name, file_ext)
+                im_thumbnail.save(thumbnail_upload_path)
+                iid = ImageQueries.insert(fid, img_fullsize_id,img_thumbnail_id)
+        return fid 
+
     except Exception as e:
-        print("There is a problem!")
         print(e)
             
