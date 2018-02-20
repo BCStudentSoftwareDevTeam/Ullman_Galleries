@@ -62,3 +62,23 @@ def insert(filepath, filename, filetype):
         print (e)
     return None
     
+def get_file_path(fid):
+    """ Retrieves a single file path
+
+    Args:
+        fid (int): The fid of the file
+
+    Returns:
+        file path: The file path if it exists
+        None: If the file object does not exist
+    """
+    try:
+        if type(fid) is int:
+            if Files.select().where(Files.fid == fid).exists():
+                 file = Files.get(Files.fid == fid)
+                 path = file.filepath
+                 filepath=path[1:]
+            return filepath
+    except Exception as e:
+        print (e)
+    return None
