@@ -1,36 +1,29 @@
 {% extends "snips/base.html" %}
 {% block body %}
-<h2 class="text-center">{{form.gallery.title}}</h2>
-
+<h2 style="text-align:center;">Gallery</h2>
 <div class ="row">
     <label for="name">Name:</label>
-    <p id="name">{{form.first_name}} {{form.last_name}}</p>
+        <p id="name">{{user.name}}</p>
 </div>
-
 <div class ="row">
     <label for="address">Address:</label>
-        <p id="address">{{form.street_address}}</p>
+        <p id="address">{{user.street_address}}</p>
 </div>
-
 <div class ="row">
     <label for="email">Email:</label>
-        <p id="email">{{form.email}}</p>
+        <p id="email">{{user.email}}</p>
 </div>
-
 <div class="row">
     <label for="phone">Phone:</label>
-        <p id="phone">{{form.phone_number}}</p>
+        <p id="phone">{{user.phone_number}}</p>
 </div>
-
 <div class="row">
     <label for="website">Personal Website</label>
-    <p id="website">{{form.website}}</p>
+    <p id="website">{{user.website}}</p>
 </div>
-
 <div class="row">
     <label for="cv">CV:</label>
 </div>
-
 <div class="row">
     <label for="statement">Artist Statement:</label>
 </div>
@@ -44,13 +37,6 @@
 </div>
 
 <div class="scrollgallery">
-    {% for image %}
-        {% if Form = form %}
-        <div class="row">
-          <div class="column">
-            <img src= {{image.fullimage}} alt="Nature" onclick="openImg(this);">
-          </div>
-        </div>
-        {% endif %}
-    {% endfor %}
+    {% for 
+</div>
 {% endblock %}
