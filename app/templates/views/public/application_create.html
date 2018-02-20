@@ -1,13 +1,12 @@
 {% extends "snips/base.html" %}
 {% block body %}
- <!--<link rel="stylesheet" href="/static/css/application_create.css" type="text/css" />-->
 <div id="createApplication">
     <div class="col-xs-16
                 col-sm-8
                 col-md-9
                 col-lg-10"
          id="">
-    <h1 style = "text-align: center;"><strong>{{gallery.title}} - Application </strong></h1>
+    <h1 class="text-center"><strong>{{gallery.title}} - Application </strong></h1>
     <input type = "text" value = "{{gid}}" type = "hidden" id = "gallery_id" hidden>
     <form class = "form-group" method = "POST" id = "createApplicationForm" action = "/application/submit/{{gid}}" enctype="multipart/form-data">
  
@@ -55,12 +54,12 @@
         </br>
         <div>
             <label for = "statement">Personal Statement</label>
-            <input id = "statement" name = "statement" type = "file" accept=".doc,.docx,.pdf, .txt">
+            <input id = "statement" name = "statement" type = "file" accept=".doc,.docx,.pdf, .txt" required>
             
         </div>
         </br>
         <div>
-            <button type="submit" class = "btn btn-primary pull-right" id="submit">Submit</button>    
+            <button type="submit" class = "btn btn-primary pull-right" id="submit">Next</button>    
         </div>
     </form>
     </div>

@@ -16,19 +16,19 @@ var fileDropZone = new Dropzone('#fileDropZone',{
     uploadMultiple: true,
     parallelUploads: 100,
     maxFiles: 100,
-    autoProcessQueue: false,
+    autoProcessQueue: true,
     init: function(){
         var submitButton = document.querySelector('#submit');
         fileDropZone = this;
         submitButton.addEventListener('click',function(){
               fileDropZone.processQueue();
         });
-        
+
         this.on("successmultiple", function(files, response) {
         console.log(response);
-        window.location.replace("/application/review/"+response);
+        // window.location.replace("/application/review/"+response);
         });
-        
+
         this.on("errormultiple", function(files, response) {
         // Gets triggered when there was an error sending the files.
         // Maybe show form again, and notify user of error
@@ -36,5 +36,3 @@ var fileDropZone = new Dropzone('#fileDropZone',{
         });
     }
   });
-      
-    
