@@ -5,6 +5,7 @@ from flask import session
 from app.models.Forms import Forms
 from app.models.queries.FilesQueries import*
 from app.models.queries.FormQueries import *
+from app.models.queries.ImageQueries import *
 from flask import send_file
 from flask import current_app
 from flask import send_from_directory 
@@ -13,7 +14,8 @@ from flask import send_from_directory
 def review():
     fid = session['form_id']
     form = FormQueries.get(fid)
-    return render_template('views/public/application_review.html', form = form)
+    images = ImageQueries.get_form_images(fid)
+    return render_template('views/public/application_review.html', form = form, images = images)
 
 
 @public.route('/download/cv/', methods=["GET","POST"])

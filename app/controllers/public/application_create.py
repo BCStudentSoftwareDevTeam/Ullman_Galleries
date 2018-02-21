@@ -143,7 +143,7 @@ def upload():
 
 @public.route('/upload/images/', methods = ["POST"])
 def upload_images():
-    fid = session['fid']
+    fid = session['form_id']
     try:
         cfg = get_cfg()
         # import pdb;pdb.set_trace()
