@@ -1,7 +1,7 @@
 from app.models import Forms
 from app.models import Files
 from app.models import Galleries
-from app.config.loadConfig import get_cfg
+from app.config.loadConfig import get_cfg 
 from app.logic.validation import*
 
 def get(fid):
@@ -121,3 +121,17 @@ def insert_attachment_file(doc_type, fid, filename, filepath, filetype):
     form.save()
     return form
     
+
+def get_cv(fid):
+    form = get(fid)
+    if form is not None:
+        if form.cv is not None:
+            return form.cv
+    return None
+
+def get_statement(fid):
+    form = get(fid)
+    if form is not None:
+        if form.personal_statement is not None:
+            return form.personal_statement
+    return None

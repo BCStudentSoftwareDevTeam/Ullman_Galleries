@@ -1,39 +1,65 @@
 {% extends "snips/base.html" %}
 {% block body %}
-<h2 class="text-center">{{form.gallery.title}}</h2>
+<div id="reviewApplication">
+    <div class="col-xs-16
+                col-sm-8
+                col-md-9
+                col-lg-10"
+         id="">
+    <h1 class="text-center"><strong>{{form.first_name}} {{form.last_name}}</strong></h1>
+    <h4 class="text-center"><strong>{{form.gallery.title}}</strong></h1>
+      </br>
+      <div>
+          <label for = "address">Address:</label>
+          <input value = "{{form.street_address}}" readonly class = "form-control">
+          </br>
 
-<div class ="row">
-    <label for="name">Name:</label>
-    <p id="name">{{form.first_name}} {{form.last_name}}</p>
-</div>
+          {%if form.second_address != "" %}
+            <label for = "address">Second Address:</label>
+            <input value = "{{form.second_address}}" readonly class = "form-control">
+            </br>
+          {%endif%}
 
-<div class ="row">
-    <label for="address">Address:</label>
-        <p id="address">{{form.street_address}}</p>
-</div>
+          <label>City:</label>
+          <input value = "{{form.city}}" readonly class = "form-control">
+          </br>
+          <label>State:</label>
+          <input value = "{{form.state}}" readonly class = "form-control">
+          </br>
+          <label>Zipcode:</label>
+          <input value = "{{form.zip_code}}" readonly class = "form-control">
 
-<div class ="row">
-    <label for="email">Email:</label>
-        <p id="email">{{form.email}}</p>
-</div>
-
-<div class="row">
-    <label for="phone">Phone:</label>
-        <p id="phone">{{form.phone_number}}</p>
-</div>
-
-
-<div class="row">
-    <label for="website">Personal Website</label>
-    <p id="website">{{form.website}}</p>
-</div>
-
-<div class="row">
-    <label for="cv">CV:</label>
-      <a href='/download/cv/1' ></href> <button type="button" id ="create" class="btn btn-primary" >CV</button><a/>
-</div>
-
-<div class="row">
-    <label for="statement">Artist Statement:</label>
+      </div>
+      </br>
+      <div>
+          <label for = "email">Email:</label>
+          <input value = "{{form.email}}" readonly class = "form-control">
+      </div>
+      </br>
+      {% if form.phone_number != "" %}
+        <div>
+            <label for = "phone">Phone</label>
+            <input value = "{{form.phone_number}}" readonly class = "form-control">
+        </div>
+        </br>
+      {%endif%}
+      {% if form.website != "" %}
+        <div>
+            <label for = "website">Personal Website:</label>
+            <input value = "{{form.website}}" readonly class = "form-control">
+        </div>
+        </br>
+      {% endif %}
+      {% if form.cv is not none %}
+       <div>
+         <a href="download/cv/" class="btn btn-primary" role="button">Link Button</a>
+      </div>
+      </br>
+      {% endif %}
+      <div>
+        <a href="/download/statement/" class="btn btn-primary" role="button">Link Button</a>
+      </div>
+      </br>
+    </div>
 </div>
 {% endblock %}

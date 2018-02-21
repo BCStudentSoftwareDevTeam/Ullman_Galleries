@@ -9,13 +9,13 @@
     <h1 class="text-center"><strong>{{gallery.title}} - Application </strong></h1>
     <input type = "text" value = "{{gid}}" type = "hidden" id = "gallery_id" hidden>
     <form class = "form-group" method = "POST" id = "createApplicationForm" action = "/application/submit/{{gid}}" enctype="multipart/form-data">
- 
+
         <div>
             <label for = "name">Name*</label>
             <input placeholder = "First" type = "text" id = "name" name = "firstName" class = "form-control" required>
             </br>
             <input placeholder = "Last" type = "text" id = "name" name = "lastName" class = "form-control" required>
-            
+
         </div>
         </br>
         <div>
@@ -29,7 +29,7 @@
             <input placeholder = "State/Province/Region" type = "text" id = "address" name = "stateProvinceRegion" class = "form-control"required>
             </br>
             <input placeholder = "Zip/Postal Code" type = "text" id = "address" name = "zipPostalCode" class = "form-control"required>
-                
+
         </div>
         </br>
         <div>
@@ -55,11 +55,11 @@
         <div>
             <label for = "statement">Personal Statement</label>
             <input id = "statement" name = "statement" type = "file" accept=".doc,.docx,.pdf, .txt" required>
-            
+
         </div>
         </br>
         <div>
-            <button type="submit" class = "btn btn-primary pull-right" id="submit">Next</button>    
+            <button type="submit" class = "btn btn-primary pull-right" id="submit">Next</button>
         </div>
     </form>
     </div>

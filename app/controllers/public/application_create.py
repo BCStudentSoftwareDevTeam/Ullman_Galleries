@@ -122,7 +122,7 @@ def application_submit(gid):
             return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
 
         # redirect to uploads
-        session['fid'] = fid
+        session['form_id'] = fid
         return redirect('upload')
 
 
@@ -134,7 +134,7 @@ def application_submit(gid):
 
 @public.route('/upload/', methods=["GET"])
 def upload():
-    fid = session['fid']
+    fid = session['form_id']
     if select_single(fid) != None:
         return render_template('snips/upload.html', fid = fid)
     else:
