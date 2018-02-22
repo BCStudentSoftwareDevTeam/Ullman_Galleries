@@ -25,14 +25,10 @@ var fileDropZone = new Dropzone('#fileDropZone',{
         });
 
         this.on("successmultiple", function(files, response) {
-        console.log(response);
-        // window.location.replace("/application/review/"+response);
+          window.location.replace("/review/");
         });
 
         this.on("errormultiple", function(files, response) {
-        // Gets triggered when there was an error sending the files.
-        // Maybe show form again, and notify user of error
-        console.log(response);
         });
     }
   });

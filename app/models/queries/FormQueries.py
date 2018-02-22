@@ -74,10 +74,9 @@ def select_single(fid):
         print (e)
         return False
 
-def insert(first_name, last_name, street_address, second_address,city, state, zip_code, email, phone_number, website, gallery,cv, personal_statement, submit_date, status):
+def insert(first_name, last_name, street_address, second_address,city, state, zip_code, email, phone_number, website, gallery,cv, personal_statement, submit_date, status, folder_path):
     '''This function is to store the inputs received from the application form into the database'''
     try:
-        print("Saving:FormQueries")
         form = Forms(   first_name=first_name,
                         last_name=last_name,
                         street_address=street_address,
@@ -92,9 +91,9 @@ def insert(first_name, last_name, street_address, second_address,city, state, zi
                         cv=cv,
                         personal_statement=personal_statement,
                         submit_date=submit_date,
-                        status=status
+                        status=status,
+                        folder_path=folder_path
                     )
-        print("Saved: FormQueries")
         form.save()
         return form
     except Exception as e:

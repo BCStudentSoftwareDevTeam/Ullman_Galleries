@@ -17,22 +17,24 @@ import json
 
 
 
-@public.route('/application/create/<gid>', methods=["GET"])
-def create(gid):
+@public.route('/', methods=["GET"])
+def create():
+    gid = 1
     gallery = Galleries.get(Galleries.gid==gid)
     return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
 
 
 
-@public.route('/application/submit/<gid>', methods=["POST"])
-def application_submit(gid):
+@public.route('/submit/', methods=["POST"])
+def application_submit():
+    gid = 1
     # retrieve the specific gallery for which the application was submitted
     gallery         = Galleries.get(Galleries.gid==gid)
 
     # retrieve data from the form
     data            = request.form
 
-    submit_date     = time.strftime("%m/%d/%y %H:%M:%S")
+    submit_date     = time.strftime("%Y-%m-%d %H:%M:%S")
 
     status          = "Pending"
 
@@ -52,7 +54,8 @@ def application_submit(gid):
                                             None,
                                             None,
                                             submit_date,
-                                            status
+                                            status,
+                                            None
                                         )
 
     except Exception as e:
@@ -66,6 +69,8 @@ def application_submit(gid):
         fid  = submission.fid
         form = FormQueries.get(fid)
         staticPath = cfg['paths']['data']+"/"+form.gallery.folder_name+"/"+ form.email
+        form.folder_path = staticPath
+        form.save()
         try:
 
             if 'cv' in request.files:
@@ -103,7 +108,7 @@ def application_submit(gid):
                 statement_ext         = (str(statement.filename.split(".").pop())).replace(" ","")
 
                 # rename the file uploaded to a specific format
-                statement_filename    = "personal_statement_{}".format(data['firstName']+ '_'+ data['lastName'] +statement_ext )
+                statement_filename    = "personal_statement_{}".format(data['firstName']+ '_'+ data['lastName'] + "." + statement_ext )
 
                 # get the absolute path where the file will be stored on the server
                 statement_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath,statement_filename,True)
@@ -173,7 +178,7 @@ def upload_images():
                 img_thumbnail_id = FilesQueries.insert(staticPath+'/'+thumbnail_file_name, thumbnail_file_name, file_ext)
                 im_thumbnail.save(thumbnail_upload_path)
                 iid = ImageQueries.insert(fid, img_fullsize_id,img_thumbnail_id)
-        return "Suc"
+        return "200"
 
     except Exception as e:
         print(e)

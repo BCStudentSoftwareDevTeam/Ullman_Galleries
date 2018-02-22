@@ -2,7 +2,6 @@
 <div id="reviewApplication">
   <div class="col-xs-12 col-sm-8 col-sm-push-2 col-md-8 col-md-push-2 col-lg-10 col-lg-push-1" id="">
     <h1 class="text-center"><strong>{{form.first_name}} {{form.last_name}}</strong></h1>
-    <h4 class="text-center"><strong>{{form.gallery.title}}</strong></h1>
     </br>
 
     <div>
@@ -52,18 +51,25 @@
       </br>
     {% endif %}
 
+    <div>
+      <a href="/download/statement/" class="btn btn-info" role="button">
+        <i class="glyphicon glyphicon-download-alt">&nbsp</i>
+        Artist Statement 
+      </a>
+    </div>
+    </br>
+
     {% if form.cv is not none %}
      <div>
-       <a href="download/cv/" class="btn btn-primary" role="button">Link Button</a>
+       <a href="/download/cv/" class="btn btn-info" role="button">
+         <i class="glyphicon glyphicon-download-alt">&nbsp</i>
+         CV 
+       </a>
     </div>
     </br>
     {% endif %}
 
-    <div>
-      <a href="/download/statement/" class="btn btn-primary" role="button">Link Button</a>
-    </div>
 
-    </br>
     <h2> Images </h2>
     <div class="row">
       {% for image in images %}
@@ -71,7 +77,7 @@
           <div class="row">
         {% endif %}
             <div class="col-md-4">
-              <a href="#" onclick="enlarge_image(this)" data-img="{{image.fullsize.filepath}}">
+              <a href="#/" onclick="enlarge_image(this)" data-img="{{image.fullsize.filepath}}">
                 <div class="thumbnail">
                     <img src="{{image.thumbnail.filepath}}" alt="{{image.thumbnail.filepath}}" >
                 </div>
@@ -83,22 +89,38 @@
         {% endif %}
       {% endfor %}
     </div> 
+  {% if is_admin and show_previous%}
+    <a href="/view/previous" class="pull-left btn btn-primary" role="button">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+      Previous Submission
+    </a>
+  {%endif%}
+
+  {% if is_admin and show_next%}
+    <a href="/view/next" class="pull-right btn btn-primary" role="button">
+      Next Submission
+      <i class="glyphicon glyphicon-arrow-right"></i>
+    </a>
+  {%endif%}
   </div>
 </div>
 
 <div class="modal fade" id="expand_image_modal" tabindex="-1" role="dialog" >
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">
           <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title text-center">Image by: {{form.first_name}} {{form.last_name}}</h4>
+        <h4 class="modal-title text-center">{{form.first_name}} {{form.last_name}}</h4>
       </div>
       <div class="modal-body">
         <img class="center-block img-responsive" src="" id="imagepreview">
       </div>
       <div class="modal-footer">
-        <a id="modal_download" href="link" class="btn btn-success" download>Download Image</a>
+        <a id="modal_download" href="link" class="btn btn-info" download>
+          <i class="glyphicon glyphicon-download-alt">&nbsp</i>
+          Download Image 
+        </a>
       </div>
     </div>
   </div>
