@@ -21,7 +21,8 @@ def insert(form, fullsize, thumbnail):
         print (e)
     return None
     
-def image_count(fid):
+        
+def file_count(fid):
     """ Get the number of images submitted by a user
     Args:
         fid (Form): The form of the user, whose images need to be counted
@@ -33,7 +34,6 @@ def image_count(fid):
         return Images.select().where(Images.form== fid).count()
     else:
         return 0
-        
 
 def get_form_images(fid):
     """ Get all images associated with a single form

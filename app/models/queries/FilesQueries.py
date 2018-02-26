@@ -61,3 +61,15 @@ def insert(filepath, filename, filetype):
         print (e)
     return None
 
+def file_count(fid):
+    """ Get the number of filessubmitted by a user
+    Args:
+        fid (Form): The form of the user, whose images need to be counted
+    
+    Returns: 
+        count (int): The number of images submitted by the user.
+    """
+    if Files.select().where(Files.fid== fid).exists():
+        return Files.select().where(Files.fid == fid).count()
+    else:
+        return 0

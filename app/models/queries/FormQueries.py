@@ -77,7 +77,7 @@ def select_single(fid):
 def insert(first_name, last_name, street_address, second_address,city, state, zip_code, email, phone_number, website, gallery,cv, personal_statement, submit_date, status, folder_path):
     '''This function is to store the inputs received from the application form into the database'''
     try:
-        form = Forms(   first_name=first_name,
+        form, created = Forms.get_or_create(   first_name=first_name,
                         last_name=last_name,
                         street_address=street_address,
                         second_address=second_address,

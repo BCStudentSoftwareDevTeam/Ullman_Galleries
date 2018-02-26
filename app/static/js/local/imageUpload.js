@@ -1,13 +1,14 @@
 
 $(window).on('load',function(){
     $('#uploadModal').modal('show');
-})
-
+}) 
 function closeModal(){
     $('#uploadModal').modal('hide');
 }
+upload_failed = false
 Dropzone.autoDiscover = false;
-var fileDropZone = new Dropzone('#fileDropZone',{
+
+$("#fileDropZone").dropzone({
     paramname: 'file', //The name that will be used to transfer the file
     acceptedFiles: ".jpg,.jpeg,.png",
     dictDefaultMessage: "Upload images here.",
@@ -16,19 +17,28 @@ var fileDropZone = new Dropzone('#fileDropZone',{
     uploadMultiple: true,
     parallelUploads: 100,
     maxFiles: 100,
-    autoProcessQueue: true,
-    init: function(){
-        var submitButton = document.querySelector('#submit');
-        fileDropZone = this;
-        submitButton.addEventListener('click',function(){
-              fileDropZone.processQueue();
-        });
+    autoProcessQueue: false,
+    error: function(file, error ,xhr){
+        file.status = Dropzone.QUEUED;
+        upload_failed = true
+    },
+   queuecomplete: function(){
+      if (upload_failed){
+        $("#message_text").text("Failed to upload files, please try again")
+        $("#message").show()
+      }
+   }
+})
 
-        this.on("successmultiple", function(files, response) {
-          window.location.replace("/review/");
-        });
+function submitforms(){
+    $.ajax({
+        url:'/submit/',
+        type:'post',
+        data:$('#createApplicationForm').serialize(),
+        success:function(){
+         console.log($("#fileDropZone")[0].dropzone.processQueue())
+        }
+    });
+    // window.location = "/review/";
 
-        this.on("errormultiple", function(files, response) {
-        });
-    }
-  });
+}

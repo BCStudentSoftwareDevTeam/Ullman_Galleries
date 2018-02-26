@@ -70,25 +70,27 @@
     {% endif %}
 
 
-    <h2> Images </h2>
-    <div class="row">
-      {% for image in images %}
-        {% if loop.index % 3 == 0 %}
-          <div class="row">
-        {% endif %}
-            <div class="col-md-4">
-              <a href="#/" onclick="enlarge_image(this)" data-img="{{image.fullsize.filepath}}">
-                <div class="thumbnail">
-                    <img src="{{image.thumbnail.filepath}}" alt="{{image.thumbnail.filepath}}" >
-                </div>
-              </a>
+    {% if images is not none %}
+      <h2> Images </h2>
+      <div class="row">
+        {% for image in images %}
+          {% if loop.index % 3 == 0 %}
+            <div class="row">
+          {% endif %}
+              <div class="col-md-4">
+                <a href="#/" onclick="enlarge_image(this)" data-img="{{image.fullsize.filepath}}">
+                  <div class="thumbnail">
+                      <img src="{{image.thumbnail.filepath}}" alt="{{image.thumbnail.filepath}}" >
+                  </div>
+                </a>
 
-            </div>
+              </div>
 
-        {% if loop.index % 3 == 0 %} </div >
-        {% endif %}
-      {% endfor %}
+          {% if loop.index % 3 == 0 %} </div >
+          {% endif %}
+        {% endfor %}
     </div> 
+  {% endif%}
   {% if is_admin and show_previous%}
     <a href="/view/previous" class="pull-left btn btn-primary" role="button">
       <i class="glyphicon glyphicon-arrow-left"></i>

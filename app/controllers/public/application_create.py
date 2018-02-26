@@ -3,16 +3,13 @@ from flask import render_template, g
 from app.logic.validation import*
 from app.models.queries.FormQueries import*
 from app.models.queries.FilesQueries import*
-from app.models.queries.ImageQueries import*
 from app.logic.upload import *
 from app.config.loadConfig import get_cfg
 from flask import session
 from flask import current_app
 import os, sys
 import time
-from PIL import Image
 import io
-
 import json
 
 
@@ -151,33 +148,20 @@ def upload_images():
     fid = session['form_id']
     try:
         cfg = get_cfg()
-        # import pdb;pdb.set_trace()
+        import pdb;pdb.set_trace()
         form = Forms.get(Forms.fid == fid)
-        count = ImageQueries.image_count(form.fid)
+        count = FilesQueries.file_count(form.fid)
         for i, f in enumerate(request.files):
             count += 1
-            img = request.files[f]
-            file_ext = get_file_extension(img.filename)
+            file = request.files[f]
+            file_ext = get_file_extension(file.filename)
             staticPath = cfg['paths']['data']+"/"+form.gallery.folder_name+"/"+ form.email
-            new_file_name = "Image"+str(count)+'.'+file_ext
-            im_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, new_file_name, True)
+            new_file_name = "file_"+str(count)+'.'+file_ext
+            file_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, new_file_name, True)
 
-            # Documentation for creating thumbnails: https://www.united-coders.com/christian-harms/image-resizing-tips-every-coder-should-know/
-            image_buffer = io.BytesIO(img.read())
-            img.seek(0)
-
-            im_thumbnail = Image.open(image_buffer)
-            im_thumbnail.thumbnail((200,200), Image.ANTIALIAS)
-            thumbnail_file_name = "Image"+str(count)+'_thumb.'+file_ext
-            thumbnail_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, thumbnail_file_name, True)
-
-
-            if allowed_file(img.filename):
-                img_fullsize_id = FilesQueries.insert(staticPath+'/'+new_file_name, new_file_name, file_ext)
-                img.save(im_upload_path)
-                img_thumbnail_id = FilesQueries.insert(staticPath+'/'+thumbnail_file_name, thumbnail_file_name, file_ext)
-                im_thumbnail.save(thumbnail_upload_path)
-                iid = ImageQueries.insert(fid, img_fullsize_id,img_thumbnail_id)
+            if allowed_file(file.filename):
+                file_id= FilesQueries.insert(staticPath+'/'+new_file_name, new_file_name, file_ext)
+                file.save(file_upload_path)
         return "200"
 
     except Exception as e:
