@@ -12,13 +12,13 @@ else:
 from app.models import *
 
 def drop_tables():
-    models = [Images, Forms, Galleries,Files,Users] 
+    models = [FormToFile, UserRoles, Forms, Galleries,Files,Users, Role] 
     for model in models:
         if model.table_exists():
             model.drop_table()
 
 def create_tables():
-    models = [Users, Files,Galleries,Forms,Images] 
+    models = [Users, Role, Files,Galleries,Forms,FormToFile,UserRoles] 
     for model in models:
         if not model.table_exists():
             model.create_table()

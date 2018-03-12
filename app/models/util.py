@@ -2,8 +2,7 @@ from app.config.loadConfig import *
 from app.logic.absolute_path import *
 from peewee import *
 import os
-
-def getDB ():
+def getDB():
   config_abs_path = getAbsolutePath('app/config','config.yaml')
   cfg                   = load_config(config_abs_path)
   secret_config_path    = getAbsolutePath('app/config','secret.yaml')

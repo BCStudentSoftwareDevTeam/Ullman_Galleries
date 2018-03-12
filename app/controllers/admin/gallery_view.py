@@ -6,6 +6,7 @@ from flask import send_file
 from flask import current_app
 from flask import render_template
 from flask import flash 
+from flask_security import login_required
 import shutil
 import bleach
 
@@ -25,11 +26,14 @@ def change_description():
         abort(404)
 
 @admin.route('/view/', methods=["GET"])
+@login_required
 def gallery_view():
     gid = 1
     gallery = GalleryQueries.get(gid)
     forms = FormQueries.get_all_from_gallery(gallery.gid) 
-    description = gallery.description.strip()
+    description = gallery.description
+    if description is not None:
+        description = description.strip()
     is_admin = False
     if(doesUserHaveRole('admin')):
         is_admin = True

@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from app.config import loadConfig
-
+from flask_security import Security, PeeweeUserDatastore
 import sys
 
 sys.dont_write_bytecode = True
@@ -12,20 +12,34 @@ sys.dont_write_bytecode = True
 def create_app(config_filename):
     from app.controllers.admin import admin
     from app.controllers.public import public
-    
+    from app.models.Role import Role
+    from app.models.Users import Users
+    from app.models.UserRoles import UserRoles
+    from app.models.util import getDB
+
+
     app = Flask(__name__)
-    
+
     secret_cfg = loadConfig.get_secret_cfg()
     cfg = loadConfig.get_cfg()
     app.secret_key = secret_cfg['secret_key']
-    
+
     app.register_blueprint(admin)
     app.register_blueprint(public)
-    
+    mainDB = getDB()
+    user_datastore = PeeweeUserDatastore(mainDB, Users, Role, UserRoles)
+
+
+    app.config["SECURITY_SEND_REGISTER_EMAIL"] = False
+    app.config["SECURITY_PASSWORD_SALT"] = "MUST BE SET"
+    security = Security(app, user_datastore)
+    user_datastore.create_user(email='matt@nobien.net', password='password')
+
+
     @app.errorhandler(403)
     def access_denied(e):
         return render_template('views/403.html', cfg=cfg), 403
-    
+
     @app.errorhandler(404)
     def pageNotFound(e):
         return render_template('views/404.html', cfg=cfg), 404
