@@ -1,5 +1,5 @@
-from app.models.util import *
 
+from app.models.util import *
 class Files (baseModel):
   fid           = PrimaryKeyField()
   filepath      = TextField()

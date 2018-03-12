@@ -9,6 +9,12 @@ paths:
   app: 'app'
   data: '/static/data'
   
+document_extensions:
+  - 'pdf'
+  - 'docx'
+  - 'doc'
+  - 'txt'
+
 allowed_extensions:
   - 'pdf'
   - 'png'
@@ -19,6 +25,7 @@ allowed_extensions:
   - 'doc'
   - 'svg'
   - 'raw'
+  - 'txt'
 
 user:
   tmp: "adminUser"

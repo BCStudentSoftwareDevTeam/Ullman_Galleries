@@ -1,5 +1,4 @@
-{% extends "snips/base.html" %} {% block body %}
-<div id="reviewApplication">
+{% extends "snips/base.html" %} {% block body %} <div id="reviewApplication">
   <div class="col-xs-12 col-sm-8 col-sm-push-2 col-md-8 col-md-push-2 col-lg-10 col-lg-push-1" id="">
     <h1 class="text-center"><strong>{{form.first_name}} {{form.last_name}}</strong></h1>
     </br>
@@ -11,8 +10,7 @@
 
       {%if form.second_address != "" %}
         <label for = "address">Second Address:</label>
-        <input value = "{{form.second_address}}" readonly class = "form-control">
-        </br>
+        <input value = "{{form.second_address}}" readonly class = "form-control"> </br>
       {%endif%}
 
       <label>City:</label>
@@ -70,18 +68,27 @@
     {% endif %}
 
 
-    {% if images is not none %}
-      <h2> Images </h2>
+    {% if files is not none %}
+      <h2> Files </h2>
       <div class="row">
-        {% for image in images %}
+        {% for file in files %}
           {% if loop.index % 3 == 0 %}
             <div class="row">
           {% endif %}
               <div class="col-md-4">
-                <a href="#/" onclick="enlarge_image(this)" data-img="{{image.fullsize.filepath}}">
-                  <div class="thumbnail">
-                      <img src="{{image.thumbnail.filepath}}" alt="{{image.thumbnail.filepath}}" >
-                  </div>
+                {% if file.file.filetype in allowed_extensions and file.file.filetype not in document_extensions%}
+                  <a href="#/" onclick="enlarge_image(this)" data-img="{{file.file.filepath}}">
+                    <div class="thumbnail">
+                        <img class="img-thumbnail" src="{{file.file.filepath}}" alt="{{file.file.filename}}" >
+                        <p class = "text-center"> {{file.file.filename}}
+                    </div>
+                {% elif file.file.filetype in allowed_extensions and file.file.filetype in document_extensions %}
+                <a href="{{file.file.filepath}}" >
+                    <div class="thumbnail">
+                        <img class="img-thumbnail" src="/static/images/document_icon.svg" alt="{{file.file.filename}}" >
+                        <p class = "text-center"> {{file.file.filename}}
+                    </div>
+                {% endif %}
                 </a>
 
               </div>
@@ -91,18 +98,24 @@
         {% endfor %}
     </div> 
   {% endif%}
-  {% if is_admin and show_previous%}
-    <a href="/view/previous" class="pull-left btn btn-primary" role="button">
-      <i class="glyphicon glyphicon-arrow-left"></i>
-      Previous Submission
-    </a>
-  {%endif%}
+  {% if is_admin %}
+    {% if show_previous%}
+      <a href="/view/previous" class="pull-left btn btn-primary" role="button">
+        <i class="glyphicon glyphicon-arrow-left"></i>
+        Previous Submission
+      </a>
+    {%endif%}
 
-  {% if is_admin and show_next%}
-    <a href="/view/next" class="pull-right btn btn-primary" role="button">
-      Next Submission
-      <i class="glyphicon glyphicon-arrow-right"></i>
-    </a>
+    {% if show_next%}
+      <a href="/view/next" class="pull-right btn btn-primary" role="button">
+        Next Submission
+        <i class="glyphicon glyphicon-arrow-right"></i>
+      </a>
+    {%endif%}
+  {% else %}
+      <a href="/withdraw" class="pull-left btn btn-danger" role="button">
+	Withdraw Application
+      </a>
   {%endif%}
   </div>
 </div>
@@ -136,7 +149,6 @@ function enlarge_image(element){
    $('#modal_download').attr('href', $(element).data()['img']); // here asign the image to the modal when the user click the enlarge link
    $('#expand_image_modal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
 }
-
 
 </script>
 

@@ -7,34 +7,38 @@
 </div>
 <br/>
 <div id="createApplication">
-    <div class="col-xs-16
-                col-sm-8
-                col-md-9
-                col-lg-10"
+    <div class="col-sm-offset-1
+                col-sm-10"
          id="">
     <h1 class="text-center"><strong>{{gallery.title}} - Application </strong></h1>
+      {{description|safe}}
     <input type = "text" value = "{{gid}}" type = "hidden" id = "gallery_id" hidden>
     <form class = "form-group" method = "POST" id = "createApplicationForm" action = "/submit/" enctype="multipart/form-data">
 
         <div>
-            <label for = "name">Name*</label>
+            <label for = "firstName">First Name</label>
             <input placeholder = "First" type = "text" id = "name" name = "firstName" class = "form-control" required>
             </br>
-            <input placeholder = "Last" type = "text" id = "name" name = "lastName" class = "form-control" required>
+            <label for = "lastName">Last Name</label>
+            <input placeholder = "Last" type = "text"  name = "lastName" class = "form-control" required>
 
         </div>
         </br>
         <div>
-            <label for = "address">Address*</label>
+            <label for = "streetAddress">Street Address</label>
             <input placeholder = "Street Address" type = "text" id = "address" name = "streetAddress" class = "form-control"required>
             </br>
-            <input placeholder = "Address Line 2" type = "text" id = "address" name = "addressLine2" class = "form-control"required>
+            <label for = "addressLine2">Address Line 2</label>
+            <input placeholder = "Address Line 2" type = "text" id = "address_line_2" name = "addressLine2" class = "form-control">
             </br>
-            <input placeholder = "City" type = "text" id = "address" name = "city" class = "form-control"required>
+            <label for = "city">City</label>
+            <input placeholder = "City" type = "text" id = "city" name = "city" class = "form-control" required>
             </br>
-            <input placeholder = "State/Province/Region" type = "text" id = "address" name = "stateProvinceRegion" class = "form-control"required>
+            <label for = "stateProvinceRegion">State/Province/Region</label>
+            <input placeholder = "State/Province/Region" type = "text" id = "stateProvinceRegion" name = "stateProvinceRegion" class = "form-control" required>
             </br>
-            <input placeholder = "Zip/Postal Code" type = "text"  pattern="[0-9]{5}" id = "address" name = "zipPostalCode" class = "form-control"required>
+            <label for = "zipPostalCode">Zip/Postal Code*</label>
+            <input placeholder = "Zip/Postal Code" type = "text"  pattern="[0-9]{5}" id = "" name = "zipPostalCode" class = "form-control"required>
 
         </div>
         </br>
@@ -45,16 +49,16 @@
         </br>
         <div>
             <label for = "phone">Phone</label>
-            <input placeholder = "(555)322-2321" type = "text" id = "phone" pattern="[0-9]{10}" name = "phone" class = "form-control">
+            <input placeholder = "1234567890" type = "digits" id = "phone" name = "phone" class = "form-control">
         </div>
         </br>
         <div>
             <label for = "website">Personal Website</label>
-            <input placeholder = "http://thisispersonal.com" type = "text" id = "website" name = "website" class = "form-control">
+            <input placeholder = "http://berea.edu" type = "url" id = "website" name = "website" class = "form-control">
         </div>
         </br>
          <div>
-            <label for = "cv">CV (optional)</label>
+            <label for = "cv">CV</label>
             <input id = "cv" name = "cv" type = "file" accept=".doc,.docx,.pdf, .txt">
         </div>
         </br>
@@ -65,17 +69,17 @@
         </br>
     </form>
 
-    <form class="dropzone" id="fileDropZone" action = "/upload/images/" >
+    <form class="dropzone" id="fileDropZone" action = "/upload/images/" hidden>
       <div class="box"></div>
     </form>
     <div>
-        <button onclick="submitforms()" class = "btn btn-primary pull-right" id="submit">Next</button>
+        <button onclick="submitforms()" class = "btn btn-primary pull-right" id="next">Next</button>
+        <a href="/success/" class = "btn btn-primary pull-right" id="submit" style="display: none;">Submit</a>
     </div>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
 <script type="text/javascript" src="/static/js/local/imageUpload.js"></script>
 
-<script>
-</script>
 
 {% endblock %}

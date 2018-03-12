@@ -10,35 +10,46 @@ Dropzone.autoDiscover = false;
 
 $("#fileDropZone").dropzone({
     paramname: 'file', //The name that will be used to transfer the file
-    acceptedFiles: ".jpg,.jpeg,.png",
-    dictDefaultMessage: "Upload images here.",
+    acceptedFiles: ".jpg,.jpeg,.pdf,.raw,.png,.docx,.doc,.svg,.gif,.bmp",
+    dictDefaultMessage: "Upload Images Here",
     addRemoveLinks: true,
     clickable: true,
     uploadMultiple: true,
     parallelUploads: 100,
     maxFiles: 100,
-    autoProcessQueue: false,
     error: function(file, error ,xhr){
         file.status = Dropzone.QUEUED;
+        file.previewElement.classList.add("dz-error")
+        file.previewElement.children[3].firstElementChild.innerText= "Failed to upload file please try again"
         upload_failed = true
     },
    queuecomplete: function(){
-      if (upload_failed){
-        $("#message_text").text("Failed to upload files, please try again")
-        $("#message").show()
-      }
    }
 })
 
 function submitforms(){
+  $("#createApplicationForm").validate({
+    errorClass:"text-danger"
+  })
+  if ($("#createApplicationForm").valid()){
+    form = $('#createApplicationForm')[0]
     $.ajax({
         url:'/submit/',
         type:'post',
-        data:$('#createApplicationForm').serialize(),
+        data:new FormData(form),
+        processData: false,
+        contentType: false,
         success:function(){
-         console.log($("#fileDropZone")[0].dropzone.processQueue())
+          $("#fileDropZone").show()
+          $("#message").hide()
+          $("#next").hide()
+          $("#submit").show()
+        },
+        error: function(){  
+          $("#message_text").text("Unable to submit form, please try again")
+          $("#message").show()
         }
     });
-    // window.location = "/review/";
+  }
 
 }

@@ -62,7 +62,7 @@ def insert(filepath, filename, filetype):
     return None
 
 def file_count(fid):
-    """ Get the number of filessubmitted by a user
+    """ Get the number of files submitted by a user
     Args:
         fid (Form): The form of the user, whose images need to be counted
     
@@ -73,3 +73,16 @@ def file_count(fid):
         return Files.select().where(Files.fid == fid).count()
     else:
         return 0
+
+def get_all_from_fid(fid):
+    """
+        Returns a list of all the files attached to a form
+    Args:
+        fid (Form): The form of the user, whose files need to be counted
+    Returns: 
+        files (list): A list of all the files attached to a user 
+    """
+    if Files.select().where(Files.fid == fid).exists():
+        return list(Files.select().where(Files.fid == fid))
+    else:
+        return list()

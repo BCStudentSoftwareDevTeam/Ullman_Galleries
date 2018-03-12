@@ -1,7 +1,7 @@
-from app.models.Images import Images
+from app.models.FormToFile import FormToFile
 from app.models.Files import Files
 
-def insert(form, fullsize, thumbnail):
+def insert(form, file):
     """ Insert a new file record
     Args:
         filepath (str): The filepath of the new file to be added
@@ -12,11 +12,9 @@ def insert(form, fullsize, thumbnail):
     
     """
     try:
-        iid = Images(form=form,
-                            fullsize=fullsize,
-                            thumbnail=thumbnail)
-        iid.save()
-        return iid
+        ftf = FormToFile.create(form=form,file=file)
+        ftf.save()
+        return ftf
     except Exception as e:
         print (e)
     return None
@@ -30,20 +28,20 @@ def file_count(fid):
     Returns: 
         count (int): The number of images submitted by the user.
     """
-    if Images.select().where(Images.form == fid).exists():
-        return Images.select().where(Images.form== fid).count()
+    if FormToFile.select().where(FormToFile.form == fid).exists():
+        return FormToFile.select().where(FormToFile.form== fid).count()
     else:
         return 0
 
-def get_form_images(fid):
-    """ Get all images associated with a single form
+def get_form_files(fid):
+    """ Get all files associated with a single form
     Args:
         fid (Form): The form of the user, whose images are needed
     Returns: 
         images (list (Image)): A list of all the images uploaded by a user 
     """
-    if Images.select().where(Images.form == fid).exists():
-        return list(Images.select().where(Images.form == fid))
+    if FormToFile.select().where(FormToFile.form == fid).exists():
+        return list(FormToFile.select().where(FormToFile.form == fid))
     return None
 
 

@@ -7,18 +7,24 @@ from app.logic.upload import *
 from app.config.loadConfig import get_cfg
 from flask import session
 from flask import current_app
+from app.models.queries.FormToFileQueries import *
 import os, sys
 import time
 import io
+import bleach
 import json
 
 
 
 @public.route('/', methods=["GET"])
 def create():
+    session['form_id'] = None
+    session['username'] = None
     gid = 1
     gallery = Galleries.get(Galleries.gid==gid)
-    return render_template('views/public/application_create.html',gid=gid, gallery = gallery)
+    description = gallery.description
+
+    return render_template('views/public/application_create.html',gid=gid,description=description, gallery = gallery)
 
 
 
@@ -125,6 +131,7 @@ def application_submit():
 
         # redirect to uploads
         session['form_id'] = fid
+        session['username'] = data['firstName']+ '_'+ data['lastName']
         return redirect('upload')
 
 
@@ -137,6 +144,8 @@ def application_submit():
 @public.route('/upload/', methods=["GET"])
 def upload():
     fid = session['form_id']
+    if fid is  None:
+        abort(404)
     if select_single(fid) != None:
         return render_template('snips/upload.html', fid = fid)
     else:
@@ -146,9 +155,12 @@ def upload():
 @public.route('/upload/images/', methods = ["POST"])
 def upload_images():
     fid = session['form_id']
+    username = session['username']
+    fid = session['form_id']
+    if fid is None:
+        abort(404)
     try:
         cfg = get_cfg()
-        import pdb;pdb.set_trace()
         form = Forms.get(Forms.fid == fid)
         count = FilesQueries.file_count(form.fid)
         for i, f in enumerate(request.files):
@@ -156,14 +168,17 @@ def upload_images():
             file = request.files[f]
             file_ext = get_file_extension(file.filename)
             staticPath = cfg['paths']['data']+"/"+form.gallery.folder_name+"/"+ form.email
-            new_file_name = "file_"+str(count)+'.'+file_ext
+            new_file_name = username+str(count)+'.'+file_ext
             file_upload_path = getAbsolutePath(cfg['paths']['app']+staticPath, new_file_name, True)
 
             if allowed_file(file.filename):
-                file_id= FilesQueries.insert(staticPath+'/'+new_file_name, new_file_name, file_ext)
+                file_id = FilesQueries.insert(staticPath+'/'+new_file_name, new_file_name, file_ext)
                 file.save(file_upload_path)
-        return "200"
+                FormToFileQueries.insert(fid, file_id)
+        return "Complete", 200
 
     except Exception as e:
         print(e)
+        return "500", 500
+        
 

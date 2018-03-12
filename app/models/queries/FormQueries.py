@@ -20,7 +20,7 @@ def get(fid):
             return Forms.get(Forms.fid == fid)
     return None
 
-def get_all_from_gallery(gid):
+def get_all_from_gallery(gid, include_deleted = False):
     """ Retrieves all form object for a single gallery
 
     Args:
@@ -33,7 +33,10 @@ def get_all_from_gallery(gid):
 
     if type(gid) is int:
         if Galleries.select().where(Galleries.gid == gid).exists():
-            forms = Forms.select().join(Galleries).where(Galleries.gid == gid)
+            if include_deleted:
+                forms = Forms.select().join(Galleries).where(Galleries.gid == gid)
+            else:
+                forms = Forms.select().join(Galleries).where(Galleries.gid == gid).where(Forms.status != "Deleted")
             return list(forms)
     return None
 
@@ -55,10 +58,13 @@ def get(fid):
             return Forms.get(Forms.fid == fid)
     return None
 
-def select_all(self):
+def select_all(self, include_deleted=False):
     '''This method is to select all the forms stored in the database'''
     try:
-        forms = Forms.select()
+        if include_deleted:
+            forms = Forms.select()
+        else:
+            forms = Forms.select().where(Forms.status != "Deleted")
         return forms
     except Exception as e:
         print (e)
@@ -134,3 +140,11 @@ def get_statement(fid):
         if form.personal_statement is not None:
             return form.personal_statement
     return None
+
+def update_status_all(gid,status="Deleted"):
+    if Forms.select().where(Forms.gallery == gid).exists():
+        forms = Forms.update({Forms.status: status}).where(Forms.gallery == gid)
+        print(forms.execute())
+        return forms
+
+
