@@ -1,6 +1,6 @@
 from app.models import Users
 from app.logic.data_validation import *
-def select_all(self):
+def select_all():
     '''Selects all users
     Args:
         None
@@ -9,7 +9,7 @@ def select_all(self):
         None: If unable to connect None is returned
     '''
     try:
-      users = Users.select().order_by(Users.username)
+      users = Users.select().order_by(Users.email)
       return users
     except Exception as e:
       return None

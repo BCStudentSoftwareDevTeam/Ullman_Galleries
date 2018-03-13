@@ -26,14 +26,14 @@ def create_tables():
 def dummy_data():
     drop_tables()
     create_tables()
-    # load_user_data()
+    load_user_data()
     # load_files_data()
     load_galleries_data()
     # load_forms_data()
     # load_images_data()
 
 def load_user_data():
-    Users(uid=1, username="adminUser").save(force_insert=True)
+    Users(email="heggens@berea.edu", password="heggens@berea.edu").save(force_insert=True)
 
 def load_galleries_data():
     Galleries(gid=1, title="D. Ullman Gallery", folder_name = "D. Ullman Gallery").save(force_insert=True)

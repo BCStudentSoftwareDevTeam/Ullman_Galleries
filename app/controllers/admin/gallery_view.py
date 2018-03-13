@@ -6,9 +6,61 @@ from flask import send_file
 from flask import current_app
 from flask import render_template
 from flask import flash 
+from app.models.queries import UserQueries
 from flask_security import login_required
+from flask import current_app
+from flask_security.utils import hash_password,verify_password
 import shutil
 import bleach
+
+@admin.route('/users/add', methods=["POST"])
+@login_required
+def add_user():
+    password = request.form['password']
+    confirm = request.form['confirm']
+    email = request.form['email']
+
+    if password == confirm:
+        datastore = current_app.extensions['security'].datastore
+        datastore.create_user(email=email, password=hash_password(password), role="admin")
+        flash("User Created", "success")
+    else:
+        flash("Passwords must match", "fail")
+    return redirect("/view")
+
+@admin.route('/users/remove', methods=["POST"])
+@login_required
+def remove_user():
+    datastore = current_app.extensions['security'].datastore
+    email = request.form['email']
+    user = datastore.get_user(email)
+    datastore.delete_user(user)
+    flash("User Removed", "success")
+    return redirect("/view")
+
+@admin.route('/users/change_password', methods=["POST"])
+@login_required
+def change_password():
+    password = request.form['password']
+    confirm = request.form['confirm']
+    current = request.form['current']
+
+    if password == confirm :
+        user_id = session["user_id"]
+        datastore = current_app.extensions['security'].datastore
+        user = datastore.get_user(user_id)
+        verify = verify_password(current,user.password)
+        if verify:
+            user.password = hash_password(password)
+            user.save()
+            flash("Your password has been updated", "success")
+        else:
+            flash("The password supplied was incorrect","danger")
+        return redirect("/view/")
+    else:
+        flash("Passwords must match","danger")
+        return redirect("/view/")
+
 
 
 @admin.route('/gallery/description', methods=["POST"])
@@ -32,7 +84,8 @@ def gallery_view():
     if description is not None:
         description = description.strip()
     is_admin = doesUserHaveRole('admin')
-    return render_template('views/admin/gallery_view.html', description= description, forms = forms, gallery = gallery, is_admin=is_admin)
+    users = UserQueries.select_all()
+    return render_template('views/admin/gallery_view.html', users=users, description= description, forms = forms, gallery = gallery, is_admin=is_admin)
 
 @admin.route('/view/<int:form_id>', methods=["GET","POST"])
 @login_required
