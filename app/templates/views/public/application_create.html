@@ -12,6 +12,8 @@
          id="">
     <h1 class="text-center"><strong>{{gallery.title}} - Application </strong></h1>
       {{description|safe}}
+      <hr/>
+
     <input type = "text" value = "{{gid}}" type = "hidden" id = "gallery_id" hidden>
     <form class = "form-group" method = "POST" id = "createApplicationForm" action = "/submit/" enctype="multipart/form-data">
 
@@ -63,12 +65,13 @@
         </div>
         </br>
         <div>
-            <label for = "statement">Personal Statement</label>
+            <label for = "statement">Artist Statement* </label>
             <input id = "statement" name = "statement" type = "file" accept=".doc,.docx,.pdf, .txt" required>
         </div>
         </br>
     </form>
 
+      <hr/>
     <form class="dropzone" id="fileDropZone" action = "/upload/images/" hidden>
       <div class="box"></div>
     </form>

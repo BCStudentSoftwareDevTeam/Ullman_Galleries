@@ -41,6 +41,7 @@ def success():
         abort(404)
     form = FormQueries.get(fid)
     form.status = "Completed"
+    form.save()
     flash("Your Application has been submitted", "success")
     return redirect('/review')
 
@@ -56,11 +57,8 @@ def review():
 
     show_next = False
     show_previous = False
-    is_admin = False
-
-    if(doesUserHaveRole('admin')):
-        is_admin = True
-    if len(FormQueries.get_all_from_gallery(gid)) > (fid + 1):
+    is_admin = doesUserHaveRole('admin')
+    if len(FormQueries.get_all_from_gallery(gid)) > (fid):
         show_next = True
     if fid != 1:
         show_previous = True

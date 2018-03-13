@@ -2,8 +2,7 @@
 secret.yaml
 
 # galleries
-app/static/data/Fortran_2018_01_21/
-app/static/data/archive
+app/static/data/
 
 # Sqlite
 *.db

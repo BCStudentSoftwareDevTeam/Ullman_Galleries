@@ -12,18 +12,15 @@ import bleach
 
 
 @admin.route('/gallery/description', methods=["POST"])
+@login_required
 def change_description():
-    if(doesUserHaveRole('admin') or True):
-        description = request.form['description']
-        gid = 1
-        gallery = GalleryQueries.get(gid)
-        gallery.description = description
-        gallery.save()
-        print(description)
-        flash("Description Updated", "success")
-        return bleach.clean(description)
-    else:
-        abort(404)
+    description = request.form['description']
+    gid = 1
+    gallery = GalleryQueries.get(gid)
+    gallery.description = description
+    gallery.save()
+    flash("Description Updated", "success")
+    return bleach.clean(description)
 
 @admin.route('/view/', methods=["GET"])
 @login_required
@@ -34,54 +31,55 @@ def gallery_view():
     description = gallery.description
     if description is not None:
         description = description.strip()
-    is_admin = False
-    if(doesUserHaveRole('admin')):
-        is_admin = True
+    is_admin = doesUserHaveRole('admin')
     return render_template('views/admin/gallery_view.html', description= description, forms = forms, gallery = gallery, is_admin=is_admin)
 
 @admin.route('/view/<int:form_id>', methods=["GET","POST"])
+@login_required
 def view_form(form_id):
     session['form_id'] = form_id
     return redirect('review')
 
 @admin.route('/view/next', methods=["GET"])
+@login_required
 def next_form():
     session['form_id'] = session['form_id'] + 1
     return redirect('review')
 
 @admin.route('/view/previous', methods=["GET"])
+@login_required
 def previous_form():
     session['form_id'] = session['form_id'] - 1
     return redirect('review')
 
 @admin.route('/view/download/<int:form_id>', methods=["GET"])
+@login_required
 def download_user_form(form_id):
     session['form_id'] = form_id
     return redirect('download/user')
 
 @admin.route('/delete/all')
+@login_required
 def delete_all():
     gid = 1
-    if(doesUserHaveRole('admin') or True):
-        zipfile = get_zip_of_files()
-        if zipfile is not None:
-            forms = FormQueries.get_all_from_gallery(gid, True)
-            for form in forms:
-                filepath = current_app.root_path + form.folder_path
-                if os.path.exists(filepath):
-                    shutil.rmtree(filepath)
-                form.status = "Deleted"
-                form.save()
-            flash("Files Deleted","success")
-            return send_file(zipfile, as_attachment=True)
-        abort(404)
+    zipfile = get_zip_of_files()
+    if zipfile is not None:
+        forms = FormQueries.get_all_from_gallery(gid, True)
+        for form in forms:
+            filepath = current_app.root_path + form.folder_path
+            if os.path.exists(filepath):
+                shutil.rmtree(filepath)
+            form.status = "Deleted"
+            form.save()
+        flash("Files Deleted","success")
+        return send_file(zipfile, as_attachment=True)
 
 @admin.route('/download/all')
+@login_required
 def download_all():
-    if(doesUserHaveRole('admin') or True):
-        zipfile = get_zip_of_files()
-        if zipfile is not None:
-            return send_file(zipfile, as_attachment=True)
+    zipfile = get_zip_of_files()
+    if zipfile is not None:
+        return send_file(zipfile, as_attachment=True)
     abort(404)
 
 def get_zip_of_files():
