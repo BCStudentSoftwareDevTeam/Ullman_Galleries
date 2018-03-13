@@ -5,7 +5,7 @@ test_dir = os.path.join(path,'app/config/')
 
 if os.path.isdir(test_dir):
     sys.path.insert(0,path)
-else:
+else: 
     new_path = os.path.dirname(path)
     sys.path.insert(0,new_path)
 
@@ -65,6 +65,7 @@ def load_forms_data():
     Forms(fid=1, first_name="John", last_name="Backus", street_address="101 Road",second_address = "Blue", city="Fortran", state="KY", email="John@Backus.me",phone_number="1234567890", website="Backus.me", gallery=1, cv=1, personal_statement=9, zip_code = "40404", submit_date = "2018-01-12 12:00:00",status = "Pending").save(force_insert=True)
 
     Forms(fid=2, first_name="Rob", last_name="Pike", street_address="101 Pike Road", second_address = "Red", city="Golang", state="NY", email="Rob@Pike.go",phone_number="0987654321", website="Pike.go", gallery=2, cv=10, personal_statement=18, zip_code = "60819", submit_date = "2018-01-12 12:00:00",status = "Approved").save(force_insert=True)
+    Forms(fid=3, first_name="Rob", last_name="Pike", street_address="101 Pike Road", second_address = "Red", city="Golang", state="NY", email="Rob@Pike.go",phone_number="0987654321", website="Pike.go", gallery=2, cv=10, personal_statement=18, zip_code = "60819", submit_date = "2018-01-12 12:00:00",status = "Approved").save(force_insert=True)
 
 def load_images_data():
     Images(iid=1, form=1, fullsize=3, thumbnail=4).save(force_insert=True)
