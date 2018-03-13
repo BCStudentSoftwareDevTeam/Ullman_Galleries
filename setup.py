@@ -41,9 +41,9 @@ INSTALL_REQUIRES = [
     "Flask-Script",
     "flask-mysqldb",
     "flask-login",
-    "PIL",
     "bcrypt",
-    "flask_security"
+    "flask_security",
+    "bleach"
     ]
     
 def parameters():
