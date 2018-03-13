@@ -3,6 +3,9 @@
 <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#edit">
   Edit Description
 </button>
+<button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#users">
+  Edit Admins
+</button>
 <div class="col-xs-12">
   <br/>
 </div>
@@ -46,6 +49,83 @@
 <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#deleteall">
   Delete All
 </button>
+
+<div class="modal fade" id="users" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Users</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+	<ul class="nav nav-pills">
+	  <li class="active"><a data-toggle="pill" href="#edit_user">Change Password</a></li>
+	  <li><a data-toggle="pill" href="#add_user">Add User</a></li>
+	  <li><a data-toggle="pill" href="#remove_user">Remove User</a></li>
+	</ul>
+
+	<div class="tab-content">
+
+	  <div id="edit_user" class="tab-pane fade in active">
+            <br/>
+            <form action="/users/change_password" method="post" >
+              <label> Current Password </label>
+              <input type="password" required  name="current" class="form-control" id="current"  placeholder="Your Current Password">
+
+              <br/>
+              <label> New Password </label>
+              <input type="password" required name="password" class="form-control" id="password"  placeholder="New Password">
+
+              <br/>
+
+              <label> Confirm Password </label>
+              <input type="password" required name="confirm" class="form-control" id="confirm"  placeholder="Confirm Password">
+              <br/>
+              <button type=submit class="btn btn-success"> Change Password </button>
+            </form>
+	  </div>
+
+	  <div id="remove_user" class="tab-pane fade">
+            <br/>
+            <p> Select user to remove: </p>
+            <form action="/users/remove" method="post">
+              <select name="email" required class='form-control'>
+                {% for user in users %}
+                  <option value="{{user.email}}">{{user.email}}</option>
+                {% endfor %}
+              </select>
+              <br/>
+
+              <button type=submit class="btn btn-danger"> Remove User</button>
+            </form>
+	  </div>
+
+	  <div id="add_user" class="tab-pane fade">
+            <br/>
+            <form method="post" action="/users/add">
+              <label> Email </label>
+              <input type="email" required class="form-control" name="email"  placeholder="New User's Email">
+
+              <br/>
+              <label> New Password </label>
+              <input type="password" required class="form-control" name="password"  placeholder="User's Password">
+
+              <br/>
+              <label> Confirm Password </label>
+              <input type="password" required class="form-control" name="confirm"  placeholder="Confirm Password">
+              <br/>
+              <button type=submit class="btn btn-success"> Add User </button>
+            </form>
+	  </div>
+
+	</div>	
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="modal fade" id="deleteall" tabindex="-1" role="dialog"  aria-hidden="true">
   <div class="modal-dialog" role="document">

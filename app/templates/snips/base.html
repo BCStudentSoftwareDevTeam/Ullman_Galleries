@@ -59,7 +59,7 @@
     <link href="/static/css/ext/bootstrap-select.css"/>
   </head>
   <body>
-    {% if  url_for(request.endpoint) != "/login" %}
+    {% if  request.endpoint is not none and  url_for(request.endpoint) != "/login" %}
       {% include 'snips/nav.html' %}
     {% endif %}
     {% include 'snips/messages.html' %}
