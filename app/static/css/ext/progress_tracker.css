@@ -1,0 +1,140 @@
+
+/* https://www.bootply.com/I23vRvEPmw */
+.center
+{
+  display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+
+}
+.nav-wizard > li {
+  float: left;
+}
+.nav-wizard > li  {
+  position: relative;
+  background-color: #eeeeee;
+}
+.nav-wizard > li  .badge {
+  margin-left: 3px;
+  color: #eeeeee;
+  background-color: #073c8d;
+}
+.nav-wizard > li  .badge.badge-step {
+  color: #073c8d;
+  border: 1px solid #073c8d;
+  border-radius: 50%;
+  padding: 3px 5px;
+  background-color: transparent;
+}
+.nav-wizard > li.active  .badge.badge-step {
+  color: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  border-radius: 50%;
+  padding: 3px 5px;
+  background-color: transparent;
+}
+.nav-wizard > li  {
+  padding-left: 34px;
+}
+.nav-wizard > li :before {
+  width: 0px;
+  height: 0px;
+  border-top: 20px inset transparent;
+  border-bottom: 20px inset transparent;
+  border-left: 20px solid #ffffff;
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+}
+.nav-wizard > li  {
+  margin-right: 4px;
+}
+.nav-wizard > li :after {
+  width: 0px;
+  height: 0px;
+  border-top: 20px inset transparent;
+  border-bottom: 20px inset transparent;
+  border-left: 20px solid #eeeeee;
+  position: absolute;
+  content: "";
+  top: 0;
+  right: -20px;
+  z-index: 2;
+}
+.nav-wizard > li:first-child  {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.nav-wizard > li:last-child  {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+/* .nav-wizard > li.done:hover , */
+/* .nav-wizard > li:hover  { */
+/*   background-color: #d5d5d5; */
+/* } */
+/* .nav-wizard > li.done:hover :before, */
+/* .nav-wizard > li:hover :before { */
+/*   border-right-color: #d5d5d5; */
+/* } */
+/* .nav-wizard > li.done:hover :after, */
+/* .nav-wizard > li:hover :after { */
+/*   border-left-color: #d5d5d5; */
+/* } */
+.nav-wizard > li.done  {
+  background-color: #e2e2e2;
+}
+.nav-wizard > li.done :before {
+  border-right-color: #e2e2e2;
+}
+.nav-wizard > li.done :after {
+  border-left-color: #e2e2e2;
+}
+.nav-wizard > li.active ,
+/* .nav-wizard > li.active :hover, */
+.nav-wizard > li.active :focus {
+  color: #ffffff;
+  background-color: #2c3e50;
+}
+.nav-wizard > li.active :after {
+  border-left-color: #2c3e50;
+}
+.nav-wizard > li.active  .badge {
+  color: #073c8d;
+  #2c3e50
+  background-color: #ffffff;
+}
+.nav-wizard > li.disabled  {
+  color: #777777;
+}
+/* .nav-wizard > li.disabled :hover, */
+.nav-wizard > li.disabled :focus {
+  color: #777777;
+  text-decoration: none;
+  background-color: #eeeeee;
+  cursor: default;
+}
+.nav-wizard > li.disabled :before {
+  border-right-color: #eeeeee;
+}
+.nav-wizard > li.disabled :after {
+  border-left-color: #eeeeee;
+}
+.nav-wizard.nav-justified > li {
+  float: none;
+}
+.nav-wizard.nav-justified > li  {
+  padding: 10px 15px;
+}
+@media (max-width: 768px) {
+  .nav-wizard.nav-justified > li  {
+    /*border-radius: 4px;*/
+    margin-right: 0;
+  }
+  .nav-wizard.nav-justified > li :before,
+  .nav-wizard.nav-justified > li :after {
+    border: none !important;
+  }
+}

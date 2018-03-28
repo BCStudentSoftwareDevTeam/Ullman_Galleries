@@ -1,23 +1,18 @@
-{% extends "snips/base.html" %}
-{% block body %}
-    <div class="modal fade" id="uploadModal" role="dialog" data-backdrop="static">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Images</h4>
-                </div>
-                <div class="modal-body">
-                    <p class="help-block">If you would like to add images to your submission, please do so here.</p>
-                    <form class="dropzone" id="fileDropZone" action = "/upload/images/">
-                        <div class="box"></div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                  <a href="/review/" class="btn btn-success"  id = "submit" >Submit</a>
-                </div>
-            </div>
-        </div>
-    </div>
-     <script type="text/javascript" src="/static/js/local/imageUpload.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/local/snips/upload.css">
 
-{% endblock %}
+<div class = "row">
+  <div class = "col-sm-8 col-sm-offset-2">
+    <form id="Dropzone" class = "dropzone center-block" method="post" action = "{{action}}">
+    </form>
+  </div>
+</div>
+
+
+<script>
+  var message="{{message}}"
+  var maxFiles= "{{maxFiles}}"
+  var acceptedFiles = "{{accepted_files}}" 
+</script>
+
+<script type="text/javascript" src="/static/js/local/snips/upload.js"></script>
+

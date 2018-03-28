@@ -1,5 +1,6 @@
 import os
 import sys
+from app.config import loadConfig
 '''Creates the AbsolutePath based off of the relative path.
 Also creates the directories in path if they are not found.
 
@@ -20,3 +21,6 @@ def getAbsolutePath(relaitivePath,filename=None,makeDirs=False):
     if filename != None:
         filepath = os.path.join(filepath,filename)
     return filepath
+def get_static_absolute_path(relaitivePath, filename=None, makeDirs=True):
+    return getAbsolutePath(loadConfig.get_cfg()['paths']['app']+relaitivePath, filename, makeDirs)
+

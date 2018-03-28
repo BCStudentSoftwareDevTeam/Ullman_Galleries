@@ -21,6 +21,7 @@ class ConfigureApp():
         self.username = None
         self.password = None
         self.secret_key = None
+        self.salt = None
 
     def get_model_filenames(self):
             filenames = []
@@ -48,15 +49,12 @@ class ConfigureApp():
         self.db_choice = 'mysql'
         return 'mysql'
 
-    def get_secret_key(self):
-        print('\nFlask Session Cookies are cryptographically signed, which basically')
-        print('means that in order for a user to modify a session cookie they would')
-        print('need a secret key, which is a functionality required by this application.\n')
+    def get_secret_key(self, prompt1, prompt2):
         while True:
-            secret_key0 = input('Therefore, what would you like the secret key to be for your application? ')
-            secret_key1 = input('Please type the secret key again: ')
+            secret_key0 = input(prompt1)
+            secret_key1 = input(prompt2)
             if secret_key0 == secret_key1:
-                print("Thank you the secret key has been saved inside of secret.yaml, and can be changed at anypoint through modifing that file.")
+                print("Thank you the secret key has been saved inside of secret.yaml, and can be changed at any point through modifying that file.")
                 return secret_key0
             else:
                 print('The two secret keys did not match.')
@@ -72,7 +70,7 @@ class ConfigureApp():
         print ('\nIf you have entered any of these variables incorrectly, they can be changed in secret.yaml.')
 
     def edit_secret_yaml(self):
-        secret_data = {'db':{"db_name":self.db_name, "db_choice":self.db_choice, "host":self.host, "username":self.username, "password":self.password}, "secret_key":self.secret_key,}
+        secret_data = {'db':{"db_name":self.db_name, "db_choice":self.db_choice, "host":self.host, "username":self.username, "password":self.password}, "secret_key":self.secret_key, "salt": self.salt}
 
         #TODO: Figure out how not to hard code this
         path = os.path.join(sys.path[0],'app/config/secret.yaml')
@@ -122,7 +120,8 @@ class ConfigureApp():
         self.db_choice    = 'mysql'
         self.db_name      = self.get_db_name()
         self.get_mysql_variables()
-        self.secret_key = self.get_secret_key()
+        self.secret_key = self.get_secret_key("What would you like the secret key to be for your application?", 'Please type the secret key again: ')
+        self.salt = self.get_secret_key("What would you like the salt key for stored passwords be for your application?", 'Please type the salt key again: ')
         self.edit_secret_yaml()
         self.create_mysql_database()
 

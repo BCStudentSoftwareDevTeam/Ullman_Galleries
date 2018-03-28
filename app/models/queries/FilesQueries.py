@@ -15,6 +15,7 @@ def get(fid):
             return Files.get(Files.fid == fid)
     return None
 
+
 def update(fid, filepath=None, filename=None, filetype=None):
     """ Update existing file record
     
@@ -53,9 +54,12 @@ def insert(filepath, filename, filetype):
     
     """
     try:
-        fid = Files.create(filepath = filepath,\
-                        filename = filename,\
-                        filetype = filetype)
+        fid = Files.get_or_create(filepath = filepath,
+                        defaults={
+                            "filename":filename,
+                            "filetype":filetype
+                            }
+                        )
         return fid
     except Exception as e:
         print (e)

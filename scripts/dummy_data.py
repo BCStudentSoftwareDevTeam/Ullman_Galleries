@@ -27,16 +27,29 @@ def dummy_data():
     drop_tables()
     create_tables()
     load_user_data()
+    load_role_data()
+    load_userroles_data()
     # load_files_data()
     load_galleries_data()
     # load_forms_data()
     # load_images_data()
 
+
 def load_user_data():
     Users(email="heggens@berea.edu", password="heggens@berea.edu").save(force_insert=True)
+    Users(email="sotoventuraj@berea.edu", password="sotoventuraj@berea.edu").save(force_insert=True)
+
+def load_role_data():
+    Role(name="admin").save(force_insert=True)
+    Role(name="student").save(force_insert=True)
+
+def load_userroles_data():
+    UserRoles(user=1, role=1).save(force_insert=True)
+    UserRoles(user=2, role=2).save(force_insert=True)
+
 
 def load_galleries_data():
-    Galleries(gid=1, title="D. Ullman Gallery", folder_name = "D. Ullman Gallery").save(force_insert=True)
+    Galleries(gid=1, title="D. Ulmann  Gallery",  folder_name="/static/data/D. Ulmann Gallery/").save(force_insert=True)
 
 def load_files_data():
     pass

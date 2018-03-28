@@ -4,21 +4,13 @@ from app.models import Galleries
 from app.config.loadConfig import get_cfg 
 from app.logic.validation import*
 
-def get(fid):
-    """ Retrieves a single form object
 
-    Args:
-        fid (int): The fid of the form model to retrieve 
+def exists(fid, include_deleted=False):
+    if include_deleted:
+        return Forms.select().where(Forms.fid == fid).exists()
+    else:
+        return Forms.select().where(Forms.fid == fid).where(Forms.status != "Deleted").exists()
 
-    Returns:
-        Form: The gallery object if it exists
-        None: If the form object does not exist
-    """
-
-    if type(fid) is int:
-        if Forms.select().where(Forms.fid == fid).exists():
-            return Forms.get(Forms.fid == fid)
-    return None
 
 def get_all_from_gallery(gid, include_deleted = False):
     """ Retrieves all form object for a single gallery
@@ -83,24 +75,54 @@ def select_single(fid):
 def insert(first_name, last_name, street_address, second_address,city, state, zip_code, email, phone_number, website, gallery,cv, personal_statement, submit_date, status, folder_path):
     '''This function is to store the inputs received from the application form into the database'''
     try:
-        form, created = Forms.get_or_create(   first_name=first_name,
-                        last_name=last_name,
-                        street_address=street_address,
-                        second_address=second_address,
-                        city=city,
-                        state=state,
-                        zip_code=zip_code,
-                        email=email,
-                        phone_number=phone_number,
-                        website=website,
-                        gallery=gallery,
-                        cv=cv,
-                        personal_statement=personal_statement,
-                        submit_date=submit_date,
-                        status=status,
-                        folder_path=folder_path
+        form, created = Forms.get_or_create(   email=email,
+                        defaults={
+                            "first_name":first_name,
+                            "last_name":last_name,
+                            "street_address":street_address,
+                            "second_address":second_address,
+                            "city":city,
+                            "state":state,
+                            "zip_code":zip_code,
+                            "phone_number":phone_number,
+                            "website":website,
+                            "gallery":gallery,
+                            "submit_date":submit_date,
+                            "cv":cv,
+                            "personal_statement":personal_statement,
+                            "folder_path":folder_path,
+                            "status":status,
+                        }
                     )
         form.save()
+        if not created:
+            folder_path = form.folder_path
+            cv = form.cv
+            personal_statement = form.personal_statement
+            if form.status == "Deleted":
+                folder_path = None
+                cv = None
+                personal_statement = None
+
+            update = Forms.update({
+                            "first_name":first_name,
+                            "last_name":last_name,
+                            "street_address":street_address,
+                            "second_address":second_address,
+                            "city":city,
+                            "state":state,
+                            "zip_code":zip_code,
+                            "phone_number":phone_number,
+                            "website":website,
+                            "gallery":gallery,
+                            "cv":cv,
+                            "personal_statement":personal_statement,
+                            "folder_path":folder_path,
+                            "submit_date":submit_date,
+                            "status":status,
+                            }
+                        ).where(Forms.email == email)
+            update.execute()
         return form
     except Exception as e:
         return e

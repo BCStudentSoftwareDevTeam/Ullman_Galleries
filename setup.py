@@ -30,11 +30,10 @@ def require_venv():
         print('This setup requires virtualenv.')
 
 INSTALL_REQUIRES = [
-    "Flask>=0.11.1",
-    "Jinja2>=2.8,<2.9",
-    "peewee>=2.8.1",
-    "Flask-Admin>=1.4.0",
-    "wtf-peewee>=0.2.6",
+    "Flask",
+    "Jinja2",
+    "peewee",
+    "wtf-peewee",
     "XlsxWriter",
     "PyYAML",
     "email_validator",
@@ -43,7 +42,8 @@ INSTALL_REQUIRES = [
     "flask-login",
     "bcrypt",
     "flask_security",
-    "bleach"
+    "bleach",
+    "pytz"
     ]
     
 def parameters():

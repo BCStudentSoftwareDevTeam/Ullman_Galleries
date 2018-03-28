@@ -1,0 +1,147 @@
+{% extends "snips/base.html" %} {% block body %} 
+<div>
+   <div class="col-xs-12 col-sm-8 col-sm-push-2 col-md-8 col-md-push-2 col-lg-10 col-lg-push-1" id="">
+    <h1 class="text-center"><strong>{{form.first_name}} {{form.last_name}}</strong></h1>
+    </br>
+
+    <div>
+      <label for = "address">Address:</label>
+      <input value = "{{form.street_address}}" readonly class = "form-control">
+      </br>
+
+      {%if form.second_address != "" %}
+        <label for = "address">Second Address:</label>
+        <input value = "{{form.second_address}}" readonly class = "form-control"> </br>
+      {%endif%}
+
+      <label>City:</label>
+      <input value = "{{form.city}}" readonly class = "form-control">
+      </br>
+
+      <label>State:</label>
+      <input value = "{{form.state}}" readonly class = "form-control">
+      </br>
+
+      <label>Zipcode:</label>
+      <input value = "{{form.zip_code}}" readonly class = "form-control">
+    </div>
+
+    </br>
+
+    <div>
+        <label for = "email">Email:</label>
+        <input value = "{{form.email}}" readonly class = "form-control">
+    </div>
+
+    </br>
+    {% if form.phone_number != "" %}
+      <div>
+          <label for = "phone">Phone</label>
+          <input value = "{{form.phone_number}}" readonly class = "form-control">
+      </div>
+      </br>
+    {%endif%}
+
+    {% if form.website != "" %}
+      <div>
+          <label for = "website">Personal Website:</label>
+          <input value = "{{form.website}}" readonly class = "form-control">
+      </div>
+      </br>
+    {% endif %}
+    
+    <h2> Files </h2>
+    <hr>
+    <div class="col-xs-12">
+        {% if form.cv is not none %}
+            <div class="thumbnail col-xs-6">
+              <a href="/download/cv/" >
+                <img class="img-thumbnail" src="/static/images/document_icon.svg" alt="Curriculm Vitae" >
+                <p class = "text-center col-xs-12"> Curriculum Vitae </p>
+              </a>
+            </div>
+        {% endif %}
+
+        {% if form.personal_statement is not none%}
+            <div class="thumbnail col-xs-6">
+              <a href="/download/statement/" >
+                <img class="img-thumbnail" src="/static/images/document_icon.svg" alt="Curriculm Vitae" >
+                <p class = "text-center col-xs-12"> Artist Statement </p>
+              </a>
+            </div>
+        {%endif%}
+    </div>
+
+    {% if files is not none %}
+      {% include "snips/image_grid.html" %}
+    {% endif%}
+  <hr>
+  {% if not doesUserHaveRole('anonymous') %}
+    <div class="col-xs-12">
+
+      {% if show_previous%}
+        <a href="/view/previous" class="pull-left btn btn-primary" role="button">
+          <i class="glyphicon glyphicon-arrow-left"></i>
+          Previous Submission
+        </a>
+      {%endif%}
+
+        <div class="col-xs-4 col-xs-offset-3">
+          <select id="status" class="form-control" onchange="status_change(this)">
+            <option value="complete"
+              {% if form.status == 'complete'%} selected {%endif%} 
+            >Completed</option>
+            <option value="withdraw"
+              {% if form.status =='withdraw' %} selected{%endif%}
+              >Withdrew</option>
+            <option value="pending"
+              {% if form.status == 'pending'%} selected{%endif%}
+            >Pending</option>
+            <option value="reject"
+              {% if form.status == 'reject'%} selected{%endif%}
+            >Reject</option>
+            <option value="approve"
+              {% if form.status == 'approve'%} selected{%endif%}
+            >Approve</option>
+            <option value="other"
+              {% if form.status == 'other'%} selected{%endif%}
+            >Other</option>
+          </select>
+        </div> 
+
+      {% if show_next%}
+        <a href="/view/next" class="pull-right btn btn-primary" role="button">
+          Next Submission
+          <i class="glyphicon glyphicon-arrow-right"></i>
+        </a>
+
+      {%endif%}
+      </div>
+
+    <div class="col-xs-12">
+      <br/>
+    </div>
+  {%else%}
+
+    <div class="col-xs-12">
+      <a href="/withdraw" class="pull-left btn btn-danger" role="button">
+	Withdraw Application
+      </a>
+
+      <a href="/?active_session='true'" class="col-xs-offset-3 btn btn-info" role="button">
+	Modify Application
+      </a>
+
+      <a href="/success" class="pull-right btn btn-success" role="button">
+        Submit Application
+      </a>
+    </div>
+
+  {%endif%}
+  </div>
+</div>
+
+<script src="/static/js/local/public/review.js"></script>
+
+{% endblock %}
+

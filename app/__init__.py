@@ -1,12 +1,7 @@
 from flask import Flask, render_template
-from app.config import loadConfig
 from flask_security import Security, PeeweeUserDatastore, utils
 import sys
-from app.models.Role import Role
-from app.models.Users import Users
-from app.models.UserRoles import UserRoles
-from app.models.util import getDB
-
+import os
 sys.dont_write_bytecode = True
 
 ''' We are following the application factory
@@ -14,6 +9,13 @@ sys.dont_write_bytecode = True
 '''
 
 def create_app(config_filename):
+    from app.models.Role import Role
+    from app.models.Users import Users
+    from app.models.UserRoles import UserRoles
+    from app.models.util import getDB
+    from app.config import loadConfig
+    from app.logic.validation import doesUserHaveRole
+
     from app.controllers.admin import admin
     from app.controllers.public import public
 
@@ -22,7 +24,7 @@ def create_app(config_filename):
 
     secret_cfg = loadConfig.get_secret_cfg()
     cfg = loadConfig.get_cfg()
-    app.secret_key = secret_cfg['secret_key']
+    app.secret_key = os.environ["APP_SECRET_KEY"]
 
     app.register_blueprint(admin)
     app.register_blueprint(public)
@@ -31,9 +33,10 @@ def create_app(config_filename):
 
 
     # app.config["SECURITY_SEND_REGISTER_EMAIL"] = False
-    app.config["SECURITY_PASSWORD_SALT"] = "MUST BE SET"
-
+    app.config["SECURITY_PASSWORD_SALT"] = os.environ["SECURITY_PASSWORD_SALT"]
     security = Security(app, user_datastore)
+    app.jinja_env.globals.update(doesUserHaveRole = doesUserHaveRole)
+
 
     # @app.before_first_request
     # def create_user():

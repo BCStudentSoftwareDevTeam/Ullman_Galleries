@@ -1,5 +1,7 @@
 from app.models.FormToFile import FormToFile
 from app.models.Files import Files
+from app.logic.absolute_path import get_static_absolute_path
+import os
 
 def insert(form, file):
     """ Insert a new file record
@@ -44,4 +46,18 @@ def get_form_files(fid):
         return list(FormToFile.select().where(FormToFile.form == fid))
     return None
 
+def delete_file(fid, filepath):
+    if FormToFile.select().where(FormToFile.form == fid).join(Files).where(Files.filepath == filepath).exists():
+        relation =  FormToFile.select().where(FormToFile.form == fid).join(Files).where(Files.filepath == filepath).get()
+        filepath = relation.file.filepath
+        absolute_filepath = get_static_absolute_path(filepath)
+        if os.path.exists(absolute_filepath):
+            os.remove(absolute_filepath)
+            relation.delete_instance()
+
+def delete_all_files(fid):
+    if FormToFile.select().where(FormToFile.form == fid).exists():
+        relation =  FormToFile.select().where(FormToFile.form == fid)
+        for entry in relation:
+            entry.delete_instance()
 

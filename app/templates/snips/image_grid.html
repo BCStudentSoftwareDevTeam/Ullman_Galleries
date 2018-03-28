@@ -1,0 +1,65 @@
+<link rel="stylesheet" type="text/css" href="/static/css/local/snips/image_grid.css">
+
+<div class="modal fade" id="expand_image_modal" tabindex="-1" role="dialog" >
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <img class="center-block img-responsive" src="" id="imagepreview">
+      </div>
+      <div class="modal-footer">
+        <a id="modal_download" href="link" class="btn btn-info" download>
+          <i class="glyphicon glyphicon-download-alt">&nbsp</i>
+          Download Image 
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  {% for file in files %}
+    {% if loop.index % 3 == 0 %}
+      <div class="row">
+    {% endif %}
+      <div class="col-md-4" id="{{loop.index}}">
+        {% if file.file.filetype in allowed_extensions and file.file.filetype not in document_extensions %}
+          <div class="thumbnail">
+            <a href="#/" onclick="enlarge_image(this)" data-img="{{file.file.filepath}}">
+              <img class="img-thumbnail" src="{{file.file.filepath}}" alt="{{file.file.filename}}" >
+              <p class = "text-center"> {{file.file.filename}} </p>
+            </a>
+
+            {% if editable is defined %}
+              <button href="#" onclick="delete_image(this)" data-div="{{loop.index}}" data-filepath="{{file.file.filepath}}" type="button" class="center-block btn btn-danger btn-sm">
+                <span class="glyphicon glyphicon-trash"></span> Delete 
+              </button>
+            {% endif %}
+          </div>
+
+        {% elif file.file.filetype in allowed_extensions and file.file.filetype in document_extensions %}
+          <div class="thumbnail">
+            <a href="{{file.file.filepath}}" >
+              <img class="img-thumbnail" src="/static/images/document_icon.svg" alt="{{file.file.filename}}" >
+              <p class = "text-center col-xs-12"> {{file.file.filename}} </p>
+            </a>
+
+          {% if editable is defined %}
+            <button onclick="delete_image(this)" data-div="{{loop.index}}" data-filepath="{{file.file.filepath}}" type="button" class="center-block btn btn-danger btn-sm">
+                <span class="glyphicon glyphicon-trash"></span> Delete 
+            </button>
+          {% endif %}
+
+          </div>
+        {% endif %}
+      </div>
+    {% if loop.index % 3 == 0 %} 
+      </div >
+    {% endif %}
+  {% endfor %}
+</div> 
+
+<script src="/static/js/local/snips/image_grid.js"></script>

@@ -1,0 +1,19 @@
+.login {
+    margin-top: 10px;
+    margin-left:auto;
+    margin-right: auto;
+    background-color: #005A8B;
+    color: white;
+    max-width: 300px;
+}
+
+
+.input-group-btn{
+    width: 50px;
+}
+
+.fa-fw{
+    display: inline-block;
+    margin: 3px;
+    text-align: center;
+}

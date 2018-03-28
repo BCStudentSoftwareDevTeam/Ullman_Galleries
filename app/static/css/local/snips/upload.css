@@ -1,0 +1,27 @@
+.dropzone {
+    background: white; border-radius: 5px;
+    border: 2px dashed rgb(0, 135, 247);
+    border-image: none;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#Page-1 > #Oval-2{
+  fill:#18bc9c;
+}
+
+#Page-1 > #Check-\+-Oval-2 > #Oval-2{
+      fill: #e74c3c;
+}
+
+.dz-max-files-reached {
+    /* disable click event on main Dropzone element when max files are reached */
+    pointer-events: none !important;
+}
+
+.dz-max-files-reached * {
+    /* allow clicking on child elements (to remove files from Dropzone) */
+    pointer-events: all;
+}
+
+

@@ -8,6 +8,7 @@ from app.logic.absolute_path import *
 from functools import wraps
 from flask import request, redirect, url_for, flash, abort
 from flask import session 
+from flask_security.core import current_user
 import os, re
 
 def doesUserHaveRole(role):
@@ -17,11 +18,10 @@ def doesUserHaveRole(role):
   Returns:
     boolean: True if user has role, false otherwise
   '''
-  if "user_id" in session:
-      user_id = session["user_id"]
-      if user_id is not None:
-        if Users.select(Users.id == user_id).exists():
-          return Users.get(Users.id == user_id).has_role(role)
+  if role == "anonymous":
+      return current_user.is_anonymous
+  if current_user.has_role(role):
+      return True
   return False
 
 

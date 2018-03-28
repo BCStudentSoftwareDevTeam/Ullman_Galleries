@@ -30,7 +30,6 @@ def insert(title, open_date, close_date, description, banner, folder_name):
         None: If Gallery object is not saved
     """
     try:
-        #TODO: Sanitize description
         gid = Galleries.create(
                         title =title,\
                         open_date = open_date,\

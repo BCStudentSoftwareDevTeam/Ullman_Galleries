@@ -12,7 +12,9 @@ To rename the app, you need to make three changes:
 '''
 import os
 import sys
-from app import create_app
+from app.config.loadConfig import *
+
+
 
 # Use local path if local variable is provided
 if os.getenv("LOCAL"):
@@ -22,6 +24,16 @@ if os.getenv("LOCAL"):
         sys.path.insert(0,os.getenv("LOCAL"))
 else:
     sys.path.insert(0,'/home/ubuntu/workspace/')
+
+
+secret_cfg = loadConfig.get_secret_cfg()
+os.environ["MYSQL_HOST"] = secret_cfg['db']['host']
+os.environ["MYSQL_DB"] = secret_cfg['db']['db_name']
+os.environ["MYSQL_PASSWORD"] = secret_cfg['db']['password']
+os.environ["MYSQL_USERNAME"] = secret_cfg['db']['username']
+os.environ["APP_SECRET_KEY"] = secret_cfg['secret_key']
+os.environ["SECURITY_PASSWORD_SALT"] = secret_cfg['salt']
+
 
 # Builds the server configuration
 if os.getenv('IP'):
@@ -35,6 +47,7 @@ else:
   PORT  = 8080
 
 # Print statements go to your log file in production; to your console while developing
+from app import create_app
 print(("Running server at http://{0}:{1}/".format(IP, PORT)))
 app = create_app('development')
 app.run(host = IP, port = PORT, debug = True, threaded = True)
