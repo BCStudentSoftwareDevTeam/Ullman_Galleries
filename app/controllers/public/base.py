@@ -19,6 +19,8 @@ import shutil
 
 @public.route('/', methods=["GET"])
 def create():
+    if not doesUserHaveRole('anonymous'):
+        return redirect('/view')
     form = None
     show_clear = True
     if 'form_id' not in session or ('submitted' in session
