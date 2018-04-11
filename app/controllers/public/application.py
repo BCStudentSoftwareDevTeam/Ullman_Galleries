@@ -36,8 +36,8 @@ def application_statement():
     button_text = "Your Artistic Statement"
     filepath = "/download/statement"
     action = "/upload/statement/"
-    next_href = "/application/image/"
-    prev_href = "/application/cv/"
+    next_href = "/application/cv/"
+    prev_href = "/?active_session='true'"
     maxFiles = 1
     remove_url = "/delete/statement"
     step = 3
@@ -79,7 +79,7 @@ def application_image():
 
     action = "/upload/image/"
     next_href = "/application/review/"
-    prev_href = "/application/statement/"
+    prev_href = "/application/cv/"
     maxFiles = 40
     step = 4
 
@@ -125,8 +125,8 @@ def application_cv():
     button_text = "Your Curriculum Vitae"
     filepath = "/download/cv/"
     action = "/upload/cv/"
-    next_href = "/application/statement/"
-    prev_href = "/?active_session='true'"
+    next_href = "/application/image/"
+    prev_href = "/application/statement/"
     maxFiles = 1
     remove_url = "/delete/cv"
     step = 2
@@ -180,7 +180,7 @@ def application_submit():
     if submission is not None:
         session['form_id'] = submission.fid
         session['username'] = secure_filename(data['firstName'] + '-' + data['lastName'])
-        return redirect("/application/cv/")
+        return redirect("/application/statement/")
     else:
         flash("We were unable to process your application")
         return render_template(
