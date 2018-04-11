@@ -1,5 +1,7 @@
 import glob,os,sys
 
+
+
 path = os.getcwd()
 test_dir = os.path.join(path,'app/config/')
 
@@ -8,6 +10,18 @@ if os.path.isdir(test_dir):
 else:
     new_path = os.path.dirname(path)
     sys.path.insert(0,new_path)
+
+from app.config.loadConfig import *
+
+if "MYSQL_HOST" not in os.environ:
+    secret_cfg = loadConfig.get_secret_cfg()
+    os.environ["MYSQL_HOST"] = secret_cfg['db']['host']
+    os.environ["MYSQL_DB"] = secret_cfg['db']['db_name']
+    os.environ["MYSQL_PASSWORD"] = secret_cfg['db']['password']
+    os.environ["MYSQL_USERNAME"] = secret_cfg['db']['username']
+    os.environ["APP_SECRET_KEY"] = secret_cfg['secret_key']
+    os.environ["SECURITY_PASSWORD_SALT"] = secret_cfg['salt']
+
 
 from app.models import *
 
