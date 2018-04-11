@@ -49,7 +49,7 @@ def load_userroles_data():
 
 
 def load_galleries_data():
-    Galleries(gid=1, title="D. Ulmann  Gallery",  folder_name="/static/data/D. Ulmann Gallery/").save(force_insert=True)
+    Galleries(gid=1, title="Doris Ulmann  Gallery",  folder_name="/static/data/D. Ulmann Gallery/").save(force_insert=True)
 
 def load_files_data():
     pass
