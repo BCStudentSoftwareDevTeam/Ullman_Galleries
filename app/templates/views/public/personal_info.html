@@ -1,6 +1,6 @@
-{% extends "snips/base.html" %}
-{% block body %}
+{% extends "snips/base.html" %} {% block body %}
 
+<link rel="stylesheet" type="text/css" href="/static/css/local/public/personal_info.css">
 
 {% with step = 1 %}
   {% include "snips/progress_tracker.html"%}
@@ -9,7 +9,11 @@
 <br/>
 <div>
     <div class="col-sm-offset-1 col-sm-10" id="">
-     <img src="static/images/du_logo.jpeg" style="width:128px;height:128px;" class= "center"> 
+     <img src="static/images/du_logo.jpeg"  id="logo" class= "img-responsive center-block"> 
+
+      <hr>
+      {{description|safe}}
+      <hr>
 
     <form class = "form-group" method = "POST" id = "createApplicationForm" action = "/application/personal/" enctype="multipart/form-data">
 
