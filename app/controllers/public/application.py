@@ -40,7 +40,7 @@ def application_statement():
     prev_href = "/?active_session='true'"
     maxFiles = 1
     remove_url = "/delete/statement"
-    step = 3
+    step = 2
     return render_template(
         'views/public/file_uploads.html',
         next_href=next_href,
@@ -129,7 +129,7 @@ def application_cv():
     prev_href = "/application/statement/"
     maxFiles = 1
     remove_url = "/delete/cv"
-    step = 2
+    step = 3
     return render_template(
         'views/public/file_uploads.html',
         next_href=next_href,
