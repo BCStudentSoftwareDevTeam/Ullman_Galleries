@@ -12,7 +12,7 @@ To rename the app, you need to make three changes:
 '''
 import os
 import sys
-from app.config.loadConfig import *
+from app.config.loadConfig import get_secret_cfg
 
 
 
@@ -26,7 +26,7 @@ else:
     sys.path.insert(0,'/home/ubuntu/workspace/')
 
 
-secret_cfg = loadConfig.get_secret_cfg()
+secret_cfg = get_secret_cfg()
 os.environ["MYSQL_HOST"] = secret_cfg['db']['host']
 os.environ["MYSQL_DB"] = secret_cfg['db']['db_name']
 os.environ["MYSQL_PASSWORD"] = secret_cfg['db']['password']
