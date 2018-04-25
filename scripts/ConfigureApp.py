@@ -54,7 +54,6 @@ class ConfigureApp():
             secret_key0 = input(prompt1)
             secret_key1 = input(prompt2)
             if secret_key0 == secret_key1:
-                print("Thank you the secret key has been saved inside of secret.yaml, and can be changed at any point through modifying that file.")
                 return secret_key0
             else:
                 print('The two secret keys did not match.')
@@ -67,7 +66,6 @@ class ConfigureApp():
         self.host = input('What is your host? ')
         self.username = input('What is your username for msql? ')
         self.password = input('What is your password for mysql? ')
-        print ('\nIf you have entered any of these variables incorrectly, they can be changed in secret.yaml.')
 
     def edit_secret_yaml(self):
         secret_data = {'db':{"db_name":self.db_name, "db_choice":self.db_choice, "host":self.host, "username":self.username, "password":self.password}, "secret_key":self.secret_key, "salt": self.salt}
@@ -120,9 +118,10 @@ class ConfigureApp():
         self.db_choice    = 'mysql'
         self.db_name      = self.get_db_name()
         self.get_mysql_variables()
-        self.secret_key = self.get_secret_key("What would you like the secret key to be for your application?", 'Please type the secret key again: ')
-        self.salt = self.get_secret_key("What would you like the salt key for stored passwords be for your application?", 'Please type the salt key again: ')
+        self.secret_key = self.get_secret_key("What is your secret key?", 'Please type the secret key again: ')
+        self.salt = self.get_secret_key("What is your salt for passwords?", 'Please type the salt key again: ')
         self.edit_secret_yaml()
+        print("ALL SETTINGS SAVED IN app/config/secret.yaml")
         self.create_mysql_database()
 
 
