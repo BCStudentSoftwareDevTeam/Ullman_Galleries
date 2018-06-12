@@ -68,8 +68,8 @@ def application_image():
     accepted_files = get_cfg()["allowed_extensions"]
     accepted_files = "." + ",.".join(accepted_files)
 
-    new_files_message = "Please upload your images"
-    existing_files_message = "You previous uploaded the following images"
+    new_files_message = "Please upload your images. Please include a document describing the images as well. "
+    existing_files_message = "You previously uploaded the following images"
     form = Forms.get(Forms.fid == fid)
     pre_exist = False
     files = FormToFileQueries.get_form_files(fid)
