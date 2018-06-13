@@ -26,8 +26,8 @@ def application_statement():
     fid = session["form_id"]
     accepted_files = get_cfg()["document_extensions"]
     accepted_files = "." + ",.".join(accepted_files)
-    new_files_message = "Please upload your artistic statement"
-    existing_files_message = "You previous uploaded the following artistic statement"
+    new_files_message = "Please upload your artist statement"
+    existing_files_message = "You previously uploaded the following artist statement"
     form = Forms.get(Forms.fid == fid)
     pre_exist = False
     if form.personal_statement is not None:
@@ -68,8 +68,8 @@ def application_image():
     accepted_files = get_cfg()["allowed_extensions"]
     accepted_files = "." + ",.".join(accepted_files)
 
-    new_files_message = "Please upload your images"
-    existing_files_message = "You previous uploaded the following images"
+    new_files_message = "Please upload your images along with a list describing them."
+    existing_files_message = "You previously uploaded the following images"
     form = Forms.get(Forms.fid == fid)
     pre_exist = False
     files = FormToFileQueries.get_form_files(fid)
@@ -116,7 +116,7 @@ def application_cv():
     accepted_files = "." + ",.".join(accepted_files)
 
     new_files_message = "Please upload your curriculum vitae"
-    existing_files_message = "You previous uploaded the following curriculum vitae"
+    existing_files_message = "You previously uploaded the following curriculum vitae"
     form = Forms.get(Forms.fid == fid)
     pre_exist = False
     if form.cv is not None:
