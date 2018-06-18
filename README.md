@@ -13,21 +13,24 @@ You can find the instruction to setting up c9 at https://docs.c9.io/docs/create-
 
 After you have accessed your environment, we have built some scripts into the system that will get the application up and running for you. 
 
-1. ```python3 setup.py install```
-2. ```. venv/bin/activate```
-3. ``` mysql-ctl install ```
-4. ``` python scripts/ConfigureApp.py ``` 
-4. ``` Use:
+1.  ``` virtualenv --python python3 venv```
+2.  ``` source venv/bin/activate```
+3.  ``` pip install --upgrade setuptools```
+4. ```python3 setup.py install```
+5. ```. venv/bin/activate```
+6. ``` mysql-ctl install ```
+7. ``` python scripts/ConfigureApp.py ``` 
+8. ``` Use:
           host - localhost
           username - Given by mysql-ctl
           password - empty
           database name  - Given by mysql-ctl
    ```
-5. ```Follow the prompts:
+9. ```Follow the prompts:
       1. Enter anything for the secret key
       2. make sure to create the database```
-6. ``` It seems everyone is getting an error, on the first run. Please re-run the program to have it setup properly```
-7. ```python app.py```
+10. ``` It seems everyone is getting an error, on the first run. Please re-run the program to have it setup properly```
+. ```python app.py```
 
 >***Note***: To start and stop mysql  in cloud9 use ```mysql-ctl [start|stop|restart]``` 
 
