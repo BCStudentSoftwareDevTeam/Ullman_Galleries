@@ -14,7 +14,7 @@ else:
 from app.config.loadConfig import *
 
 if "MYSQL_HOST" not in os.environ:
-    secret_cfg = loadConfig.get_secret_cfg()
+    secret_cfg = get_secret_cfg()
     os.environ["MYSQL_HOST"] = secret_cfg['db']['host']
     os.environ["MYSQL_DB"] = secret_cfg['db']['db_name']
     os.environ["MYSQL_PASSWORD"] = secret_cfg['db']['password']
