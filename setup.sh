@@ -21,7 +21,7 @@ BCRYPT_VERSION="${BCRYPT_VERSION:-2.1.3}"             #2.1.3
 if [ ! -d venv ]
 then
   git update-index --assume-unchanged app/config/secret.yaml
-
+fi
 if [ ! -d venv ]
 then
   virtualenv --python python3 venv
@@ -44,6 +44,7 @@ if [ ! -f app/config/secret.yaml ]
 then
   if [ "${C9_USER}" ]
   then
+    mysql-ctl start
     mysql -u root --execute="CREATE DATABASE Ulmann"
     echo "PLEASE USE THE FOLLOWING SETTINGS FOR YOUR SECRET SETUP"
     echo "mysql database: Ulmann"
@@ -51,17 +52,19 @@ then
     echo "username: ${C9_USER}"
     echo "password: (LEAVE EMPTY)"
   fi
-if [ -z "C9_USER"]
-then
-  mysql -u root --execute="CREATE DATABASE Ulmann"
-  echo "PLEASE USE THE FOLLOWING SETTINGS FOR YOUR SECRET SETUP"
-  echo "db: Ulmann"
-  echo "Hostname: localhost"
-  echo "password: (LEAVE EMPTY)"
-  echo "username: YOUR C9 USERNAME"
-fi
+  
+	if [ -z "C9_USER" ]
+	then
+	  mysql -u root --execute="CREATE DATABASE Ulmann"
+	  echo "PLEASE USE THE FOLLOWING SETTINGS FOR YOUR SECRET SETUP"
+	  echo "db: Ulmann"
+	  echo "Hostname: localhost"
+	  echo "password: (LEAVE EMPTY)"
+	  echo "username: YOUR C9 USERNAME"
+	fi
 
-if [ ! -f app/config/secret.yaml ]
-then
-  python scripts/ConfigureApp.py
+	if [ ! -f app/config/secret.yaml ]
+	then
+	  python scripts/ConfigureApp.py
+	fi
 fi
