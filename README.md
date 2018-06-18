@@ -13,6 +13,9 @@ You can find the instruction to setting up c9 at https://docs.c9.io/docs/create-
 
 After you have accessed your environment, we have built some scripts into the system that will get the application up and running for you. 
 
+```try./setup.sh, if it fails try the next steps```
+
+
 1.  ``` virtualenv --python python3 venv```
 2.  ``` source venv/bin/activate```
 3.  ``` pip install --upgrade setuptools```
