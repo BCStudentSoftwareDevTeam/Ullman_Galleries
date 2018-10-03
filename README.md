@@ -1,4 +1,7 @@
-# Ullman Galleries Ullman Galleries is a management tool for application entries. It provides an easy way to accept applications. Our main purpose for the system is to accept applications from artists that want to show their work in a Berea College Gallery Showing.
+# Ullman Galleries 
+
+## Purpose 
+Ullman Galleries is a management tool for application entries. It provides an easy way to accept applications. Our main purpose for the system is to accept applications from artists that want to show their work in a Berea College Gallery Showing.
   
 
 ## Getting Started
@@ -135,9 +138,8 @@ The versioning scheme that we use is [SemVer](http://semver.org/).
 
 ## Authors
 1. [Cody Myers](http://github.com/myersCody)
+2. [Jesson Soto Ventura](http://github.com/jessonsotoventura)
 
-
-## License
 
 ## Acknowledgments
 * [Berea College](https://www.berea.edu/) for providing us the opportunity to have a student software developers group.
