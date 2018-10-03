@@ -32,7 +32,7 @@ def download_all():
 @admin.route('/download/contact-info/', methods=['GET'])
 @login_required
 def contact_info():
-    gid = 1
+    gid = 1  # What is gid?
     forms = FormQueries.get_all_from_gallery(gid)
     filepath = generate_csv(forms)
     if filepath is not None:
@@ -44,6 +44,7 @@ def contact_info():
 
 
 def generate_csv(forms):
+    import unicodedata
     if len(forms) > 0:
         entries = [
             'first_name', 'last_name', 'street_address', 'second_address',
@@ -53,7 +54,7 @@ def generate_csv(forms):
         header = ",".join(entries)
         filepath = get_static_absolute_path(forms[0].gallery.folder_name,
                                             'contact-info.csv')
-        with open(filepath, 'w') as csvfile:
+        with open(filepath, 'w', encoding = 'utf-8') as csvfile:
             writer = csv.DictWriter(
                 csvfile, fieldnames=entries, extrasaction="ignore")
             writer.writeheader()
