@@ -10,7 +10,7 @@ import logging
 def load_config(file):
     if os.path.exists(getAbsolutePath(file)):
         with open(file, 'r') as ymlfile:
-            cfg = yaml.load(ymlfile)
+            cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
         return cfg
     else:
         return None

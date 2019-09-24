@@ -3,7 +3,7 @@
 # http://configure.readthedocs.io/en/latest/#
 from app.models import *
 from app.models.queries import *
-from app.config import * #This import is for testing
+# from app.config import * #This import is for testing
 from app.logic.absolute_path import *
 from functools import wraps
 from flask import request, redirect, url_for, flash, abort

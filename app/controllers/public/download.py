@@ -35,8 +35,12 @@ def download_user():
         return abort(404)
     form = FormQueries.get(fid)
     filepath = get_static_absolute_path(form.folder_path)
-    zip_archive = filepath + \
-        "/../../archive/%s-%s-%s" % (form.first_name, form.last_name, form.fid)
+    import unicodedata
+    form.first_name = unicodedata.normalize('NFKD', form.first_name).encode('ascii', 'ignore')    
+    form.last_name = unicodedata.normalize('NFKD', form.last_name).encode('ascii', 'ignore')
+    zip_archive = filepath + "/../../archive/{0}-{1}-{2}".format(form.first_name, form.last_name, form.fid)
+#    zip_archive = filepath + \
+#       "/../../archive/%s-%s-%s" % (form.first_name, form.last_name, form.fid)
     print(zip_archive)
     zipfile = shutil.make_archive(zip_archive, "zip", filepath)
     return send_file(zipfile, as_attachment=True)

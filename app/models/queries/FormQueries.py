@@ -29,6 +29,7 @@ def get_all_from_gallery(gid, include_deleted = False):
                 forms = Forms.select().join(Galleries).where(Galleries.gid == gid)
             else:
                 forms = Forms.select().join(Galleries).where(Galleries.gid == gid).where(Forms.status != "Deleted")
+            print("Got all forms")
             return list(forms)
     return None
 
